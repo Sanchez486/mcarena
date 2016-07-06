@@ -26,4 +26,7 @@ public slots:
     void clickedMenu();
     void clickedPlayer1();
     void clickedPlayer2();
+
+public:
+    SelectionModel(QObject *parent = nullptr);
 };

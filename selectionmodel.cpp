@@ -1,5 +1,11 @@
 #include "inc/selectionmodel.h"
 
+SelectionModel::SelectionModel(QObject *parent)
+    : QObject(parent)
+{
+
+}
+
 void SelectionModel::clickedHero(Hero *)
 {
 

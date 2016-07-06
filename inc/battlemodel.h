@@ -21,4 +21,6 @@ public slots:
     void selectedAction(Action*);  // After attack or skill clicked
     void selectedTarget(Hero*);  // After Hero clicked
 
+public:
+    BattleModel(QObject *parent = nullptr);
 };

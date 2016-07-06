@@ -1,5 +1,12 @@
 #include "inc/menumodel.h"
 
+MenuModel::MenuModel(QObject *parent)
+    : QObject(parent)
+{
+
+}
+
+
 void MenuModel::clickedPlay()
 {
 

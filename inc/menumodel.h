@@ -19,4 +19,7 @@ public slots:
     void clickedExit();
     void clickedSound();  // Button sounds on/off
     void clickedMusic();  // Button music on/off
+
+public:
+    MenuModel(QObject *parent = nullptr);
 };
