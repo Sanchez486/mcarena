@@ -7,11 +7,13 @@
 class BattleGUI : public QObject
 {
 Q_OBJECT
-private:
+public:
+    BattleGUI(QObject *parent = nullptr);
 
 signals:
     void selectedAction(Action*);  // After attack or skill clicked
     void selectedTarget(Hero*);  // After Hero clicked
+    void closed();  // After closing window
     void showInfoSignal(Hero*);  // After right-click on Hero  [this -> this]
 
 public slots:

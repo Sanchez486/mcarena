@@ -7,7 +7,8 @@
 class SelectionGUI : public QObject
 {
 Q_OBJECT
-private:
+public:
+    SelectionGUI(QObject *parent = nullptr);
 
 signals:
     void clickedHero(Hero*);  // After hero clicked (on the left)
@@ -18,6 +19,7 @@ signals:
     void clickedMenu();
     void clickedPlayer1();
     void clickedPlayer2();
+    void closed();  // After closing window
     void mouseOnSeat(/* position */);  // After mouse moved on hero (show cross)  [this -> this]
 
 public slots:

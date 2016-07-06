@@ -1,5 +1,11 @@
 #include "inc/selectiongui.h"
 
+SelectionGUI::SelectionGUI(QObject *parent)
+    : QObject(parent)
+{
+
+}
+
 void SelectionGUI::show()
 {
 
