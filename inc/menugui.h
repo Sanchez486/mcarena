@@ -14,7 +14,7 @@ class MenuGUI : public QObject
 {
 Q_OBJECT
 public:
-    MenuGUI();
+    MenuGUI(QObject *parent = nullptr);
 
 private:
     QTimer *timer;

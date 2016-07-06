@@ -7,7 +7,8 @@
 class BattleGUI : public QObject
 {
 Q_OBJECT
-private:
+public:
+    BattleGUI(QObject *parent = nullptr);
 
 signals:
     void selectedAction(Action*);  // After attack or skill clicked

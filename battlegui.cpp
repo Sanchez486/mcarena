@@ -1,5 +1,11 @@
 #include "inc/battlegui.h"
 
+BattleGUI::BattleGUI(QObject *parent)
+    : QObject(parent)
+{
+
+}
+
 void BattleGUI::show()
 {
 

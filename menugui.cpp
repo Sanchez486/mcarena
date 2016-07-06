@@ -5,8 +5,9 @@
 #define YWINDOW 400
 #define XYSETTINGS 200
 
-MenuGUI::MenuGUI()
+MenuGUI::MenuGUI(QObject *parent)
     :
+      QObject(parent),
       app_window( sf::VideoMode( XSIZE, YSIZE ), "McArena", sf::Style::Titlebar | sf::Style::Close ),
 
       //Main window

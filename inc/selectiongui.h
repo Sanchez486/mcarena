@@ -7,7 +7,8 @@
 class SelectionGUI : public QObject
 {
 Q_OBJECT
-private:
+public:
+    SelectionGUI(QObject *parent = nullptr);
 
 signals:
     void clickedHero(Hero*);  // After hero clicked (on the left)
