@@ -29,7 +29,8 @@ HEADERS += \
     inc/heroqueue.h \
     inc/herogroup.h \
     inc/player.h \
-    inc/action.h
+    inc/action.h \
+    inc/game.h
 
 LIBS += \
     -lsfml-graphics \
