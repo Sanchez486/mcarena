@@ -5,7 +5,7 @@
 #define YINFO 180
 #define XFIELD 270
 #define YFIELD 300
-#define XFRAME 30
+#define XFRAME 20
 #define YFRAME 20
 #define XPOINTS 125
 #define YPOINTS 130
@@ -13,7 +13,7 @@
 #define XBUTTONS 450
 #define YBUTTONS 80
 #define XBUTTONS2 135
-#define YBUTTONS2 220
+#define YBUTTONS2 200
 #define FRAME 10
 #define N 16 //debug
 
@@ -24,10 +24,13 @@ SelectionGUI::SelectionGUI()
       //Boxes
       infoWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
       infoBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),
+      infoTable(sfg::Table::Create()),
       pointsWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
       pointsBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),
-      fieldWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
+      pointsLabel(sfg::Label::Create("POINTS: ")),
+      fieldWindow(sfg::Window::Create(sfg::Window::Style::NO_STYLE)),
       fieldBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),
+      fieldTable(sfg::Table::Create()),
 
       //Heroes menu
       scrollwin(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
@@ -58,16 +61,53 @@ SelectionGUI::SelectionGUI()
     desktop.Add(infoWindow);
     infoWindow->Add(infoBox);
     infoWindow->SetAllocation(sf::FloatRect(XSIZE-XINFO,0,XINFO,YINFO));
+    infoBox->Pack(infoTable);
     desktop.Add(pointsWindow);
     pointsWindow->Add(pointsBox);
     pointsWindow->SetAllocation(sf::FloatRect(XSIZE-XPOINTS,YINFO,XPOINTS,YPOINTS));
+    pointsBox->Pack(pointsLabel);
     desktop.Add(fieldWindow);
     fieldWindow->Add(fieldBox);
     fieldWindow->SetAllocation(sf::FloatRect(XSCROLL+XFRAME,YINFO+YFRAME,XFIELD,YFIELD));
+    fieldBox->Pack(fieldTable);
+    //debug
+    sf::Image fieldImg;
+    fieldImg.loadFromFile("src/kek.jpg");
+    for (int i=0;i<6;i++){
+        sfg::Image::Ptr newimg = sfg::Image::Create(fieldImg);
+        fieldTable->Attach(newimg,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+    }
+    sf::Image icoImg;
+    icoImg.loadFromFile("src/ico.jpg");
+    sfg::Image::Ptr pic1 = sfg::Image::Create(icoImg);
+    sfg::Image::Ptr pic2 = sfg::Image::Create(fieldImg);
+    sfg::Label::Ptr infoLabels[7];
+    sfg::Image::Ptr infoPics[5];
+    for (int i=0;i<7;i++) infoLabels[i]= sfg::Label::Create("");
+    for (int i=0;i<5;i++) infoPics[i]= sfg::Image::Create(icoImg);
+    infoLabels[0]->SetText("Hero Name");
+    infoLabels[1]->SetText("X HP");
+    infoLabels[2]->SetText("X DMG");
+    infoLabels[3]->SetText("X INIT");
+    infoLabels[4]->SetText("Element: Fire");
+    infoLabels[5]->SetText("X PTS");
+    infoLabels[6]->SetText("Special Skill: Keks");
 
+    infoTable->Attach(pic2,sf::Rect<sf::Uint32>(0, 0, 2, 3),sfg::Table::FILL, sfg::Table::FILL);
+    infoTable->Attach(infoLabels[0],sf::Rect<sf::Uint32>(1, 0, 4, 1),sfg::Table::FILL, sfg::Table::FILL);
+    infoTable->Attach(infoPics[0],sf::Rect<sf::Uint32>(2, 1, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+    infoTable->Attach(infoPics[1],sf::Rect<sf::Uint32>(2, 2, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+    infoTable->Attach(infoPics[2],sf::Rect<sf::Uint32>(4, 1, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+    infoTable->Attach(infoPics[3],sf::Rect<sf::Uint32>(4, 2, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+    infoTable->Attach(infoPics[4],sf::Rect<sf::Uint32>(0, 3, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+    infoTable->Attach(infoLabels[1],sf::Rect<sf::Uint32>(3, 1, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+    infoTable->Attach(infoLabels[2],sf::Rect<sf::Uint32>(3, 2, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+    infoTable->Attach(infoLabels[3],sf::Rect<sf::Uint32>(5, 1, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+    infoTable->Attach(infoLabels[4],sf::Rect<sf::Uint32>(5, 2, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+    infoTable->Attach(infoLabels[5],sf::Rect<sf::Uint32>(1, 3, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+    infoTable->Attach(infoLabels[6],sf::Rect<sf::Uint32>(2, 1, 4, 1),sfg::Table::FILL, sfg::Table::FILL);
 
-
-    //Main window
+    //Buttons Window
     desktop.Add(buttonsWindow);
     buttonsWindow->Add(buttonsBox);
     buttonsWindow->SetAllocation(sf::FloatRect( XSIZE-XBUTTONS , YSIZE-YBUTTONS, XBUTTONS, YBUTTONS));
@@ -80,7 +120,6 @@ SelectionGUI::SelectionGUI()
     desktop.Add(playerWindow);
     playerWindow->Add(playerBox);
     playerWindow->SetAllocation(sf::FloatRect( XSIZE-XBUTTONS2, YSIZE-YBUTTONS2-YBUTTONS, XBUTTONS2, YBUTTONS2));
-
     playerBox->Pack(player1Button);
     playerBox->Pack(player2Button);
 

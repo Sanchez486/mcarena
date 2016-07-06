@@ -29,10 +29,13 @@ private:
     //Boxes
     sfg::Window::Ptr infoWindow;
     sfg::Box::Ptr infoBox;
+    sfg::Table::Ptr infoTable;
     sfg::Window::Ptr pointsWindow;
     sfg::Box::Ptr pointsBox;
+    sfg::Label::Ptr pointsLabel;
     sfg::Window::Ptr fieldWindow;
     sfg::Box::Ptr fieldBox;
+    sfg::Table::Ptr fieldTable;
 
     //Heroes list
     sfg::Window::Ptr scrollwin;
