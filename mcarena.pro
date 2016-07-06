@@ -15,7 +15,8 @@ SOURCES += main.cpp \
     menugui.cpp \
     menumodel.cpp \
     selectiongui.cpp \
-    selectionmodel.cpp
+    selectionmodel.cpp \
+    game.cpp
 
 HEADERS += \
     inc/menugui.h \
