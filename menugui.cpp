@@ -100,7 +100,7 @@ void MenuGUI::update()
     if (app_window.isOpen())
     {
         sf::Event event;
-        if (app_window.pollEvent(event))
+        while (app_window.pollEvent(event))
         {
               desktop.HandleEvent(event);
 
