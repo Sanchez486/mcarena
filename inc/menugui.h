@@ -65,6 +65,7 @@ signals:
     void clickedExit();
     void clickedSound();  // Button sounds on/off
     void clickedMusic();  // Button music on/off
+    void closed();  // After closing window
 
 public slots:
     void update();// move to private slot
