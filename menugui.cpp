@@ -4,9 +4,11 @@
 #define XWINDOW 300
 #define YWINDOW 400
 #define XYSETTINGS 200
+#define TIMEUPDATE 25 //Window updates every 25 milliseconds (40 fps)
 
-MenuGUI::MenuGUI()
+MenuGUI::MenuGUI(QObject* parent = nullptr)
     :
+      QObject(parent),
       app_window( sf::VideoMode( XSIZE, YSIZE ), "McArena", sf::Style::Titlebar | sf::Style::Close ),
 
       //Main window
@@ -75,7 +77,7 @@ void MenuGUI::clickedOk()
     window->SetState(sfg::Widget::State::NORMAL);
 }
 
-//Connecting Button and Qt signals
+//Connecting Buttons and Qt signals
 void MenuGUI::clickedButton(ButtonPressed Button)
 {
     switch (Button)
@@ -83,24 +85,26 @@ void MenuGUI::clickedButton(ButtonPressed Button)
         case PLAY: clickedPlay(); break;
         case PLAY_WITH_CPU: clickedPlayCPU(); break;
         case EXIT: clickedExit(); break;
-        case MUSIC:clickedMusic();break;
+        case MUSIC:clickedMusic(); break;
         case SOUND:clickedSound(); break;
     }
 }
 
 void MenuGUI::show()
 {
-   timer = new QTimer(this);
+   timer = new QTimer();
    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-   timer->start(10);
+   timer->start(TIMEUPDATE);
 }
 
 void MenuGUI::update()
 {
-    if (app_window.isOpen())
+    static bool flag = true;
+
+    if(app_window.isOpen())
     {
         sf::Event event;
-        if (app_window.pollEvent(event))
+        while(app_window.pollEvent(event))
         {
               desktop.HandleEvent(event);
 
@@ -113,11 +117,19 @@ void MenuGUI::update()
         sfgui.Display(app_window);
         app_window.display();
     }
+
+    else if(flag)
+    {
+        flag = false;
+        clickedExit();
+    }
 }
 
 void MenuGUI::hide()
 {
-
+    delete timer;
+    app_window.clear(sf::Color::Black);
+    app_window.display();
 }
 
 void MenuGUI::setSounds(bool)

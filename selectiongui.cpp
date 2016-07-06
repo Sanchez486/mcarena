@@ -1,6 +1,18 @@
 #include "inc/selectiongui.h"
 
+SelectionGUI::SelectionGUI(QObject *parent = nullptr)
+    :
+      QObject(parent)
+{
+
+}
+
 void SelectionGUI::show()
+{
+
+}
+
+void SelectionGUI::update()
 {
 
 }

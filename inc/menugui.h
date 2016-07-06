@@ -14,11 +14,10 @@ class MenuGUI : public QObject
 {
 Q_OBJECT
 public:
-    MenuGUI();
+    MenuGUI(QObject* parent);
 
 private:
     QTimer *timer;
-
     sf::RenderWindow app_window;
     sfg::SFGUI sfgui;
     sfg::Desktop desktop;
@@ -56,7 +55,7 @@ private:
     void clickedButton(ButtonPressed Button);
 
 private slots:
-
+    void update();
 
 signals:
     void clickedPlay();
@@ -65,9 +64,9 @@ signals:
     void clickedExit();
     void clickedSound();  // Button sounds on/off
     void clickedMusic();  // Button music on/off
+    void closed();
 
 public slots:
-    void update();// move to private slot
     void show();  // Show this window
     void hide();  // Hide this window
     void setSounds(bool);  // Change sounds icon on/off
