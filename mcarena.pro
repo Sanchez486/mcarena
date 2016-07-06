@@ -24,9 +24,14 @@ HEADERS += \
     inc/menumodel.h \
     inc/selectionmodel.h \
     inc/battlemodel.h \
-    inc/game.h \
     inc/hero.h \
     inc/heroqueue.h \
     inc/herogroup.h \
     inc/player.h \
     inc/action.h
+
+LIBS += \
+    -lsfml-graphics \
+    -lsfml-window\
+    -lsfml-system\
+    -lsfgui
