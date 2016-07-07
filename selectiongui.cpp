@@ -85,27 +85,27 @@ SelectionGUI::SelectionGUI()
     sfg::Image::Ptr infoPics[5];
     for (int i=0;i<7;i++) infoLabels[i]= sfg::Label::Create("");
     for (int i=0;i<5;i++) infoPics[i]= sfg::Image::Create(icoImg);
-    infoLabels[0]->SetText("Hero Name");
+    infoLabels[0]->SetText("Pretty Long Hero Name");
     infoLabels[1]->SetText("X HP");
     infoLabels[2]->SetText("X DMG");
     infoLabels[3]->SetText("X INIT");
     infoLabels[4]->SetText("Element: Fire");
     infoLabels[5]->SetText("X PTS");
-    infoLabels[6]->SetText("Special Skill: Keks");
+    infoLabels[6]->SetText("Special Skill: very very long skill description, really long man, but it's OK");
 
-    infoTable->Attach(pic2,sf::Rect<sf::Uint32>(0, 0, 2, 3),sfg::Table::FILL, sfg::Table::FILL);
-    infoTable->Attach(infoLabels[0],sf::Rect<sf::Uint32>(1, 0, 4, 1),sfg::Table::FILL, sfg::Table::FILL);
-    infoTable->Attach(infoPics[0],sf::Rect<sf::Uint32>(2, 1, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
-    infoTable->Attach(infoPics[1],sf::Rect<sf::Uint32>(2, 2, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
-    infoTable->Attach(infoPics[2],sf::Rect<sf::Uint32>(4, 1, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
-    infoTable->Attach(infoPics[3],sf::Rect<sf::Uint32>(4, 2, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
-    infoTable->Attach(infoPics[4],sf::Rect<sf::Uint32>(0, 3, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
-    infoTable->Attach(infoLabels[1],sf::Rect<sf::Uint32>(3, 1, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
-    infoTable->Attach(infoLabels[2],sf::Rect<sf::Uint32>(3, 2, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
-    infoTable->Attach(infoLabels[3],sf::Rect<sf::Uint32>(5, 1, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
-    infoTable->Attach(infoLabels[4],sf::Rect<sf::Uint32>(5, 2, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
-    infoTable->Attach(infoLabels[5],sf::Rect<sf::Uint32>(1, 3, 1, 1),sfg::Table::FILL, sfg::Table::FILL);
-    infoTable->Attach(infoLabels[6],sf::Rect<sf::Uint32>(2, 1, 4, 1),sfg::Table::FILL, sfg::Table::FILL);
+    infoTable->Attach(pic2,sf::Rect<sf::Uint32>(0, 0, 1, 3),sfg::Table::EXPAND , sfg::Table::EXPAND );
+    infoTable->Attach(infoLabels[0],sf::Rect<sf::Uint32>(1, 0, 2, 1),sfg::Table::EXPAND | sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoPics[0],sf::Rect<sf::Uint32>(1, 1, 1, 1),sfg::Table::EXPAND | sfg::Table::FILL, sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoPics[1],sf::Rect<sf::Uint32>(1, 2, 1, 1),sfg::Table::EXPAND | sfg::Table::FILL, sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoPics[2],sf::Rect<sf::Uint32>(3, 1, 1, 1),sfg::Table::EXPAND | sfg::Table::FILL, sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoPics[3],sf::Rect<sf::Uint32>(3, 2, 1, 1),sfg::Table::EXPAND | sfg::Table::FILL, sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoPics[4],sf::Rect<sf::Uint32>(3, 0, 1, 1),sfg::Table::EXPAND | sfg::Table::FILL, sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoLabels[1],sf::Rect<sf::Uint32>(2, 1, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoLabels[2],sf::Rect<sf::Uint32>(2, 2, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoLabels[3],sf::Rect<sf::Uint32>(4, 1, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoLabels[4],sf::Rect<sf::Uint32>(4, 2, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoLabels[5],sf::Rect<sf::Uint32>(4, 0, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoLabels[6],sf::Rect<sf::Uint32>(0, 3, 7, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
 
     //Buttons Window
     desktop.Add(buttonsWindow);
