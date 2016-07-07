@@ -2,6 +2,7 @@
 
 #include <QObject>
 
+#include "inc/mainwindow.h"
 #include "inc/menugui.h"
 #include "inc/menumodel.h"
 #include "inc/selectiongui.h"
@@ -13,6 +14,7 @@ class Game : public QObject
 {
     Q_OBJECT
 private:
+    MainWindow *mainWindow;
     MenuGUI *menuGUI;
     MenuModel *menuModel;
     SelectionGUI *selectionGUI;

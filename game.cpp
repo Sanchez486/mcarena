@@ -2,11 +2,12 @@
 
 Game::Game()
 {
-    menuGUI = new MenuGUI(this);
+    mainWindow = new MainWindow();
+    menuGUI = new MenuGUI(this, mainWindow);
     menuModel = new MenuModel(this);
-    selectionGUI = new SelectionGUI(this);
+    selectionGUI = new SelectionGUI(this, mainWindow);
     selectionModel = new SelectionModel(this);
-    battleGUI = new BattleGUI(this);
+    battleGUI = new BattleGUI(this, mainWindow);
     battleModel = new BattleModel(this);
 
     // Signals Menu GUI -> Model
