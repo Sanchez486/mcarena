@@ -16,7 +16,8 @@ SOURCES += main.cpp \
     menumodel.cpp \
     selectiongui.cpp \
     selectionmodel.cpp \
-    game.cpp
+    game.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     inc/menugui.h \
@@ -30,7 +31,8 @@ HEADERS += \
     inc/herogroup.h \
     inc/player.h \
     inc/action.h \
-    inc/game.h
+    inc/game.h \
+    inc/mainwindow.h
 
 LIBS += \
     -lsfml-graphics \
