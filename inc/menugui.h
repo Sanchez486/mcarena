@@ -22,7 +22,6 @@ private:
     sf::RenderWindow app_window;
     sf::Texture backgroundT;
     sf::Sprite background;
-    sf::Image buttonPIC;
     sfg::SFGUI sfgui;
     sfg::Desktop desktop;
 

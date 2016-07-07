@@ -1,11 +1,12 @@
-#include "inc/selectiongui.h"
+#include "inc/menugui.h"
 #include <QCoreApplication>
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    SelectionGUI sg;
-    sg.show();
+
+    MenuGUI mg;
+    mg.show();
 
     return a.exec();
 }

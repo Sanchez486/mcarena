@@ -13,7 +13,7 @@ MenuGUI::MenuGUI()
       //Main window
       window(sfg::Window::Create(sfg::Window::Style::NO_STYLE)),
       box(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 20)),
-      playButton(sfg::Button::Create()),
+      playButton(sfg::Button::Create("Play")),
       playWithCpuButton(sfg::Button::Create( "Play with CPU" )),
       settingsButton(sfg::Button::Create( "Settings" )),
       exitButton(sfg::Button::Create( "Exit" )),
@@ -31,7 +31,6 @@ MenuGUI::MenuGUI()
     app_window.resetGLStates();
     backgroundT.loadFromFile("src/menuBACK.jpg");
     background.setTexture(backgroundT);
-    buttonPIC.loadFromFile("src/startButtonPIC.jpg");
 
 
     //Main window
@@ -44,7 +43,6 @@ MenuGUI::MenuGUI()
     box->Pack(settingsButton);
     box->Pack(exitButton);
 
-    playButton->SetImage(sfg::Image::Create(buttonPIC));
 
     //Settings window
     desktop.Add(settingsWindow);
