@@ -1,4 +1,7 @@
 #include "inc/game.h"
+#include <iostream>
+
+using namespace std;
 
 Game::Game()
 {
@@ -49,9 +52,75 @@ Game::Game()
     connect(battleModel, SIGNAL(setQueue(HeroQueue*)), battleGUI, SLOT(setQueue(HeroQueue*)));
     connect(battleModel, SIGNAL(showTargets(Action*)), battleGUI, SLOT(showTargets(Action*)));
     connect(battleModel, SIGNAL(playAction(Action*)), battleGUI, SLOT(playAction(Action*)));
+
+    // Signals MenuModel -> Game
+    connect(menuModel, SIGNAL(clickedPlaySignal()), SLOT(clickedPlay()));
+    connect(menuModel, SIGNAL(clickedPlayOnlineSignal()), SLOT(clickedPlayOnline()));
+    connect(menuModel, SIGNAL(clickedPlayCPUSignal()), SLOT(clickedPlayCPU()));
+    connect(menuModel, SIGNAL(clickedExitSignal()), SLOT(clickedExit()));
+    connect(menuModel, SIGNAL(closedSignal()), SLOT(closedMenu()));
+
+    // Signals SelectionModel -> Game
+    connect(selectionModel, SIGNAL(clickedReadySignal()), SLOT(clickedReady()));
+    connect(selectionModel, SIGNAL(clickedMenuSignal()), SLOT(clickedMenu()));
+    connect(selectionModel, SIGNAL(closedSignal()), SLOT(closedSelection()));
+
+    // Signals BattleModel -> Game
+    connect(battleModel, SIGNAL(finishedSignal()), SLOT(finished()));
+    connect(battleModel, SIGNAL(closedSignal()), SLOT(closedBattle()));
 }
 
 void Game::start()
 {
     menuGUI->show();
+}
+
+void Game::clickedPlay()
+{
+    cerr << "Game::clickedPlay()" << endl;
+}
+
+void Game::clickedPlayOnline()
+{
+    cerr << "Game::clickedPlayOnline()" << endl;
+}
+
+void Game::clickedPlayCPU()
+{
+    cerr << "Game::clickedPlayCPU()" << endl;
+}
+
+void Game::clickedExit()
+{
+    cerr << "Game::clickedExit()" << endl;
+}
+
+void Game::closedMenu()
+{
+    cerr << "Game::closedMenu()" << endl;
+}
+
+void Game::clickedReady()
+{
+    cerr << "Game::clickedReady()" << endl;
+}
+
+void Game::clickedMenu()
+{
+    cerr << "Game::clickedMenu()" << endl;
+}
+
+void Game::closedSelection()
+{
+    cerr << "Game::closedSelection()" << endl;
+}
+
+void Game::finished()
+{
+    cerr << "Game::finished()" << endl;
+}
+
+void Game::closedBattle()
+{
+    cerr << "Game::closedBattle()" << endl;
 }

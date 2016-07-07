@@ -39,3 +39,8 @@ void MenuModel::clickedMusic()
 {
     cerr << "MenuModel::clickedMusic()" << endl;
 }
+
+void MenuModel::closed()
+{
+    cerr << "MenuModel::closed()" << endl;
+}

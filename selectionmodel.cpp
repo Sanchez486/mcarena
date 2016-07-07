@@ -48,3 +48,8 @@ void SelectionModel::clickedPlayer2()
 {
     cerr << "SelectionModel::clickedPlayer2()" << endl;
 }
+
+void SelectionModel::closed()
+{
+    cerr << "SelectionModel::closed()" << endl;
+}

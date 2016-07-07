@@ -20,6 +20,23 @@ private:
     BattleGUI *battleGUI;
     BattleModel *battleModel;
 
+public slots:
+    // MenuModel -> Game
+    void clickedPlay();
+    void clickedPlayOnline();
+    void clickedPlayCPU();
+    void clickedExit();
+    void closedMenu();
+
+    // SelectionModel -> Game
+    void clickedReady();
+    void clickedMenu();
+    void closedSelection();
+
+    // BattleModel -> Game
+    void finished();
+    void closedBattle();
+
 public:
     Game();
 
