@@ -78,49 +78,69 @@ void Game::start()
 void Game::clickedPlay()
 {
     cerr << "Game::clickedPlay()" << endl;
+    menuGUI->hide();
+    selectionGUI->show();
 }
 
 void Game::clickedPlayOnline()
 {
     cerr << "Game::clickedPlayOnline()" << endl;
+    menuGUI->hide();
+    selectionGUI->show();
 }
 
 void Game::clickedPlayCPU()
 {
     cerr << "Game::clickedPlayCPU()" << endl;
+    menuGUI->hide();
+    selectionGUI->show();
 }
 
 void Game::clickedExit()
 {
     cerr << "Game::clickedExit()" << endl;
+    menuGUI->hide();
+    // app.quit()
 }
 
 void Game::closedMenu()
 {
     cerr << "Game::closedMenu()" << endl;
+    menuGUI->hide();
+    // app.quit()
 }
 
 void Game::clickedReady()
 {
     cerr << "Game::clickedReady()" << endl;
+    selectionGUI->hide();
+    battleGUI->show();
 }
 
 void Game::clickedMenu()
 {
     cerr << "Game::clickedMenu()" << endl;
+    selectionGUI->hide();
+    menuGUI->show();
 }
 
 void Game::closedSelection()
 {
     cerr << "Game::closedSelection()" << endl;
+    selectionGUI->hide();
+    // app.quit()
 }
 
 void Game::finished()
 {
     cerr << "Game::finished()" << endl;
+    battleGUI->hide();
+    menuGUI->show();
 }
 
 void Game::closedBattle()
 {
     cerr << "Game::closedBattle()" << endl;
+    battleGUI->hide();
+    // app.quit()
 }
