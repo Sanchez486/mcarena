@@ -23,7 +23,6 @@ signals:
     void clickedPlayer2();
     void closed();  // After closing window
     void mouseOnSeat(/* position */);  // After mouse moved on hero (show cross)  [this -> this]
-    void closed();
 
 private slots:
     void update();
