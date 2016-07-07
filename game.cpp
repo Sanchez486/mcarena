@@ -2,12 +2,12 @@
 
 Game::Game()
 {
-    menuGUI = new MenuGUI();
-    menuModel = new MenuModel();
-    selectionGUI = new SelectionGUI();
-    selectionModel = new SelectionModel();
-    battleGUI = new BattleGUI();
-    battleModel = new BattleModel();
+    menuGUI = new MenuGUI(this);
+    menuModel = new MenuModel(this);
+    selectionGUI = new SelectionGUI(this);
+    selectionModel = new SelectionModel(this);
+    battleGUI = new BattleGUI(this);
+    battleModel = new BattleModel(this);
 
     // Signals Menu GUI -> Model
     connect(menuGUI, SIGNAL(clickedPlay()), menuModel, SLOT(clickedPlay()));
