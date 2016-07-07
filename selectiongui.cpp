@@ -17,10 +17,10 @@
 #define FRAME 10
 #define N 16 //debug
 
-SelectionGUI::SelectionGUI(QObject *parent)
+SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     :
-      app_window( sf::VideoMode( XSIZE, YSIZE ), "McArena", sf::Style::Titlebar | sf::Style::Close ),
 
+      app_window(_app_window),
       //Boxes
       infoWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
       infoBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),

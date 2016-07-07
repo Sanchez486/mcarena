@@ -3,11 +3,11 @@
 Game::Game()
 {
     mainWindow = new MainWindow();
-    menuGUI = new MenuGUI(this, mainWindow);
+    menuGUI = new MenuGUI(*mainWindow, this);
     menuModel = new MenuModel(this);
-    selectionGUI = new SelectionGUI(this, mainWindow);
+    selectionGUI = new SelectionGUI(*mainWindow, this);
     selectionModel = new SelectionModel(this);
-    battleGUI = new BattleGUI(this, mainWindow);
+    battleGUI = new BattleGUI(*mainWindow, this);
     battleModel = new BattleModel(this);
 
     // Signals Menu GUI -> Model
@@ -54,5 +54,5 @@ Game::Game()
 
 void Game::start()
 {
-    menuGUI->show();
+    selectionGUI->show();
 }

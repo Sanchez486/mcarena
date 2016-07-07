@@ -1,4 +1,5 @@
 #pragma once
+#include "inc/mainwindow.h"
 
 #include <QObject>
 #include <QTimer>
@@ -14,12 +15,12 @@ class MenuGUI : public QObject
 {
 Q_OBJECT
 public:
-    MenuGUI(QObject *parent = nullptr);
+    MenuGUI(MainWindow&, QObject *parent = nullptr);
 
 private:
     QTimer *timer;
 
-    sf::RenderWindow app_window;
+    sf::RenderWindow& app_window;
     sf::Texture backgroundT;
     sf::Sprite background;
     sfg::SFGUI sfgui;

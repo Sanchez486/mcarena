@@ -1,6 +1,7 @@
 #pragma once
 #include <QObject>
 #include <QTimer>
+#include "inc/mainwindow.h"
 
 #include <SFGUI/SFGUI.hpp>
 #include <SFGUI/Widgets.hpp>
@@ -23,17 +24,17 @@ class BattleGUI : public QObject
 {
 Q_OBJECT
 public:
-    BattleGUI(QObject *parent = nullptr);
+    BattleGUI(MainWindow& , QObject *parent = nullptr);
 
 
 private:
     QTimer *timer;
-    sf::RenderWindow app_window;
     sfg::SFGUI sfgui;
     sfg::Desktop desktop;
 
     sfg::Image::Ptr image;
 
+    sf::RenderWindow& app_window;
     sf::Texture backgroundT;
     sf::Sprite background;
 

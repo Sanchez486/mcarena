@@ -4,6 +4,7 @@
 #include "hero.h"
 #include "herogroup.h"
 #include "player.h"
+#include "inc/mainwindow.h"
 
 #include <SFGUI/SFGUI.hpp>
 #include <SFGUI/Widgets.hpp>
@@ -16,11 +17,11 @@ class SelectionGUI : public QObject
 {
 Q_OBJECT
 public:
-    SelectionGUI(QObject *parent = nullptr);
+    SelectionGUI(MainWindow&, QObject *parent = nullptr);
 private:
     QTimer *timer;
 
-    sf::RenderWindow app_window;
+    sf::RenderWindow& app_window;
     sf::Texture backgroundT;
     sf::Sprite background;
     sfg::SFGUI sfgui;

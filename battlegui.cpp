@@ -10,11 +10,11 @@
 #define YBUTTON 50
 #define TIMEUPDATE 25
 
-BattleGUI::BattleGUI(QObject *parent)
+BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     :
       QObject(parent),
-      app_window( sf::VideoMode( XSIZE, YSIZE ), "McArena", sf::Style::Titlebar | sf::Style::Close ),
 
+      app_window(_app_window),
       queueWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
       buttonWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
       infoWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
@@ -44,7 +44,6 @@ BattleGUI::BattleGUI(QObject *parent)
 
 {
     app_window.resetGLStates();
-
     backgroundT.loadFromFile("src/battleBACK.jpg");
     background.setTexture(backgroundT);
 
