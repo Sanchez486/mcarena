@@ -114,6 +114,13 @@ BattleGUI::BattleGUI(QObject *parent)
     infoWindow->SetAllocation(sf::FloatRect( 0 , 0, XINFO, YINFO));
 }
 
+BattleGUI::BattleGUI(QObject *parent = nullptr)
+    :
+      QObject(parent)
+{
+
+}
+
 void BattleGUI::show()
 {
    timer = new QTimer();
@@ -148,6 +155,11 @@ void BattleGUI::update()
         flag = false;
         closed();
     }
+}
+
+void BattleGUI::update()
+{
+
 }
 
 void BattleGUI::hide()

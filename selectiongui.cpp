@@ -2,11 +2,17 @@
 
 SelectionGUI::SelectionGUI(QObject *parent)
     : QObject(parent)
+
 {
 
 }
 
 void SelectionGUI::show()
+{
+
+}
+
+void SelectionGUI::update()
 {
 
 }

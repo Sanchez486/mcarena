@@ -10,6 +10,8 @@ Q_OBJECT
 public:
     SelectionGUI(QObject *parent = nullptr);
 
+private:
+
 signals:
     void clickedHero(Hero*);  // After hero clicked (on the left)
     void clickedPlace(/* position */);  // After empty seat clicked
@@ -21,6 +23,10 @@ signals:
     void clickedPlayer2();
     void closed();  // After closing window
     void mouseOnSeat(/* position */);  // After mouse moved on hero (show cross)  [this -> this]
+    void closed();
+
+private slots:
+    void update();
 
 public slots:
     void show();  // Show this window
