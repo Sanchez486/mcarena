@@ -1,4 +1,7 @@
 #include "inc/game.h"
+#include <iostream>
+
+using namespace std;
 
 Game::Game()
 {
@@ -50,9 +53,95 @@ Game::Game()
     connect(battleModel, SIGNAL(setQueue(HeroQueue*)), battleGUI, SLOT(setQueue(HeroQueue*)));
     connect(battleModel, SIGNAL(showTargets(Action*)), battleGUI, SLOT(showTargets(Action*)));
     connect(battleModel, SIGNAL(playAction(Action*)), battleGUI, SLOT(playAction(Action*)));
+
+    // Signals MenuModel -> Game
+    connect(menuModel, SIGNAL(clickedPlaySignal()), SLOT(clickedPlay()));
+    connect(menuModel, SIGNAL(clickedPlayOnlineSignal()), SLOT(clickedPlayOnline()));
+    connect(menuModel, SIGNAL(clickedPlayCPUSignal()), SLOT(clickedPlayCPU()));
+    connect(menuModel, SIGNAL(clickedExitSignal()), SLOT(clickedExit()));
+    connect(menuModel, SIGNAL(closedSignal()), SLOT(closedMenu()));
+
+    // Signals SelectionModel -> Game
+    connect(selectionModel, SIGNAL(clickedReadySignal()), SLOT(clickedReady()));
+    connect(selectionModel, SIGNAL(clickedMenuSignal()), SLOT(clickedMenu()));
+    connect(selectionModel, SIGNAL(closedSignal()), SLOT(closedSelection()));
+
+    // Signals BattleModel -> Game
+    connect(battleModel, SIGNAL(finishedSignal()), SLOT(finished()));
+    connect(battleModel, SIGNAL(closedSignal()), SLOT(closedBattle()));
 }
 
 void Game::start()
 {
     selectionGUI->show();
+}
+
+void Game::clickedPlay()
+{
+    cerr << "Game::clickedPlay()" << endl;
+    menuGUI->hide();
+    selectionGUI->show();
+}
+
+void Game::clickedPlayOnline()
+{
+    cerr << "Game::clickedPlayOnline()" << endl;
+    menuGUI->hide();
+    selectionGUI->show();
+}
+
+void Game::clickedPlayCPU()
+{
+    cerr << "Game::clickedPlayCPU()" << endl;
+    menuGUI->hide();
+    selectionGUI->show();
+}
+
+void Game::clickedExit()
+{
+    cerr << "Game::clickedExit()" << endl;
+    menuGUI->hide();
+    // app.quit()
+}
+
+void Game::closedMenu()
+{
+    cerr << "Game::closedMenu()" << endl;
+    menuGUI->hide();
+    // app.quit()
+}
+
+void Game::clickedReady()
+{
+    cerr << "Game::clickedReady()" << endl;
+    selectionGUI->hide();
+    battleGUI->show();
+}
+
+void Game::clickedMenu()
+{
+    cerr << "Game::clickedMenu()" << endl;
+    selectionGUI->hide();
+    menuGUI->show();
+}
+
+void Game::closedSelection()
+{
+    cerr << "Game::closedSelection()" << endl;
+    selectionGUI->hide();
+    // app.quit()
+}
+
+void Game::finished()
+{
+    cerr << "Game::finished()" << endl;
+    battleGUI->hide();
+    menuGUI->show();
+}
+
+void Game::closedBattle()
+{
+    cerr << "Game::closedBattle()" << endl;
+    battleGUI->hide();
+    // app.quit()
 }

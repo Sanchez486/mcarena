@@ -32,11 +32,13 @@ void SelectionModel::clickedDiscard()
 void SelectionModel::clickedReady()
 {
     cerr << "SelectionModel::clickedReady()" << endl;
+    emit clickedReadySignal();
 }
 
 void SelectionModel::clickedMenu()
 {
     cerr << "SelectionModel::clickedMenu()" << endl;
+    emit clickedMenuSignal();
 }
 
 void SelectionModel::clickedPlayer1()
@@ -47,4 +49,10 @@ void SelectionModel::clickedPlayer1()
 void SelectionModel::clickedPlayer2()
 {
     cerr << "SelectionModel::clickedPlayer2()" << endl;
+}
+
+void SelectionModel::closed()
+{
+    cerr << "SelectionModel::closed()" << endl;
+    emit closedSignal();
 }
