@@ -1,3 +1,4 @@
+#include "inc/menugui.h"
 #include <QCoreApplication>
 #include "inc/game.h"
 

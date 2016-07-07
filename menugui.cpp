@@ -10,10 +10,11 @@ MenuGUI::MenuGUI(QObject *parent)
       QObject(parent),
       app_window( sf::VideoMode( XSIZE, YSIZE ), "McArena", sf::Style::Titlebar | sf::Style::Close ),
 
+
       //Main window
-      window(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
-      box(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 25)),
-      playButton(sfg::Button::Create( "PLAY" )),
+      window(sfg::Window::Create(sfg::Window::Style::NO_STYLE)),
+      box(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 20)),
+      playButton(sfg::Button::Create("Play")),
       playWithCpuButton(sfg::Button::Create( "Play with CPU" )),
       settingsButton(sfg::Button::Create( "Settings" )),
       exitButton(sfg::Button::Create( "Exit" )),
@@ -27,9 +28,11 @@ MenuGUI::MenuGUI(QObject *parent)
       musicButton(sfg::Button::Create( "Sound enabled" )),
       okButton(sfg::Button::Create( "OK" ))
 
-
 {
     app_window.resetGLStates();
+    backgroundT.loadFromFile("src/menuBACK.jpg");
+    background.setTexture(backgroundT);
+
 
     //Main window
     desktop.Add(window);
@@ -40,6 +43,7 @@ MenuGUI::MenuGUI(QObject *parent)
     box->Pack(playWithCpuButton);
     box->Pack(settingsButton);
     box->Pack(exitButton);
+
 
     //Settings window
     desktop.Add(settingsWindow);
@@ -108,9 +112,9 @@ void MenuGUI::update()
             if (event.type == sf::Event::Closed)
                app_window.close();
         }
-        desktop.Update( 0.5 );
-
+        desktop.Update( 10 );
         app_window.clear();
+        app_window.draw(background);
         sfgui.Display(app_window);
         app_window.display();
     }
