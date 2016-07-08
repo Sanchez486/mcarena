@@ -15,4 +15,14 @@ int MainWindow::getY()
     return YSIZE;
 }
 
+QTimer* MainWindow::newTimer()
+{
+    timer = new QTimer();
+    return timer;
+}
+
+void MainWindow::deleteTimer()
+{
+    delete timer;
+}
 

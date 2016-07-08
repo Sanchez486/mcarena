@@ -29,10 +29,11 @@ MenuGUI::MenuGUI(MainWindow& _app_window, QObject *parent)
     app_window.resetGLStates();
     backgroundT.loadFromFile("src/menuBACK.jpg");
     background.setTexture(backgroundT);
+    desktop.Add(window);
+    desktop.Add(settingsWindow);
 
 
     //Main window
-    desktop.Add(window);
     window->Add(box);
     window->SetAllocation(sf::FloatRect( (app_window.getX()-XWINDOW)/2 , (app_window.getY()-YWINDOW)/2, XWINDOW, YWINDOW));
 
@@ -43,7 +44,6 @@ MenuGUI::MenuGUI(MainWindow& _app_window, QObject *parent)
 
 
     //Settings window
-    desktop.Add(settingsWindow);
     settingsWindow->Add(sharedBox);
     settingsWindow->Show(false);
     settingsWindow->SetAllocation(sf::FloatRect( (app_window.getX()-XYSETTINGS)/2 - 15, (app_window.getY()-XYSETTINGS)/2, XYSETTINGS, XYSETTINGS));
@@ -92,7 +92,8 @@ void MenuGUI::clickedButton(ButtonPressed Button)
 
 void MenuGUI::show()
 {
-   timer = new QTimer(this);
+   window->Show(true);
+   timer = app_window.newTimer();
    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
    timer->start(10);
 }
@@ -119,7 +120,12 @@ void MenuGUI::update()
 
 void MenuGUI::hide()
 {
-
+    window->Show(false);
+    settingsWindow->Show(false);
+    desktop.Add(settingsWindow);
+    app_window.deleteTimer();
+    app_window.clear(sf::Color::Black);
+    app_window.display();
 }
 
 void MenuGUI::setSounds(bool)

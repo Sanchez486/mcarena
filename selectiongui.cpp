@@ -147,7 +147,13 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
 
 void SelectionGUI::show()
 {
-   timer = new QTimer(this);
+   infoWindow->Show(true);
+   pointsWindow->Show(true);
+   fieldWindow->Show(true);
+   buttonsWindow->Show(true);
+   playerWindow->Show(true);
+   scrollwin->Show(true);
+   timer = app_window.newTimer();
    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
    timer->start(10);
 }
@@ -174,7 +180,15 @@ void SelectionGUI::update()
 
 void SelectionGUI::hide()
 {
-
+    infoWindow->Show(false);
+    pointsWindow->Show(false);
+    fieldWindow->Show(false);
+    buttonsWindow->Show(false);
+    playerWindow->Show(false);
+    scrollwin->Show(false);
+    app_window.deleteTimer();
+    app_window.clear(sf::Color::Black);
+    app_window.display();
 }
 
 void SelectionGUI::setActiveHero(Hero *)
