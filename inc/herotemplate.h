@@ -15,4 +15,7 @@ public:
 
     Stats& getStats();
     Resources& getResources();
+
+    void setStats(const Stats &_stats);
+    void setResources(const Resources &_resources);
 };

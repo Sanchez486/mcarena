@@ -17,4 +17,11 @@ struct Stats
     int cost;
 
     Stats();
+    Stats(const HP &_hp,
+          const Damage &_damage,
+          Kind _kind,
+          Element _element,
+          const Initiative &_initiative,
+          const Actions &_actions,
+          int _cost);
 };

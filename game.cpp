@@ -151,5 +151,15 @@ int Game::exec()
 
 void Game::loadHeroes()
 {
+    HeroTemplate *hero = new HeroTemplate();
 
+    //Resources *resource;
+    //hero->setResources(resource);
+
+    hero->setStats(Stats(HP(999), Damage(11, 99), Kind::melee, Element::neutral,
+                         Initiative(99), Actions(), 10));
+    heroes.push_back(hero);
+
+    //hero->setStats();
+    //...
 }

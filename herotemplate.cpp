@@ -28,3 +28,23 @@ Resources& HeroTemplate::getResources()
 {
     return *resources;
 }
+
+void HeroTemplate::setStats(const Stats &_stats)
+{
+    if(stats != nullptr)
+    {
+        delete stats;
+    }
+
+    stats = new Stats(_stats);
+}
+
+void HeroTemplate::setResources(const Resources &_resources)
+{
+    if(resources != nullptr)
+    {
+        delete resources;
+    }
+
+    resources = new Resources(_resources);
+}
