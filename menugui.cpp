@@ -64,6 +64,7 @@ MenuGUI::MenuGUI(MainWindow& _app_window, QObject *parent)
     exitButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &MenuGUI::clickedButton, this, ButtonPressed::EXIT ) );
     soundButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &MenuGUI::clickedButton, this, ButtonPressed::SOUND ) );
     musicButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &MenuGUI::clickedButton, this, ButtonPressed::MUSIC ) );
+
 }
 
 void MenuGUI::clickedSettings()
@@ -123,7 +124,7 @@ void MenuGUI::update()
     else if(flag)
     {
         flag = false;
-        clickedExit();
+        closed();
     }
 }
 

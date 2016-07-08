@@ -175,6 +175,8 @@ void SelectionGUI::show()
 
 void SelectionGUI::update()
 {
+    static bool flag = true;
+
     if (app_window.isOpen())
     {
         sf::Event event;
@@ -190,6 +192,12 @@ void SelectionGUI::update()
         app_window.draw(background);
         sfgui.Display(app_window);
         app_window.display();
+    }
+
+    else if(flag)
+    {
+        flag = false;
+        closed();
     }
 }
 
