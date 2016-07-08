@@ -17,6 +17,7 @@
 
 SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     :
+      QObject(parent),
 
       app_window(_app_window),
       //Boxes
