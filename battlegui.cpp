@@ -112,6 +112,21 @@ BattleGUI::BattleGUI(QObject *parent)
 
     desktop.Add(infoWindow);
     infoWindow->SetAllocation(sf::FloatRect( 0 , 0, XINFO, YINFO));
+
+    //Signals
+    skillButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                std::bind( &BattleGUI::clickedButton, this, ButtonPressed::SKILL ) );
+    attackButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                std::bind( &BattleGUI::clickedButton, this, ButtonPressed::ATTACK ) );
+}
+
+void BattleGUI::clickedButton(ButtonPressed Button)
+{
+    switch (Button)
+    {
+        case ATTACK: selectedAction(nullptr); break;
+        case SKILL: selectedAction(nullptr); break;
+    }
 }
 
 void BattleGUI::show()

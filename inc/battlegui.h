@@ -63,6 +63,15 @@ private:
 
     sfg::Frame::Ptr frame;
 
+    //for signals
+    enum ButtonPressed
+    {
+        ATTACK,
+        SKILL
+    };
+
+    void clickedButton(ButtonPressed Button);
+
 signals:
     void selectedAction(Action*);  // After attack or skill clicked
     void selectedTarget(Hero*);  // After Hero clicked
