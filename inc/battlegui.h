@@ -26,15 +26,16 @@ Q_OBJECT
 public:
     BattleGUI(MainWindow& , QObject *parent = nullptr);
 
-
 private:
     QTimer *timer;
+    
     sfg::SFGUI sfgui;
     sfg::Desktop desktop;
 
     sfg::Image::Ptr image;
 
     MainWindow& app_window;
+    
     sf::Texture backgroundT;
     sf::Sprite background;
 
@@ -65,11 +66,20 @@ private:
 
     sfg::Frame::Ptr frame;
 
+    //for signals
+    enum ButtonPressed
+    {
+        ATTACK,
+        SKILL
+    };
+
+    void clickedButton(ButtonPressed Button);
+
 signals:
     void selectedAction(Action*);  // After attack or skill clicked
     void selectedTarget(Hero*);  // After Hero clicked
-    void closed();  // After closing window
     void showInfoSignal(Hero*);  // After right-click on Hero  [this -> this]
+    void closed();
 
 public slots:
     void show();  // Show this window

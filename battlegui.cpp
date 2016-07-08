@@ -1,4 +1,5 @@
 #include "inc/battlegui.h"
+
 #define XICON 150
 #define YICON 180
 #define XSICON 50
@@ -7,6 +8,7 @@
 #define YINFO 500
 #define YBUTTON 50
 #define TIMEUPDATE 25
+<<<<<<< HEAD
 
 BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     :
@@ -109,6 +111,21 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
 
     desktop.Add(infoWindow);
     infoWindow->SetAllocation(sf::FloatRect( 0 , 0, XINFO, YINFO));
+
+    //Signals
+    skillButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                std::bind( &BattleGUI::clickedButton, this, ButtonPressed::SKILL ) );
+    attackButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                std::bind( &BattleGUI::clickedButton, this, ButtonPressed::ATTACK ) );
+}
+
+void BattleGUI::clickedButton(ButtonPressed Button)
+{
+    switch (Button)
+    {
+        case ATTACK: selectedAction(nullptr); break;
+        case SKILL: selectedAction(nullptr); break;
+    }
 }
 
 void BattleGUI::show()
@@ -149,6 +166,7 @@ void BattleGUI::update()
         closed();
     }
 }
+
 
 void BattleGUI::hide()
 {

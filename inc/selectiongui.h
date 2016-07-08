@@ -74,6 +74,8 @@ private:
     void clickedButton(ButtonPressed Button);
 
 
+private:
+
 signals:
     void clickedHero(Hero*);  // After hero clicked (on the left)
     void clickedPlace(/* position */);  // After empty seat clicked
@@ -85,6 +87,9 @@ signals:
     void clickedPlayer2();
     void closed();  // After closing window
     void mouseOnSeat(/* position */);  // After mouse moved on hero (show cross)  [this -> this]
+
+private slots:
+    void update();
 
 public slots:
     void update();

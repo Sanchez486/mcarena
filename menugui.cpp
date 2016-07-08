@@ -2,6 +2,7 @@
 #define XWINDOW 300
 #define YWINDOW 400
 #define XYSETTINGS 200
+#define TIMEUPDATE 25 //Window updates every 25 milliseconds (40 fps)
 
 MenuGUI::MenuGUI(MainWindow& _app_window, QObject *parent)
     :
@@ -77,7 +78,7 @@ void MenuGUI::clickedOk()
     window->SetState(sfg::Widget::State::NORMAL);
 }
 
-//Connecting Button and Qt signals
+//Connecting Buttons and Qt signals
 void MenuGUI::clickedButton(ButtonPressed Button)
 {
     switch (Button)
@@ -85,7 +86,7 @@ void MenuGUI::clickedButton(ButtonPressed Button)
         case PLAY: clickedPlay(); break;
         case PLAY_WITH_CPU: clickedPlayCPU(); break;
         case EXIT: clickedExit(); break;
-        case MUSIC:clickedMusic();break;
+        case MUSIC:clickedMusic(); break;
         case SOUND:clickedSound(); break;
     }
 }
@@ -95,15 +96,17 @@ void MenuGUI::show()
    window->Show(true);
    timer = app_window.newTimer();
    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-   timer->start(10);
+   timer->start(TIMEUPDATE);
 }
 
 void MenuGUI::update()
 {
-    if (app_window.isOpen())
+    static bool flag = true;
+
+    if(app_window.isOpen())
     {
         sf::Event event;
-        while (app_window.pollEvent(event))
+        while(app_window.pollEvent(event))
         {
               desktop.HandleEvent(event);
 
@@ -115,6 +118,12 @@ void MenuGUI::update()
         app_window.draw(background);
         sfgui.Display(app_window);
         app_window.display();
+    }
+
+    else if(flag)
+    {
+        flag = false;
+        clickedExit();
     }
 }
 

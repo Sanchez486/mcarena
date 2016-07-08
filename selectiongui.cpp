@@ -49,7 +49,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
       playerBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 15)),
       player1Button(sfg::Button::Create( "PLAYER1" )),
       player2Button(sfg::Button::Create( "PLAYER2" ))
-
+      
 {
     app_window.resetGLStates();
     backgroundT.loadFromFile("src/selectBACK.jpg");
@@ -191,6 +191,11 @@ void SelectionGUI::update()
         sfgui.Display(app_window);
         app_window.display();
     }
+}
+
+void SelectionGUI::update()
+{
+
 }
 
 void SelectionGUI::hide()
