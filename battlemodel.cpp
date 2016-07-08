@@ -24,3 +24,8 @@ void BattleModel::closed()
     cerr << "BattleModel::closed()" << endl;
     emit closedSignal();
 }
+
+void BattleModel::hideGUI()
+{
+    emit hide();
+}

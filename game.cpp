@@ -75,70 +75,71 @@ Game::Game(int argc, char *argv[]) : app(argc, argv), heroes()
 void Game::clickedPlay()
 {
     cerr << "Game::clickedPlay()" << endl;
-    menuGUI->hide();
-    selectionGUI->show();
+    menuModel->hideGUI();
+    selectionModel->beginPlay(&heroes);
 }
 
 void Game::clickedPlayOnline()
 {
     cerr << "Game::clickedPlayOnline()" << endl;
-    menuGUI->hide();
-    selectionGUI->show();
+    menuModel->hideGUI();
+    selectionModel->beginPlayOnline(&heroes);
 }
 
 void Game::clickedPlayCPU()
 {
     cerr << "Game::clickedPlayCPU()" << endl;
-    menuGUI->hide();
-    selectionGUI->show();
+    menuModel->hideGUI();
+    selectionModel->beginPlayCPU(&heroes);
 }
 
 void Game::clickedExit()
 {
     cerr << "Game::clickedExit()" << endl;
-    menuGUI->hide();
+    menuModel->hideGUI();
     app.quit();
 }
 
 void Game::closedMenu()
 {
     cerr << "Game::closedMenu()" << endl;
-    menuGUI->hide();
+    menuModel->hideGUI();
     app.quit();
 }
 
+// TODO: recieve and send data [Selection->Battle]
 void Game::clickedStart()
 {
     cerr << "Game::clickedStart()" << endl;
-    selectionGUI->hide();
+    selectionModel->hideGUI();
     battleGUI->show();
 }
 
 void Game::clickedMenu()
 {
     cerr << "Game::clickedMenu()" << endl;
-    selectionGUI->hide();
-    menuGUI->show();
+    selectionModel->hideGUI();
+    menuModel->showGUI();
 }
 
 void Game::closedSelection()
 {
     cerr << "Game::closedSelection()" << endl;
-    selectionGUI->hide();
+    selectionModel->hideGUI();
     app.quit();
 }
 
 void Game::finished()
 {
     cerr << "Game::finished()" << endl;
-    battleGUI->hide();
-    menuGUI->show();
+    battleModel->hideGUI();
+    menuModel->showGUI();
 }
 
 void Game::closedBattle()
 {
     cerr << "Game::closedBattle()" << endl;
-    battleGUI->hide();
+    battleModel->hideGUI();
     app.quit();
 }
 

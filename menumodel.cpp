@@ -9,7 +9,6 @@ MenuModel::MenuModel(QObject *parent)
 
 }
 
-
 void MenuModel::clickedPlay()
 {
     cerr << "MenuModel::clickedPlay()" << endl;
@@ -48,4 +47,14 @@ void MenuModel::closed()
 {
     cerr << "MenuModel::closed()" << endl;
     emit closedSignal();
+}
+
+void MenuModel::showGUI()
+{
+    emit show();
+}
+
+void MenuModel::hideGUI()
+{
+    emit hide();
 }

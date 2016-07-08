@@ -31,4 +31,7 @@ public slots:
 
 public:
     MenuModel(QObject *parent = nullptr);
+
+    void showGUI();
+    void hideGUI();
 };

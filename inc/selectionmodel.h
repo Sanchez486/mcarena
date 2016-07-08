@@ -46,4 +46,7 @@ public:
     SelectionModel(QObject *parent = nullptr);
 
     void beginPlay(std::vector<HeroTemplate*> *_heroes);
+    void beginPlayOnline(std::vector<HeroTemplate*> *_heroes);
+    void beginPlayCPU(std::vector<HeroTemplate*> *_heroes);
+    void hideGUI();
 };

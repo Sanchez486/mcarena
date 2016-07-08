@@ -4,7 +4,12 @@
 using namespace std;
 
 SelectionModel::SelectionModel(QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      heroes(nullptr),
+      player1(nullptr),
+      player2(nullptr),
+      activeHero(nullptr),
+      activePlayer(nullptr)
 {
 
 }
@@ -80,4 +85,19 @@ void SelectionModel::beginPlay(std::vector<HeroTemplate *> *_heroes)
     emit setHeroVector(*heroes);
     emit setActiveHero(activeHero);
     emit setHeroGroup( &(activePlayer->getHeroGroup()) );
+}
+
+void SelectionModel::beginPlayOnline(std::vector<HeroTemplate *> *_heroes)
+{
+    emit show();
+}
+
+void SelectionModel::beginPlayCPU(std::vector<HeroTemplate *> *_heroes)
+{
+    emit show();
+}
+
+void SelectionModel::hideGUI()
+{
+    emit hide();
 }

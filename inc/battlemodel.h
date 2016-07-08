@@ -29,4 +29,6 @@ public slots:
 
 public:
     BattleModel(QObject *parent = nullptr);
+
+   void hideGUI();
 };
