@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <vector>
 
 #include "menugui.h"
 #include "menumodel.h"
@@ -8,6 +9,7 @@
 #include "selectionmodel.h"
 #include "battlegui.h"
 #include "battlemodel.h"
+#include "herotemplate.h"
 
 class Game : public QObject
 {
@@ -19,6 +21,8 @@ private:
     SelectionModel *selectionModel;
     BattleGUI *battleGUI;
     BattleModel *battleModel;
+
+    std::vector<HeroTemplate*> heroes;
 
 public slots:
     // MenuModel -> Game
@@ -41,4 +45,5 @@ public:
     Game();
 
     void start();
+    void loadHeroes();
 };

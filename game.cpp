@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Game::Game()
+Game::Game() : heroes()
 {
     menuGUI = new MenuGUI(this);
     menuModel = new MenuModel(this);
@@ -68,11 +68,6 @@ Game::Game()
     // Signals BattleModel -> Game
     connect(battleModel, SIGNAL(finishedSignal()), SLOT(finished()));
     connect(battleModel, SIGNAL(closedSignal()), SLOT(closedBattle()));
-}
-
-void Game::start()
-{
-    menuGUI->show();
 }
 
 void Game::clickedPlay()
@@ -143,4 +138,14 @@ void Game::closedBattle()
     cerr << "Game::closedBattle()" << endl;
     battleGUI->hide();
     // app.quit()
+}
+
+void Game::start()
+{
+    menuGUI->show();
+}
+
+void Game::loadHeroes()
+{
+
 }
