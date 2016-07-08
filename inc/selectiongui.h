@@ -21,7 +21,7 @@ public:
 private:
     QTimer *timer;
 
-    sf::RenderWindow& app_window;
+    MainWindow& app_window;
     sf::Texture backgroundT;
     sf::Sprite background;
     sfg::SFGUI sfgui;

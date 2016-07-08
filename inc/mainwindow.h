@@ -3,7 +3,7 @@
 #include <SFGUI/Window.hpp>
 #include <SFGUI/SFGUI.hpp>
 #include <SFGUI/Widgets.hpp>
- #include <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 
 class MainWindow: public sf::RenderWindow

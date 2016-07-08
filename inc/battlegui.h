@@ -34,7 +34,7 @@ private:
 
     sfg::Image::Ptr image;
 
-    sf::RenderWindow& app_window;
+    MainWindow& app_window;
     sf::Texture backgroundT;
     sf::Sprite background;
 

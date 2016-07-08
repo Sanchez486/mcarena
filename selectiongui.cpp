@@ -1,6 +1,4 @@
 #include "inc/selectiongui.h"
-#define XSIZE 800
-#define YSIZE 600
 #define XINFO 450
 #define YINFO 180
 #define XFIELD 270
@@ -60,11 +58,11 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     //Boxes
     desktop.Add(infoWindow);
     infoWindow->Add(infoBox);
-    infoWindow->SetAllocation(sf::FloatRect(XSIZE-XINFO,0,XINFO,YINFO));
+    infoWindow->SetAllocation(sf::FloatRect(app_window.getX()-XINFO,0,XINFO,YINFO));
     infoBox->Pack(infoTable);
     desktop.Add(pointsWindow);
     pointsWindow->Add(pointsBox);
-    pointsWindow->SetAllocation(sf::FloatRect(XSIZE-XPOINTS,YINFO,XPOINTS,YPOINTS));
+    pointsWindow->SetAllocation(sf::FloatRect(app_window.getX()-XPOINTS,YINFO,XPOINTS,YPOINTS));
     pointsBox->Pack(pointsLabel);
     desktop.Add(fieldWindow);
     fieldWindow->Add(fieldBox);
@@ -110,7 +108,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     //Buttons Window
     desktop.Add(buttonsWindow);
     buttonsWindow->Add(buttonsBox);
-    buttonsWindow->SetAllocation(sf::FloatRect( XSIZE-XBUTTONS , YSIZE-YBUTTONS, XBUTTONS, YBUTTONS));
+    buttonsWindow->SetAllocation(sf::FloatRect( app_window.getX()-XBUTTONS , app_window.getY()-YBUTTONS, XBUTTONS, YBUTTONS));
 
     buttonsBox->Pack(menuButton);
     buttonsBox->Pack(discardButton);
@@ -119,7 +117,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     //Player window
     desktop.Add(playerWindow);
     playerWindow->Add(playerBox);
-    playerWindow->SetAllocation(sf::FloatRect( XSIZE-XBUTTONS2, YSIZE-YBUTTONS2-YBUTTONS, XBUTTONS2, YBUTTONS2));
+    playerWindow->SetAllocation(sf::FloatRect( app_window.getX()-XBUTTONS2, app_window.getY()-YBUTTONS2-YBUTTONS, XBUTTONS2, YBUTTONS2));
     playerBox->Pack(player1Button);
     playerBox->Pack(player2Button);
 
@@ -128,7 +126,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     scroll->SetScrollbarPolicy( sfg::ScrolledWindow::HORIZONTAL_NEVER| sfg::ScrolledWindow::VERTICAL_ALWAYS);
     tablebox->Pack(table);
     scroll->AddWithViewport(tablebox);
-    scroll->SetRequisition( sf::Vector2f( XSCROLL - FRAME*2, YSIZE - FRAME*2) );
+    scroll->SetRequisition( sf::Vector2f( XSCROLL - FRAME*2, app_window.getY() - FRAME*2) );
     scrollwinbox->Pack(scroll, false, true);
     scrollwin->Add(scrollwinbox);
 

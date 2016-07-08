@@ -54,5 +54,5 @@ Game::Game()
 
 void Game::start()
 {
-    selectionGUI->show();
+    menuGUI->show();
 }

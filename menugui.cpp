@@ -1,6 +1,4 @@
 #include "inc/menugui.h"
-#define XSIZE 800
-#define YSIZE 600
 #define XWINDOW 300
 #define YWINDOW 400
 #define XYSETTINGS 200
@@ -36,7 +34,7 @@ MenuGUI::MenuGUI(MainWindow& _app_window, QObject *parent)
     //Main window
     desktop.Add(window);
     window->Add(box);
-    window->SetAllocation(sf::FloatRect( (XSIZE-XWINDOW)/2 , (YSIZE-YWINDOW)/2, XWINDOW, YWINDOW));
+    window->SetAllocation(sf::FloatRect( (app_window.getX()-XWINDOW)/2 , (app_window.getY()-YWINDOW)/2, XWINDOW, YWINDOW));
 
     box->Pack(playButton);
     box->Pack(playWithCpuButton);
@@ -48,7 +46,7 @@ MenuGUI::MenuGUI(MainWindow& _app_window, QObject *parent)
     desktop.Add(settingsWindow);
     settingsWindow->Add(sharedBox);
     settingsWindow->Show(false);
-    settingsWindow->SetAllocation(sf::FloatRect( (XSIZE-XYSETTINGS)/2 - 15, (YSIZE-XYSETTINGS)/2, XYSETTINGS, XYSETTINGS));
+    settingsWindow->SetAllocation(sf::FloatRect( (app_window.getX()-XYSETTINGS)/2 - 15, (app_window.getY()-XYSETTINGS)/2, XYSETTINGS, XYSETTINGS));
     sharedBox->Pack(settingsBox);
     sharedBox->Pack(okBox);
 

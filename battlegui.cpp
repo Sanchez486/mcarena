@@ -1,6 +1,4 @@
 #include "inc/battlegui.h"
-#define XSIZE 800
-#define YSIZE 600
 #define XICON 150
 #define YICON 180
 #define XSICON 50
@@ -67,7 +65,7 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     //for debug end
 
     desktop.Add(queueWindow);
-    queueWindow->SetAllocation(sf::FloatRect( 0 , YINFO, XSIZE, YSIZE - YINFO));
+    queueWindow->SetAllocation(sf::FloatRect( 0 , YINFO, app_window.getX(), app_window.getY() - YINFO));
 
     //Buttonwindow
 
@@ -76,7 +74,7 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     buttonBox->Pack(attackButton);
 
     desktop.Add(buttonWindow);
-    buttonWindow->SetAllocation(sf::FloatRect( XINFO , YINFO - YBUTTON, XSIZE - XINFO, YBUTTON));
+    buttonWindow->SetAllocation(sf::FloatRect( XINFO , YINFO - YBUTTON, app_window.getX() - XINFO, YBUTTON));
 
     //Ifowindow
 
