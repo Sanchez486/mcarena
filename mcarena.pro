@@ -24,7 +24,8 @@ SOURCES += main.cpp \
     stats.cpp \
     herotemplate.cpp \
     hero.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    resources.cpp
 
 HEADERS += \
     inc/menugui.h \
@@ -54,4 +55,5 @@ LIBS += \
     -lsfml-graphics \
     -lsfml-window\
     -lsfml-system\
+    -lsfml-audio\
     -lsfgui
