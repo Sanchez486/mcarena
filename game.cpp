@@ -5,11 +5,12 @@ using namespace std;
 
 Game::Game() : heroes()
 {
-    menuGUI = new MenuGUI(this);
+    mainWindow = new MainWindow();
+    menuGUI = new MenuGUI(*mainWindow, this);
     menuModel = new MenuModel(this);
-    selectionGUI = new SelectionGUI(this);
+    selectionGUI = new SelectionGUI(*mainWindow, this);
     selectionModel = new SelectionModel(this);
-    battleGUI = new BattleGUI(this);
+    battleGUI = new BattleGUI(*mainWindow, this);
     battleModel = new BattleModel(this);
 
     // Signals Menu GUI -> Model
@@ -30,7 +31,7 @@ Game::Game() : heroes()
     connect(selectionGUI, SIGNAL(clickedPlace()), selectionModel, SLOT(clickedPlace()));
     connect(selectionGUI, SIGNAL(clickedCross(Hero*)), selectionModel, SLOT(clickedCross(Hero*)));
     connect(selectionGUI, SIGNAL(clickedDiscard()), selectionModel, SLOT(clickedDiscard()));
-    connect(selectionGUI, SIGNAL(clickedReady()), selectionModel, SLOT(clickedReady()));
+    connect(selectionGUI, SIGNAL(clickedStart()), selectionModel, SLOT(clickedStart()));
     connect(selectionGUI, SIGNAL(clickedMenu()), selectionModel, SLOT(clickedMenu()));
     connect(selectionGUI, SIGNAL(clickedPlayer1()), selectionModel, SLOT(clickedPlayer1()));
     connect(selectionGUI, SIGNAL(clickedPlayer2()), selectionModel, SLOT(clickedPlayer2()));
@@ -62,7 +63,7 @@ Game::Game() : heroes()
     connect(menuModel, SIGNAL(closedSignal()), SLOT(closedMenu()));
 
     // Signals SelectionModel -> Game
-    connect(selectionModel, SIGNAL(clickedReadySignal()), SLOT(clickedReady()));
+    connect(selectionModel, SIGNAL(clickedStartSignal()), SLOT(clickedStart()));
     connect(selectionModel, SIGNAL(clickedMenuSignal()), SLOT(clickedMenu()));
     connect(selectionModel, SIGNAL(closedSignal()), SLOT(closedSelection()));
 
@@ -106,9 +107,9 @@ void Game::closedMenu()
     // app.quit()
 }
 
-void Game::clickedReady()
+void Game::clickedStart()
 {
-    cerr << "Game::clickedReady()" << endl;
+    cerr << "Game::clickedStart()" << endl;
     selectionGUI->hide();
     battleGUI->show();
 }

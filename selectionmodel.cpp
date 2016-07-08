@@ -29,10 +29,10 @@ void SelectionModel::clickedDiscard()
     cerr << "SelectionModel::clickedDiscard()" << endl;
 }
 
-void SelectionModel::clickedReady()
+void SelectionModel::clickedStart()
 {
-    cerr << "SelectionModel::clickedReady()" << endl;
-    emit clickedReadySignal();
+    cerr << "SelectionModel::clickedStart()" << endl;
+    emit clickedStartSignal();
 }
 
 void SelectionModel::clickedMenu()

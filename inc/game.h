@@ -3,6 +3,7 @@
 #include <QObject>
 #include <vector>
 
+#include "mainwindow.h"
 #include "menugui.h"
 #include "menumodel.h"
 #include "selectiongui.h"
@@ -15,6 +16,7 @@ class Game : public QObject
 {
     Q_OBJECT
 private:
+    MainWindow *mainWindow;
     MenuGUI *menuGUI;
     MenuModel *menuModel;
     SelectionGUI *selectionGUI;
@@ -33,7 +35,7 @@ public slots:
     void closedMenu();
 
     // SelectionModel -> Game
-    void clickedReady();
+    void clickedStart();
     void clickedMenu();
     void closedSelection();
 

@@ -23,7 +23,8 @@ SOURCES += main.cpp \
     initiative.cpp \
     stats.cpp \
     herotemplate.cpp \
-    hero.cpp
+    hero.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     inc/menugui.h \
@@ -46,7 +47,8 @@ HEADERS += \
     inc/initiative.h \
     inc/actions.h \
     inc/resources.h \
-    inc/herotemplate.h
+    inc/herotemplate.h \
+    inc/mainwindow.h
 
 LIBS += \
     -lsfml-graphics \

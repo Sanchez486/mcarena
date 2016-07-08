@@ -1,19 +1,18 @@
 #include "inc/menugui.h"
-#define XSIZE 800
-#define YSIZE 600
 #define XWINDOW 300
 #define YWINDOW 400
 #define XYSETTINGS 200
+#define TIMEUPDATE 25 //Window updates every 25 milliseconds (40 fps)
 
-MenuGUI::MenuGUI(QObject *parent)
+MenuGUI::MenuGUI(MainWindow& _app_window, QObject *parent)
     :
       QObject(parent),
-      app_window( sf::VideoMode( XSIZE, YSIZE ), "McArena", sf::Style::Titlebar | sf::Style::Close ),
+      app_window(_app_window),
 
       //Main window
-      window(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
-      box(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 25)),
-      playButton(sfg::Button::Create( "PLAY" )),
+      window(sfg::Window::Create(sfg::Window::Style::NO_STYLE)),
+      box(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 20)),
+      playButton(sfg::Button::Create("Play")),
       playWithCpuButton(sfg::Button::Create( "Play with CPU" )),
       settingsButton(sfg::Button::Create( "Settings" )),
       exitButton(sfg::Button::Create( "Exit" )),
@@ -27,25 +26,28 @@ MenuGUI::MenuGUI(QObject *parent)
       musicButton(sfg::Button::Create( "Sound enabled" )),
       okButton(sfg::Button::Create( "OK" ))
 
-
 {
     app_window.resetGLStates();
+    backgroundT.loadFromFile("src/menuBACK.jpg");
+    background.setTexture(backgroundT);
+    desktop.Add(window);
+    desktop.Add(settingsWindow);
+
 
     //Main window
-    desktop.Add(window);
     window->Add(box);
-    window->SetAllocation(sf::FloatRect( (XSIZE-XWINDOW)/2 , (YSIZE-YWINDOW)/2, XWINDOW, YWINDOW));
+    window->SetAllocation(sf::FloatRect( (app_window.getX()-XWINDOW)/2 , (app_window.getY()-YWINDOW)/2, XWINDOW, YWINDOW));
 
     box->Pack(playButton);
     box->Pack(playWithCpuButton);
     box->Pack(settingsButton);
     box->Pack(exitButton);
 
+
     //Settings window
-    desktop.Add(settingsWindow);
     settingsWindow->Add(sharedBox);
     settingsWindow->Show(false);
-    settingsWindow->SetAllocation(sf::FloatRect( (XSIZE-XYSETTINGS)/2 - 15, (YSIZE-XYSETTINGS)/2, XYSETTINGS, XYSETTINGS));
+    settingsWindow->SetAllocation(sf::FloatRect( (app_window.getX()-XYSETTINGS)/2 - 15, (app_window.getY()-XYSETTINGS)/2, XYSETTINGS, XYSETTINGS));
     sharedBox->Pack(settingsBox);
     sharedBox->Pack(okBox);
 
@@ -76,7 +78,7 @@ void MenuGUI::clickedOk()
     window->SetState(sfg::Widget::State::NORMAL);
 }
 
-//Connecting Button and Qt signals
+//Connecting Buttons and Qt signals
 void MenuGUI::clickedButton(ButtonPressed Button)
 {
     switch (Button)
@@ -84,41 +86,55 @@ void MenuGUI::clickedButton(ButtonPressed Button)
         case PLAY: clickedPlay(); break;
         case PLAY_WITH_CPU: clickedPlayCPU(); break;
         case EXIT: clickedExit(); break;
-        case MUSIC:clickedMusic();break;
+        case MUSIC:clickedMusic(); break;
         case SOUND:clickedSound(); break;
     }
 }
 
 void MenuGUI::show()
 {
-   timer = new QTimer(this);
+   window->Show(true);
+   timer = app_window.newTimer();
    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-   timer->start(10);
+   timer->start(TIMEUPDATE);
 }
 
 void MenuGUI::update()
 {
-    if (app_window.isOpen())
+    static bool flag = true;
+
+    if(app_window.isOpen())
     {
         sf::Event event;
-        while (app_window.pollEvent(event))
+        while(app_window.pollEvent(event))
         {
               desktop.HandleEvent(event);
 
             if (event.type == sf::Event::Closed)
                app_window.close();
         }
-        desktop.Update( 0.5 );
-
+        desktop.Update( 10 );
         app_window.clear();
+        app_window.draw(background);
         sfgui.Display(app_window);
         app_window.display();
+    }
+
+    else if(flag)
+    {
+        flag = false;
+        clickedExit();
     }
 }
 
 void MenuGUI::hide()
 {
-
+    window->Show(false);
+    settingsWindow->Show(false);
+    desktop.Add(settingsWindow);
+    app_window.deleteTimer();
+    app_window.clear(sf::Color::Black);
+    app_window.display();
 }
 
 void MenuGUI::setSounds(bool)
