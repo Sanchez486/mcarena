@@ -56,3 +56,28 @@ void SelectionModel::closed()
     cerr << "SelectionModel::closed()" << endl;
     emit closedSignal();
 }
+
+void SelectionModel::beginPlay(std::vector<HeroTemplate *> *_heroes)
+{
+    heroes = _heroes;
+
+    if(player1 != nullptr)
+    {
+        delete player1;
+    }
+    player1 = new Player();
+
+    if(player2 != nullptr)
+    {
+        delete player2;
+    }
+    player2 = new Player();
+
+    activePlayer = player1;
+    activeHero = nullptr;
+
+    emit show();
+    emit setHeroVector(*heroes);
+    emit setActiveHero(activeHero);
+    emit setHeroGroup( &(activePlayer->getHeroGroup()) );
+}

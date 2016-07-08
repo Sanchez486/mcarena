@@ -1,5 +1,7 @@
 #pragma once
 #include <QObject>
+#include <vector>
+
 #include "hero.h"
 #include "herogroup.h"
 #include "player.h"
@@ -8,6 +10,11 @@ class SelectionModel : public QObject
 {
 Q_OBJECT
 private:
+    std::vector<HeroTemplate*> *heroes;
+    Player *player1;
+    Player *player2;
+    HeroTemplate *activeHero;
+    Player *activePlayer;
 
 signals:
     // SelectionModel -> SelectionGUI
@@ -37,4 +44,6 @@ public slots:
 
 public:
     SelectionModel(QObject *parent = nullptr);
+
+    void beginPlay(std::vector<HeroTemplate*> *_heroes);
 };

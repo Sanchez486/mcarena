@@ -24,7 +24,9 @@ SOURCES += main.cpp \
     stats.cpp \
     herotemplate.cpp \
     hero.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    player.cpp \
+    herogroup.cpp
 
 HEADERS += \
     inc/menugui.h \
