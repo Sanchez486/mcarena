@@ -152,15 +152,89 @@ int Game::exec()
 
 void Game::loadHeroes()
 {
-    HeroTemplate *hero = new HeroTemplate();
+    Resources *resource = new Resources();
+    resource->loadAttackSound("res/sfx/sonic_attack.wav");
+    resource->loadSkillSound("res/sfx/sonic_attack.wav");
+    resource->loadTexture("res/img/sprites/sonic_sprite.png");
+    resource->loadImage("res/img/images/sonic_img.png");
 
-    //Resources *resource;
-    //hero->setResources(resource);
+    HeroTemplate *hero1 = new HeroTemplate();
+    hero1->setResources(*resource);
+    hero1->setStats(Stats(HP(90),Damage(30,35),Kind::range,Element::earth,Initiative(50),Actions(),5));
+    heroes.push_back(hero1);
 
-    hero->setStats(Stats(HP(999), Damage(11, 99), Kind::melee, Element::neutral,
-                         Initiative(99), Actions(), 10));
-    heroes.push_back(hero);
+    HeroTemplate *hero2 = new HeroTemplate();
+    hero2->setResources(*resource);
+    hero2->setStats(Stats(HP(90),Damage(20,25),Kind::range,Element::earth,Initiative(30),Actions(),5));
+    heroes.push_back(hero2);
 
-    //hero->setStats();
-    //...
+    HeroTemplate *hero3 = new HeroTemplate();
+    hero3->setResources(*resource);
+    hero3->setStats(Stats(HP(60),Damage(10,15),Kind::range,Element::earth,Initiative(40),Actions(),8));
+    heroes.push_back(hero3);
+
+    HeroTemplate *hero4 = new HeroTemplate();
+    hero4->setResources(*resource);
+    hero4->setStats(Stats(HP(140),Damage(50,55),Kind::melee,Element::earth,Initiative(40),Actions(),9));
+    heroes.push_back(hero4);
+
+    HeroTemplate *hero5 = new HeroTemplate();
+    hero5->setResources(*resource);
+    hero5->setStats(Stats(HP(75),Damage(30,35),Kind::melee,Element::water,Initiative(30),Actions(),6));
+    heroes.push_back(hero5);
+
+    HeroTemplate *hero6 = new HeroTemplate();
+    hero6->setResources(*resource);
+    hero6->setStats(Stats(HP(120),Damage(45,50),Kind::melee,Element::water,Initiative(45),Actions(),8));
+    heroes.push_back(hero6);
+
+    HeroTemplate *hero7 = new HeroTemplate();
+    hero7->setResources(*resource);
+    hero7->setStats(Stats(HP(45),Damage(20,25),Kind::melee,Element::water,Initiative(40),Actions(),2));
+    heroes.push_back(hero7);
+
+    HeroTemplate *hero8 = new HeroTemplate();
+    hero8->setResources(*resource);
+    hero8->setStats(Stats(HP(135),Damage(10,15),Kind::range,Element::water,Initiative(30),Actions(),5));
+    heroes.push_back(hero8);
+
+    HeroTemplate *hero9 = new HeroTemplate();
+    hero9->setResources(*resource);
+    hero9->setStats(Stats(HP(150),Damage(50,60),Kind::melee,Element::fire,Initiative(40),Actions(),10));
+    heroes.push_back(hero9);
+
+    HeroTemplate *hero10 = new HeroTemplate();
+    hero10->setResources(*resource);
+    hero10->setStats(Stats(HP(130),Damage(45,50),Kind::melee,Element::fire,Initiative(35),Actions(),8));
+    heroes.push_back(hero10);
+
+    HeroTemplate *hero11 = new HeroTemplate();
+    hero11->setResources(*resource);
+    hero11->setStats(Stats(HP(75),Damage(40,45),Kind::range,Element::fire,Initiative(45),Actions(),6));
+    heroes.push_back(hero11);
+
+    HeroTemplate *hero12 = new HeroTemplate();
+    hero12->setResources(*resource);
+    hero12->setStats(Stats(HP(45),Damage(15,20),Kind::range,Element::fire,Initiative(60),Actions(),1));
+    heroes.push_back(hero12);
+
+    HeroTemplate *hero13 = new HeroTemplate();
+    hero13->setResources(*resource);
+    hero13->setStats(Stats(HP(80),Damage(20,25),Kind::melee,Element::neutral,Initiative(30),Actions(),6));
+    heroes.push_back(hero13);
+
+    HeroTemplate *hero14 = new HeroTemplate();
+    hero14->setResources(*resource);
+    hero14->setStats(Stats(HP(100),Damage(20,25),Kind::range,Element::neutral,Initiative(40),Actions(),4));
+    heroes.push_back(hero14);
+
+    HeroTemplate *hero15 = new HeroTemplate();
+    hero15->setResources(*resource);
+    hero15->setStats(Stats(HP(20),Damage(40,45),Kind::melee,Element::neutral,Initiative(80),Actions(),7));
+    heroes.push_back(hero15);
+
+    HeroTemplate *hero16 = new HeroTemplate();
+    hero16->setResources(*resource);
+    hero16->setStats(Stats(HP(90),Damage(40,50),Kind::range,Element::neutral,Initiative(30),Actions(),4));
+    heroes.push_back(hero16);
 }
