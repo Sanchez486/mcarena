@@ -8,7 +8,6 @@
 #define YINFO 500
 #define YBUTTON 50
 #define TIMEUPDATE 25
-<<<<<<< HEAD
 
 BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     :

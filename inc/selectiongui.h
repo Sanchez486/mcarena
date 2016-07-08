@@ -92,7 +92,6 @@ private slots:
     void update();
 
 public slots:
-    void update();
     void show();  // Show this window
     void hide();  // Hide this window
     void setActiveHero(Hero*);  // Change current hero

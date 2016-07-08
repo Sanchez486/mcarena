@@ -193,11 +193,6 @@ void SelectionGUI::update()
     }
 }
 
-void SelectionGUI::update()
-{
-
-}
-
 void SelectionGUI::hide()
 {
     infoWindow->Show(false);
