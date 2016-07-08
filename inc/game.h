@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QCoreApplication>
 #include <QObject>
 #include <vector>
 
@@ -16,6 +17,8 @@ class Game : public QObject
 {
     Q_OBJECT
 private:
+    QCoreApplication app;
+
     MainWindow *mainWindow;
     MenuGUI *menuGUI;
     MenuModel *menuModel;
@@ -44,8 +47,8 @@ public slots:
     void closedBattle();
 
 public:
-    Game();
+    Game(int argc, char *argv[]);
 
-    void start();
+    int exec();
     void loadHeroes();
 };

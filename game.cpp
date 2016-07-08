@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Game::Game() : heroes()
+Game::Game(int argc, char *argv[]) : app(argc, argv), heroes()
 {
     mainWindow = new MainWindow();
     menuGUI = new MenuGUI(*mainWindow, this);
@@ -97,14 +97,14 @@ void Game::clickedExit()
 {
     cerr << "Game::clickedExit()" << endl;
     menuGUI->hide();
-    // app.quit()
+    app.quit();
 }
 
 void Game::closedMenu()
 {
     cerr << "Game::closedMenu()" << endl;
     menuGUI->hide();
-    // app.quit()
+    app.quit();
 }
 
 void Game::clickedStart()
@@ -125,7 +125,7 @@ void Game::closedSelection()
 {
     cerr << "Game::closedSelection()" << endl;
     selectionGUI->hide();
-    // app.quit()
+    app.quit();
 }
 
 void Game::finished()
@@ -139,12 +139,14 @@ void Game::closedBattle()
 {
     cerr << "Game::closedBattle()" << endl;
     battleGUI->hide();
-    // app.quit()
+    app.quit();
 }
 
-void Game::start()
+int Game::exec()
 {
     menuGUI->show();
+
+    return app.exec();
 }
 
 void Game::loadHeroes()
