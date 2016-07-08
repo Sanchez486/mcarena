@@ -112,7 +112,10 @@ void MenuGUI::update()
               desktop.HandleEvent(event);
 
             if (event.type == sf::Event::Closed)
-               app_window.close();
+            {
+                app_window.close();
+                closed();
+            }
         }
         desktop.Update( 10 );
         app_window.clear();

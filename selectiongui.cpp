@@ -185,7 +185,10 @@ void SelectionGUI::update()
               desktop.HandleEvent(event);
 
             if (event.type == sf::Event::Closed)
+            {
                app_window.close();
+               close();
+            }
         }
         desktop.Update( 10 );
         app_window.clear();
