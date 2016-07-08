@@ -1,7 +1,7 @@
 #pragma once
 
-#include "inc/herotemplate.h"
-#include "inc/stats.h"
+#include "herotemplate.h"
+#include "stats.h"
 
 class Hero
 {

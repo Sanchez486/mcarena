@@ -2,12 +2,12 @@
 
 #include <QObject>
 
-#include "inc/menugui.h"
-#include "inc/menumodel.h"
-#include "inc/selectiongui.h"
-#include "inc/selectionmodel.h"
-#include "inc/battlegui.h"
-#include "inc/battlemodel.h"
+#include "menugui.h"
+#include "menumodel.h"
+#include "selectiongui.h"
+#include "selectionmodel.h"
+#include "battlegui.h"
+#include "battlemodel.h"
 
 class Game : public QObject
 {

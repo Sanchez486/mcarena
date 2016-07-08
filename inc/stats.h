@@ -1,10 +1,10 @@
 #pragma once
-#include "inc/hp.h"
-#include "inc/damage.h"
-#include "inc/kind.h"
-#include "inc/element.h"
-#include "inc/initiative.h"
-#include "inc/actions.h"
+#include "hp.h"
+#include "damage.h"
+#include "kind.h"
+#include "element.h"
+#include "initiative.h"
+#include "actions.h"
 
 struct Stats
 {

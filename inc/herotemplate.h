@@ -1,7 +1,7 @@
 #pragma once
 
-#include "inc/stats.h"
-#include "inc/resources.h"
+#include "stats.h"
+#include "resources.h"
 
 class HeroTemplate
 {
