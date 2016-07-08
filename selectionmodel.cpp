@@ -9,7 +9,7 @@ SelectionModel::SelectionModel(QObject *parent)
 
 }
 
-void SelectionModel::clickedHero(Hero *)
+void SelectionModel::clickedHero(HeroTemplate *)
 {
     cerr << "SelectionModel::clickedHero(Hero *)" << endl;
 }

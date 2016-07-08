@@ -1,5 +1,7 @@
 #pragma once
 #include <QObject>
+#include <vector>
+
 #include "hero.h"
 #include "herogroup.h"
 #include "player.h"
@@ -11,7 +13,7 @@ public:
     SelectionGUI(QObject *parent = nullptr);
 
 signals:
-    void clickedHero(Hero*);  // After hero clicked (on the left)
+    void clickedHero(HeroTemplate*);  // After hero clicked (on the left)
     void clickedPlace(/* position */);  // After empty seat clicked
     void clickedCross(Hero*);  // After cross clicked on seat
     void clickedDiscard();
@@ -25,7 +27,8 @@ signals:
 public slots:
     void show();  // Show this window
     void hide();  // Hide this window
-    void setActiveHero(Hero*);  // Change current hero
+    void setHeroVector(const std::vector<HeroTemplate*>&);  // Change current list of heroes
+    void setActiveHero(HeroTemplate*);  // Change current hero
     void setHeroGroup(HeroGroup*);  // Change current group
     void setCost(/* cost */); // Change cost amount: 'curr/max'
     void setPlayer(Player*);  // Change buttons 'Player1' and 'Player2'

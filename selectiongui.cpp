@@ -16,7 +16,12 @@ void SelectionGUI::hide()
 
 }
 
-void SelectionGUI::setActiveHero(Hero *)
+void SelectionGUI::setHeroVector(const std::vector<HeroTemplate *> &)
+{
+
+}
+
+void SelectionGUI::setActiveHero(HeroTemplate *)
 {
 
 }

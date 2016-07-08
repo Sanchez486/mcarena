@@ -13,7 +13,8 @@ signals:
     // SelectionModel -> SelectionGUI
     void show();  // Show GUI window
     void hide();  // Hide GUI window
-    void setActiveHero(Hero*);  // Change current hero
+    void setHeroVector(const std::vector<HeroTemplate*>&);  // Change current list of heroes
+    void setActiveHero(HeroTemplate*);  // Change current hero
     void setHeroGroup(HeroGroup*);  // Change current group
     void setCost(/* cost */); // Change cost amount: 'curr/max'
     void setPlayer(Player*);  // Change buttons 'Player1' and 'Player2'
@@ -24,7 +25,7 @@ signals:
     void closedSignal();
 
 public slots:
-    void clickedHero(Hero*);  // After hero clicked (on the left)
+    void clickedHero(HeroTemplate*);  // After hero clicked (on the left)
     void clickedPlace(/* position */);  // After empty seat clicked
     void clickedCross(Hero*);  // After cross clicked on seat
     void clickedDiscard();
