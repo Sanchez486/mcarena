@@ -149,7 +149,10 @@ void BattleGUI::update()
               desktop.HandleEvent(event);
 
             if (event.type == sf::Event::Closed)
+            {
                app_window.close();
+               closed();
+            }
         }
         desktop.Update( 0.5 );
 

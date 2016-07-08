@@ -17,6 +17,7 @@
 
 SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     :
+      QObject(parent),
 
       app_window(_app_window),
       //Boxes
@@ -175,6 +176,8 @@ void SelectionGUI::show()
 
 void SelectionGUI::update()
 {
+    static bool flag = true;
+
     if (app_window.isOpen())
     {
         sf::Event event;
@@ -183,13 +186,22 @@ void SelectionGUI::update()
               desktop.HandleEvent(event);
 
             if (event.type == sf::Event::Closed)
+            {
                app_window.close();
+               closed();
+            }
         }
         desktop.Update( 10 );
         app_window.clear();
         app_window.draw(background);
         sfgui.Display(app_window);
         app_window.display();
+    }
+
+    else if(flag)
+    {
+        flag = false;
+        closed();
     }
 }
 
