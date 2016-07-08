@@ -10,6 +10,7 @@ Q_OBJECT
 private:
 
 signals:
+    // BattleModel -> BattleGUI
     void show();  // Show GUI window
     void hide();  // Hide GUI window
     void setActiveHero(Hero*);  // Change current hero
@@ -17,9 +18,14 @@ signals:
     void showTargets(Action*);  // Highlight avaliable targets
     void playAction(Action*);  // Play animation/sounds, show numbers
 
+    // BattleModel -> Game
+    void finishedSignal();
+    void closedSignal();
+
 public slots:
     void selectedAction(Action*);  // After attack or skill clicked
     void selectedTarget(Hero*);  // After Hero clicked
+    void closed();
 
 public:
     BattleModel(QObject *parent = nullptr);
