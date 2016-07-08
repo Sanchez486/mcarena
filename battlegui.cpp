@@ -151,7 +151,7 @@ void BattleGUI::update()
             if (event.type == sf::Event::Closed)
             {
                app_window.close();
-               close();
+               closed();
             }
         }
         desktop.Update( 0.5 );
