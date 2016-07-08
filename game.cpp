@@ -20,6 +20,7 @@ Game::Game(int argc, char *argv[]) : app(argc, argv), heroes()
     connect(menuGUI, SIGNAL(clickedExit()), menuModel, SLOT(clickedExit()));
     connect(menuGUI, SIGNAL(clickedSound()), menuModel, SLOT(clickedSound()));
     connect(menuGUI, SIGNAL(clickedMusic()), menuModel, SLOT(clickedMusic()));
+    connect(menuGUI, SIGNAL(closed()), menuModel, SLOT(closed()));
     // Signals Menu Model -> GUI
     connect(menuModel, SIGNAL(show()), menuGUI, SLOT(show()));
     connect(menuModel, SIGNAL(hide()), menuGUI, SLOT(hide()));
@@ -35,6 +36,7 @@ Game::Game(int argc, char *argv[]) : app(argc, argv), heroes()
     connect(selectionGUI, SIGNAL(clickedMenu()), selectionModel, SLOT(clickedMenu()));
     connect(selectionGUI, SIGNAL(clickedPlayer1()), selectionModel, SLOT(clickedPlayer1()));
     connect(selectionGUI, SIGNAL(clickedPlayer2()), selectionModel, SLOT(clickedPlayer2()));
+    connect(selectionGUI, SIGNAL(closed()), selectionModel, SLOT(closed()));
     // Signals Selection Model -> GUI
     connect(selectionModel, SIGNAL(show()), selectionGUI, SLOT(show()));
     connect(selectionModel, SIGNAL(hide()), selectionGUI, SLOT(hide()));
@@ -47,6 +49,7 @@ Game::Game(int argc, char *argv[]) : app(argc, argv), heroes()
     // Signals Battle GUI -> Model
     connect(battleGUI, SIGNAL(selectedAction(Action*)), battleModel, SLOT(selectedAction(Action*)));
     connect(battleGUI, SIGNAL(selectedTarget(Hero*)), battleModel, SLOT(selectedTarget(Hero*)));
+    connect(battleGUI, SIGNAL(closed()), battleModel, SLOT(closed()));
     // Signals Battel Model -> GUI
     connect(battleModel, SIGNAL(show()), battleGUI, SLOT(show()));
     connect(battleModel, SIGNAL(hide()), battleGUI, SLOT(hide()));
