@@ -31,7 +31,7 @@ Game::Game()
     connect(selectionGUI, SIGNAL(clickedPlace()), selectionModel, SLOT(clickedPlace()));
     connect(selectionGUI, SIGNAL(clickedCross(Hero*)), selectionModel, SLOT(clickedCross(Hero*)));
     connect(selectionGUI, SIGNAL(clickedDiscard()), selectionModel, SLOT(clickedDiscard()));
-    connect(selectionGUI, SIGNAL(clickedReady()), selectionModel, SLOT(clickedReady()));
+    connect(selectionGUI, SIGNAL(clickedStart()), selectionModel, SLOT(clickedStart()));
     connect(selectionGUI, SIGNAL(clickedMenu()), selectionModel, SLOT(clickedMenu()));
     connect(selectionGUI, SIGNAL(clickedPlayer1()), selectionModel, SLOT(clickedPlayer1()));
     connect(selectionGUI, SIGNAL(clickedPlayer2()), selectionModel, SLOT(clickedPlayer2()));
@@ -62,7 +62,7 @@ Game::Game()
     connect(menuModel, SIGNAL(closedSignal()), SLOT(closedMenu()));
 
     // Signals SelectionModel -> Game
-    connect(selectionModel, SIGNAL(clickedReadySignal()), SLOT(clickedReady()));
+    connect(selectionModel, SIGNAL(clickedStartSignal()), SLOT(clickedStart()));
     connect(selectionModel, SIGNAL(clickedMenuSignal()), SLOT(clickedMenu()));
     connect(selectionModel, SIGNAL(closedSignal()), SLOT(closedSelection()));
 
@@ -111,9 +111,9 @@ void Game::closedMenu()
     // app.quit()
 }
 
-void Game::clickedReady()
+void Game::clickedStart()
 {
-    cerr << "Game::clickedReady()" << endl;
+    cerr << "Game::clickedStart()" << endl;
     selectionGUI->hide();
     battleGUI->show();
 }

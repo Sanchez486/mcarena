@@ -139,10 +139,25 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
         table->Attach(images[i],sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
     }
 
-
     //Signals
-    //settingsButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &MenuGUI::clickedSettings, this ) );
+    startButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::clickedButton, this, ButtonPressed::START ) );
+    discardButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                std::bind( &SelectionGUI::clickedButton, this, ButtonPressed::DISCARD ) );
+    menuButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::clickedButton, this, ButtonPressed::MENU ) );
+    player1Button->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::clickedButton, this, ButtonPressed::PLAYER1 ) );
+    player2Button->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::clickedButton, this, ButtonPressed::PLAYER2 ) );
+}
 
+void SelectionGUI::clickedButton(ButtonPressed Button)
+{
+    switch (Button)
+    {
+        case START: clickedStart(); break;
+        case DISCARD: clickedDiscard(); break;
+        case MENU: clickedMenu(); break;
+        case PLAYER1:clickedPlayer1();break;
+        case PLAYER2:clickedPlayer2(); break;
+    }
 }
 
 void SelectionGUI::show()

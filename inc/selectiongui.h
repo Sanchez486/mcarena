@@ -62,9 +62,9 @@ private:
     //for signals
     enum ButtonPressed
     {
-        MENU,
-        DISCARD,
         START,
+        DISCARD,
+        MENU,
         PLAYER1,
         PLAYER2
     };
@@ -79,7 +79,7 @@ signals:
     void clickedPlace(/* position */);  // After empty seat clicked
     void clickedCross(Hero*);  // After cross clicked on seat
     void clickedDiscard();
-    void clickedReady();
+    void clickedStart();
     void clickedMenu();
     void clickedPlayer1();
     void clickedPlayer2();

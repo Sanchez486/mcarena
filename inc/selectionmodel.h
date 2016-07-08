@@ -19,7 +19,7 @@ signals:
     void setPlayer(Player*);  // Change buttons 'Player1' and 'Player2'
 
     // SelectionModel -> Game
-    void clickedReadySignal();
+    void clickedStartSignal();
     void clickedMenuSignal();
     void closedSignal();
 
@@ -28,7 +28,7 @@ public slots:
     void clickedPlace(/* position */);  // After empty seat clicked
     void clickedCross(Hero*);  // After cross clicked on seat
     void clickedDiscard();
-    void clickedReady();
+    void clickedStart();
     void clickedMenu();
     void clickedPlayer1();
     void clickedPlayer2();
