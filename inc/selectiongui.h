@@ -81,7 +81,7 @@ private:
 signals:
     void clickedHero(HeroTemplate*);  // After hero clicked (on the left)
     void clickedPlace(HeroPosition);  // After empty seat clicked
-    void clickedCross(Hero*);  // After cross clicked on seat
+    void clickedCross(HeroPosition);  // After cross clicked on seat
     void clickedDiscard();
     void clickedStart();
     void clickedMenu();
@@ -100,6 +100,5 @@ public slots:
     void setActiveHero(HeroTemplate*);  // Change current hero
     void setHeroGroup(HeroGroup*);  // Change current group
     void setCost(/* cost */); // Change cost amount: 'curr/max'
-    void setPlayer(Player*);  // Change buttons 'Player1' and 'Player2'
     void showCross(HeroPosition);  // Show cross on seat  [this -> this]
 };

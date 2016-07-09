@@ -24,7 +24,6 @@ signals:
     void setActiveHero(HeroTemplate*);  // Change current hero
     void setHeroGroup(HeroGroup*);  // Change current group
     void setCost(/* cost */); // Change cost amount: 'curr/max'
-    void setPlayer(Player*);  // Change buttons 'Player1' and 'Player2'
 
     // SelectionModel -> Game
     void clickedStartSignal();
@@ -32,9 +31,9 @@ signals:
     void closedSignal();
 
 public slots:
-    void clickedHero(HeroTemplate*);  // After hero clicked (on the left)
-    void clickedPlace(HeroPosition);  // After empty seat clicked
-    void clickedCross(Hero*);  // After cross clicked on seat
+    void clickedHero(HeroTemplate *_hero);  // After hero clicked (on the left)
+    void clickedPlace(HeroPosition pos);  // After empty seat clicked
+    void clickedCross(HeroPosition pos);  // After cross clicked on seat
     void clickedDiscard();
     void clickedStart();
     void clickedMenu();
@@ -49,4 +48,7 @@ public:
     void beginPlayOnline(HeroVector *_heroes);
     void beginPlayCPU(HeroVector *_heroes);
     void hideGUI();
+
+private:
+    void updateHero(HeroPosition pos, HeroTemplate *templ);  // delete old and create new hero to activePlayer
 };

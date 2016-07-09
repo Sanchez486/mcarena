@@ -238,11 +238,6 @@ void SelectionGUI::setCost()
 
 }
 
-void SelectionGUI::setPlayer(Player *)
-{
-
-}
-
 void SelectionGUI::showCross(HeroPosition)
 {
 
