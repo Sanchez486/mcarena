@@ -46,6 +46,7 @@ private:
     sfg::ScrolledWindow::Ptr scroll;
     sfg::Table::Ptr table;
     sfg::Box::Ptr tablebox;
+    std::vector<HeroTemplate *> heroesList;
 
     //For main bar
     sfg::Window::Ptr buttonsWindow;
@@ -71,15 +72,13 @@ private:
         PLAYER2
     };
 
-    //sfgui button signals
+    //sfgui widget signals
 
     void clickedButton(ButtonPressed Button);
-
-
-private:
+    void heroChosen(int i);
 
 signals:
-    void clickedHero(HeroTemplate*);  // After hero clicked (on the left)
+    void clickedHero(HeroTemplate *hero);  // After hero clicked (on the left)
     void clickedPlace(/* position */);  // After empty seat clicked
     void clickedCross(Hero*);  // After cross clicked on seat
     void clickedDiscard();
@@ -96,8 +95,8 @@ private slots:
 public slots:
     void show();  // Show this window
     void hide();  // Hide this window
-    void setHeroVector(const std::vector<HeroTemplate*>&);  // Change current list of heroes
-    void setActiveHero(HeroTemplate*);  // Change current hero
+    void setHeroVector(const std::vector<HeroTemplate*> &heroVector);  // Change current list of heroes
+    void setActiveHero(HeroTemplate *hero);  // Change current hero
     void setHeroGroup(HeroGroup*);  // Change current group
     void setCost(/* cost */); // Change cost amount: 'curr/max'
     void setPlayer(Player*);  // Change buttons 'Player1' and 'Player2'

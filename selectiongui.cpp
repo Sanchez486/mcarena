@@ -132,13 +132,13 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     scrollwin->Add(scrollwinbox);
 
     //ОТЛАДОЧНОЕ ЗАПОЛНЕНИЕ!!!
-    sf::Image heropic;
-    heropic.loadFromFile("src/heroPIC.jpg");
-    sfg::Image::Ptr images[N];
-    for(int i=0;i<N;i++){
-        images[i]=sfg::Image::Create(heropic);
-        table->Attach(images[i],sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
-    }
+//    sf::Image heropic;
+//    heropic.loadFromFile("src/heroPIC.jpg");
+//    sfg::Image::Ptr images[N];
+//    for(int i=0;i<N;i++){
+//        images[i]=sfg::Image::Create(heropic);
+//        table->Attach(images[i],sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+//    }
 
     //Signals
     startButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::clickedButton, this, ButtonPressed::START ) );
@@ -218,12 +218,29 @@ void SelectionGUI::hide()
     app_window.display();
 }
 
-void SelectionGUI::setHeroVector(const std::vector<HeroTemplate *> &)
+void SelectionGUI::setHeroVector(const std::vector<HeroTemplate *> &heroVector)
 {
+    heroesList = heroVector;
+    int i = 0;
+    for(std::vector<HeroTemplate *>::const_iterator it = heroesList.begin(), end = heroesList.end(); it != end; it++)
+    {
+        sf::Image image = (*it)->getResources().getImage();
+        sfg::Image::Ptr finalImage = sfg::Image::Create(image);
+        table->Attach(finalImage,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+        //Signal setting
+        finalImage->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::heroChosen, this, i));
 
+        i++;
+    }
 }
 
-void SelectionGUI::setActiveHero(HeroTemplate *)
+void SelectionGUI::heroChosen(int i)
+{
+    clickedHero(heroesList[i]);
+    std::cout << i + 1 << "Hero chosen" << std::endl;
+}
+
+void SelectionGUI::setActiveHero(HeroTemplate *hero)
 {
 
 }
