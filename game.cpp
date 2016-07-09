@@ -29,7 +29,7 @@ Game::Game(int argc, char *argv[]) : app(argc, argv), heroes()
 
     // Signals Selection GUI -> Model
     connect(selectionGUI, SIGNAL(clickedHero(HeroTemplate*)), selectionModel, SLOT(clickedHero(HeroTemplate*)));
-    connect(selectionGUI, SIGNAL(clickedPlace()), selectionModel, SLOT(clickedPlace()));
+    connect(selectionGUI, SIGNAL(clickedPlace(HeroPosition)), selectionModel, SLOT(clickedPlace(HeroPosition)));
     connect(selectionGUI, SIGNAL(clickedCross(Hero*)), selectionModel, SLOT(clickedCross(Hero*)));
     connect(selectionGUI, SIGNAL(clickedDiscard()), selectionModel, SLOT(clickedDiscard()));
     connect(selectionGUI, SIGNAL(clickedStart()), selectionModel, SLOT(clickedStart()));
@@ -40,7 +40,7 @@ Game::Game(int argc, char *argv[]) : app(argc, argv), heroes()
     // Signals Selection Model -> GUI
     connect(selectionModel, SIGNAL(show()), selectionGUI, SLOT(show()));
     connect(selectionModel, SIGNAL(hide()), selectionGUI, SLOT(hide()));
-    connect(selectionModel, SIGNAL(setHeroVector(const std::vector<HeroTemplate*>&)), selectionGUI, SLOT(setHeroVector(const std::vector<HeroTemplate*>&)));
+    connect(selectionModel, SIGNAL(setHeroVector(HeroVector*)), selectionGUI, SLOT(setHeroVector(HeroVector*)));
     connect(selectionModel, SIGNAL(setActiveHero(HeroTemplate*)), selectionGUI, SLOT(setActiveHero(HeroTemplate*)));
     connect(selectionModel, SIGNAL(setHeroGroup(HeroGroup*)), selectionGUI, SLOT(setHeroGroup(HeroGroup*)));
     connect(selectionModel, SIGNAL(setCost()), selectionGUI, SLOT(setCost()));

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "hero.h"
+#include "heroposition.h"
 
 struct HeroGroup
 {
@@ -12,4 +13,6 @@ struct HeroGroup
     Hero *back3;
 
     HeroGroup();
+    Hero* at(HeroPosition pos);
+    HeroPosition find(Hero *hero);
 };

@@ -1,16 +1,16 @@
 #pragma once
 #include <QObject>
-#include <vector>
 
 #include "hero.h"
 #include "herogroup.h"
 #include "player.h"
+#include "herovector.h"
 
 class SelectionModel : public QObject
 {
 Q_OBJECT
 private:
-    std::vector<HeroTemplate*> *heroes;
+    HeroVector *heroes;
     Player *player1;
     Player *player2;
     HeroTemplate *activeHero;
@@ -20,7 +20,7 @@ signals:
     // SelectionModel -> SelectionGUI
     void show();  // Show GUI window
     void hide();  // Hide GUI window
-    void setHeroVector(const std::vector<HeroTemplate*>&);  // Change current list of heroes
+    void setHeroVector(HeroVector*);  // Change current list of heroes
     void setActiveHero(HeroTemplate*);  // Change current hero
     void setHeroGroup(HeroGroup*);  // Change current group
     void setCost(/* cost */); // Change cost amount: 'curr/max'
@@ -33,7 +33,7 @@ signals:
 
 public slots:
     void clickedHero(HeroTemplate*);  // After hero clicked (on the left)
-    void clickedPlace(/* position */);  // After empty seat clicked
+    void clickedPlace(HeroPosition);  // After empty seat clicked
     void clickedCross(Hero*);  // After cross clicked on seat
     void clickedDiscard();
     void clickedStart();
@@ -45,8 +45,8 @@ public slots:
 public:
     SelectionModel(QObject *parent = nullptr);
 
-    void beginPlay(std::vector<HeroTemplate*> *_heroes);
-    void beginPlayOnline(std::vector<HeroTemplate*> *_heroes);
-    void beginPlayCPU(std::vector<HeroTemplate*> *_heroes);
+    void beginPlay(HeroVector *_heroes);
+    void beginPlayOnline(HeroVector *_heroes);
+    void beginPlayCPU(HeroVector *_heroes);
     void hideGUI();
 };

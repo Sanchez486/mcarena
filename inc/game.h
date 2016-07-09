@@ -2,7 +2,6 @@
 
 #include <QCoreApplication>
 #include <QObject>
-#include <vector>
 
 #include "mainwindow.h"
 #include "menugui.h"
@@ -11,7 +10,7 @@
 #include "selectionmodel.h"
 #include "battlegui.h"
 #include "battlemodel.h"
-#include "herotemplate.h"
+#include "herovector.h"
 
 class Game : public QObject
 {
@@ -27,7 +26,7 @@ private:
     BattleGUI *battleGUI;
     BattleModel *battleModel;
 
-    std::vector<HeroTemplate*> heroes;
+    HeroVector heroes;
 
 public slots:
     // MenuModel -> Game

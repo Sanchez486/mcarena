@@ -218,7 +218,7 @@ void SelectionGUI::hide()
     app_window.display();
 }
 
-void SelectionGUI::setHeroVector(const std::vector<HeroTemplate *> &heroVector)
+void SelectionGUI::setHeroVector(HeroVector *)
 {
     heroesList = heroVector;
     int i = 0;
@@ -260,7 +260,7 @@ void SelectionGUI::setPlayer(Player *)
 
 }
 
-void SelectionGUI::showCross()
+void SelectionGUI::showCross(HeroPosition)
 {
 
 }
