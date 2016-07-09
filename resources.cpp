@@ -8,6 +8,14 @@ Resources::Resources()
     image = nullptr;
 }
 
+Resources::~Resources()
+{
+    if (attackSound!=nullptr) delete attackSound;
+    if (skillSound!=nullptr) delete attackSound;
+    if (texture!=nullptr) delete attackSound;
+    if (image!=nullptr) delete attackSound;
+}
+
 sf::SoundBuffer& Resources::getAttackSound()
 {
     return *(attackSound);
