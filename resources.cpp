@@ -14,6 +14,7 @@ Resources::~Resources()
     if (skillSound!=nullptr) delete skillSound;
     if (texture!=nullptr) delete texture;
     if (image!=nullptr) delete image;
+    if (image2!=nullptr) delete image2;
 }
 
 sf::SoundBuffer& Resources::getAttackSound()
@@ -34,6 +35,11 @@ sf::Texture& Resources::getTexture()
 sf::Image& Resources::getImage()
 {
     return *(image);
+}
+
+sf::Image& Resources::getImage2()
+{
+    return *(image2);
 }
 
 void Resources::loadAttackSound(const std::string &path)
@@ -62,4 +68,11 @@ void Resources::loadImage(const std::string &path)
     if (image!=nullptr) delete image;
     image = new sf::Image;
     image->loadFromFile(path);
+}
+
+void Resources::loadImage2(const std::string &path)
+{
+    if (image2!=nullptr) delete image2;
+    image2 = new sf::Image;
+    image2->loadFromFile(path);
 }
