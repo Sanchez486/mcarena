@@ -159,6 +159,7 @@ void Game::loadHeroes()
     resource->loadSkillSound("res/sfx/sonic_attack.wav");
     resource->loadTexture("res/img/sprites/sonic_sprite.png");
     resource->loadImage("res/img/images/sonic_img.png");
+    resource->loadImage2("res/img/images/sonic_img2.png");
 
     HeroTemplate *hero1 = new HeroTemplate();
     hero1->setResources(*resource);
