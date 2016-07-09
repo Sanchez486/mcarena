@@ -62,7 +62,7 @@ void SelectionModel::closed()
     emit closedSignal();
 }
 
-void SelectionModel::beginPlay(std::vector<HeroTemplate *> *_heroes)
+void SelectionModel::beginPlay(HeroVector *_heroes)
 {
     heroes = _heroes;
 
@@ -82,17 +82,17 @@ void SelectionModel::beginPlay(std::vector<HeroTemplate *> *_heroes)
     activeHero = nullptr;
 
     emit show();
-    emit setHeroVector(*heroes);
+    emit setHeroVector(heroes);
     emit setActiveHero(activeHero);
     emit setHeroGroup( &(activePlayer->getHeroGroup()) );
 }
 
-void SelectionModel::beginPlayOnline(std::vector<HeroTemplate *> *_heroes)
+void SelectionModel::beginPlayOnline(HeroVector *_heroes)
 {
     emit show();
 }
 
-void SelectionModel::beginPlayCPU(std::vector<HeroTemplate *> *_heroes)
+void SelectionModel::beginPlayCPU(HeroVector *_heroes)
 {
     emit show();
 }

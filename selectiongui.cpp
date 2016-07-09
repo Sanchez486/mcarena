@@ -218,7 +218,7 @@ void SelectionGUI::hide()
     app_window.display();
 }
 
-void SelectionGUI::setHeroVector(const std::vector<HeroTemplate *> &)
+void SelectionGUI::setHeroVector(HeroVector *)
 {
 
 }

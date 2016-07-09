@@ -1,10 +1,10 @@
 #pragma once
 #include <QObject>
 #include <QTimer>
-#include <vector>
 
 #include "hero.h"
 #include "herogroup.h"
+#include "herovector.h"
 #include "player.h"
 #include "mainwindow.h"
 
@@ -96,7 +96,7 @@ private slots:
 public slots:
     void show();  // Show this window
     void hide();  // Hide this window
-    void setHeroVector(const std::vector<HeroTemplate*>&);  // Change current list of heroes
+    void setHeroVector(HeroVector*);  // Change current list of heroes
     void setActiveHero(HeroTemplate*);  // Change current hero
     void setHeroGroup(HeroGroup*);  // Change current group
     void setCost(/* cost */); // Change cost amount: 'curr/max'
