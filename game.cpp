@@ -147,7 +147,8 @@ void Game::closedBattle()
 
 int Game::exec()
 {
-    menuGUI->show();
+    loadHeroes();
+    menuModel->showGUI();
 
     return app.exec();
 }
