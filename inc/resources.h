@@ -15,8 +15,10 @@ public:
     void loadSkillSound(const std::string&);
     void loadTexture(const std::string&);
     void loadImage(const std::string&);
+    void loadImage2(const std::string&);
     sf::SoundBuffer& getAttackSound();
     sf::SoundBuffer& getSkillSound();
     sf::Texture& getTexture();
     sf::Image& getImage();
+    sf::Image& getImage2();
 };

@@ -30,7 +30,7 @@ Game::Game(int argc, char *argv[]) : app(argc, argv), heroes()
     // Signals Selection GUI -> Model
     connect(selectionGUI, SIGNAL(clickedHero(HeroTemplate*)), selectionModel, SLOT(clickedHero(HeroTemplate*)));
     connect(selectionGUI, SIGNAL(clickedPlace(HeroPosition)), selectionModel, SLOT(clickedPlace(HeroPosition)));
-    connect(selectionGUI, SIGNAL(clickedCross(Hero*)), selectionModel, SLOT(clickedCross(Hero*)));
+    connect(selectionGUI, SIGNAL(clickedCross(HeroPosition)), selectionModel, SLOT(clickedCross(HeroPosition)));
     connect(selectionGUI, SIGNAL(clickedDiscard()), selectionModel, SLOT(clickedDiscard()));
     connect(selectionGUI, SIGNAL(clickedStart()), selectionModel, SLOT(clickedStart()));
     connect(selectionGUI, SIGNAL(clickedMenu()), selectionModel, SLOT(clickedMenu()));
@@ -44,7 +44,6 @@ Game::Game(int argc, char *argv[]) : app(argc, argv), heroes()
     connect(selectionModel, SIGNAL(setActiveHero(HeroTemplate*)), selectionGUI, SLOT(setActiveHero(HeroTemplate*)));
     connect(selectionModel, SIGNAL(setHeroGroup(HeroGroup*)), selectionGUI, SLOT(setHeroGroup(HeroGroup*)));
     connect(selectionModel, SIGNAL(setCost()), selectionGUI, SLOT(setCost()));
-    connect(selectionModel, SIGNAL(setPlayer(Player*)), selectionGUI, SLOT(setPlayer(Player*)));
 
     // Signals Battle GUI -> Model
     connect(battleGUI, SIGNAL(selectedAction(Action*)), battleModel, SLOT(selectedAction(Action*)));
@@ -161,6 +160,7 @@ void Game::loadHeroes()
     resource->loadSkillSound("res/sfx/sonic_attack.wav");
     resource->loadTexture("res/img/sprites/sonic_sprite.png");
     resource->loadImage("src/sonic.png");
+    resource->loadImage2("src/colorSonic.png");
 
     HeroTemplate *hero1 = new HeroTemplate();
     hero1->setResources(*resource);

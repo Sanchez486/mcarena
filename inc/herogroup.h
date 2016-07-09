@@ -13,6 +13,7 @@ struct HeroGroup
     Hero *back3;
 
     HeroGroup();
-    Hero* at(HeroPosition pos);
-    HeroPosition find(Hero *hero);
+    Hero* at(HeroPosition pos) const;
+    HeroPosition find(Hero *hero) const;
+    void set(HeroPosition pos, Hero *hero);
 };

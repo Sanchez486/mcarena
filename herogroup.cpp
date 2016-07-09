@@ -7,7 +7,7 @@ HeroGroup::HeroGroup()
 
 }
 
-Hero* HeroGroup::at(HeroPosition pos)
+Hero* HeroGroup::at(HeroPosition pos) const
 {
     switch(pos)
     {
@@ -30,7 +30,7 @@ Hero* HeroGroup::at(HeroPosition pos)
     }
 }
 
-HeroPosition HeroGroup::find(Hero *hero)
+HeroPosition HeroGroup::find(Hero *hero) const
 {
     if(hero == nullptr)
         return HeroPosition::NONE;
@@ -54,4 +54,23 @@ HeroPosition HeroGroup::find(Hero *hero)
         return HeroPosition::back3;
 
     return HeroPosition::NONE;
+}
+
+void HeroGroup::set(HeroPosition pos, Hero *hero)
+{
+    switch(pos)
+    {
+    case HeroPosition::front1:
+        front1 = hero;
+    case HeroPosition::front2:
+        front2 = hero;
+    case HeroPosition::front3:
+        front3 = hero;
+    case HeroPosition::back1:
+        back1 = hero;
+    case HeroPosition::back2:
+        back2 = hero;
+    case HeroPosition::back3:
+        back3 = hero;
+    }
 }
