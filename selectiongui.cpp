@@ -254,7 +254,7 @@ void SelectionGUI::setHeroGroup(HeroGroup *)
 
 }
 
-void SelectionGUI::setCost()
+void SelectionGUI::setCost(Cost *)
 {
 
 }
