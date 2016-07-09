@@ -27,7 +27,8 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     player.cpp \
     herogroup.cpp \
-    resources.cpp
+    resources.cpp \
+    cost.cpp
 
 HEADERS += \
     inc/menugui.h \
@@ -53,7 +54,8 @@ HEADERS += \
     inc/herotemplate.h \
     inc/mainwindow.h \
     inc/heroposition.h \
-    inc/herovector.h
+    inc/herovector.h \
+    inc/cost.h
 
 LIBS += \
     -lsfml-graphics \
