@@ -33,7 +33,7 @@ signals:
 
 public slots:
     void clickedHero(HeroTemplate*);  // After hero clicked (on the left)
-    void clickedPlace(/* position */);  // After empty seat clicked
+    void clickedPlace(HeroPosition);  // After empty seat clicked
     void clickedCross(Hero*);  // After cross clicked on seat
     void clickedDiscard();
     void clickedStart();

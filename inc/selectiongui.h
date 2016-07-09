@@ -6,7 +6,7 @@
 #include "hero.h"
 #include "herogroup.h"
 #include "player.h"
-#include "inc/mainwindow.h"
+#include "mainwindow.h"
 
 #include <SFGUI/SFGUI.hpp>
 #include <SFGUI/Widgets.hpp>
@@ -80,7 +80,7 @@ private:
 
 signals:
     void clickedHero(HeroTemplate*);  // After hero clicked (on the left)
-    void clickedPlace(/* position */);  // After empty seat clicked
+    void clickedPlace(HeroPosition);  // After empty seat clicked
     void clickedCross(Hero*);  // After cross clicked on seat
     void clickedDiscard();
     void clickedStart();
@@ -88,7 +88,7 @@ signals:
     void clickedPlayer1();
     void clickedPlayer2();
     void closed();  // After closing window
-    void mouseOnSeat(/* position */);  // After mouse moved on hero (show cross)  [this -> this]
+    void mouseOnSeat(HeroPosition);  // After mouse moved on hero (show cross)  [this -> this]
 
 private slots:
     void update();
@@ -101,5 +101,5 @@ public slots:
     void setHeroGroup(HeroGroup*);  // Change current group
     void setCost(/* cost */); // Change cost amount: 'curr/max'
     void setPlayer(Player*);  // Change buttons 'Player1' and 'Player2'
-    void showCross(/* position */);  // Show cross on seat  [this -> this]
+    void showCross(HeroPosition);  // Show cross on seat  [this -> this]
 };

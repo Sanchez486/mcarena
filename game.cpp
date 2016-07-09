@@ -29,7 +29,7 @@ Game::Game(int argc, char *argv[]) : app(argc, argv), heroes()
 
     // Signals Selection GUI -> Model
     connect(selectionGUI, SIGNAL(clickedHero(HeroTemplate*)), selectionModel, SLOT(clickedHero(HeroTemplate*)));
-    connect(selectionGUI, SIGNAL(clickedPlace()), selectionModel, SLOT(clickedPlace()));
+    connect(selectionGUI, SIGNAL(clickedPlace(HeroPosition)), selectionModel, SLOT(clickedPlace(HeroPosition)));
     connect(selectionGUI, SIGNAL(clickedCross(Hero*)), selectionModel, SLOT(clickedCross(Hero*)));
     connect(selectionGUI, SIGNAL(clickedDiscard()), selectionModel, SLOT(clickedDiscard()));
     connect(selectionGUI, SIGNAL(clickedStart()), selectionModel, SLOT(clickedStart()));

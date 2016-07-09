@@ -51,7 +51,8 @@ HEADERS += \
     inc/actions.h \
     inc/resources.h \
     inc/herotemplate.h \
-    inc/mainwindow.h
+    inc/mainwindow.h \
+    inc/heroposition.h
 
 LIBS += \
     -lsfml-graphics \

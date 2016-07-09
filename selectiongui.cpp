@@ -243,7 +243,7 @@ void SelectionGUI::setPlayer(Player *)
 
 }
 
-void SelectionGUI::showCross()
+void SelectionGUI::showCross(HeroPosition)
 {
 
 }

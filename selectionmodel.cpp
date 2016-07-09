@@ -19,7 +19,7 @@ void SelectionModel::clickedHero(HeroTemplate *)
     cerr << "SelectionModel::clickedHero(Hero *)" << endl;
 }
 
-void SelectionModel::clickedPlace()
+void SelectionModel::clickedPlace(HeroPosition)
 {
     cerr << "SelectionModel::clickedPlace()" << endl;
 }
