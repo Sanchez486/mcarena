@@ -1,13 +1,14 @@
 #include "inc/battlegui.h"
 
-#define XICON 150
-#define YICON 180
-#define XSICON 50
-#define YSICON 60
+#define XICON 83
+#define YICON 100
 #define XINFO 200
-#define YINFO 500
 #define YBUTTON 50
 #define TIMEUPDATE 25
+#define FRAME 15
+#define YSCROLLBAR 30
+#define YINDENT 10
+#define YQTOTAL (YICON+FRAME*2+YSCROLLBAR+YINDENT)
 
 BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     :
@@ -19,7 +20,10 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
       infoWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
 
       //Queuewindow
-      queueBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, 15)),
+      queueSBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, FRAME)),
+      qScroll(sfg::ScrolledWindow::Create()),
+      queueBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),
+      queueTable(sfg::Table::Create()),
       separator(sfg::Separator::Create(sfg::Separator::Orientation::VERTICAL)),
 
       //Buttonwindow
@@ -28,10 +32,10 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
       skillButton(sfg::Button::Create( "SKILL" )),
 
       //InfoWindow
-      infoBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 15)),
-      skillsBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, 15)),
-      picBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 15)),
-      labelBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 15)),
+      infoBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, FRAME)),
+      skillsBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, FRAME)),
+      picBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, FRAME)),
+      labelBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, FRAME)),
 
 
       hp(sfg::Label::Create(sf::String("80 hp"))),
@@ -47,26 +51,31 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     background.setTexture(backgroundT);
 
     //Queuewindow
-    queueWindow->Add(queueBox);
+    queueWindow->Add(queueSBox);
+    queueSBox->Pack(qScroll, false, true);
+    qScroll->AddWithViewport(queueBox);
+    queueBox->Pack(queueTable);
+    qScroll->SetScrollbarPolicy( sfg::ScrolledWindow::VERTICAL_NEVER| sfg::ScrolledWindow::HORIZONTAL_ALWAYS);
+    qScroll->SetRequisition( sf::Vector2f(app_window.getX() - FRAME*2, YICON ) );
 
     //for debug start
+
     sf::Image sfImage;
-    sfImage.loadFromFile("src/debug/hat.png");
-
+    sfImage.loadFromFile("res/img/images/sonic_img.png");
     image = sfg::Image::Create(sfImage);
-
-    queueBox->Pack(image);
-    queueBox->Pack(separator);
-
-    for(int i=0; i<11; i++)
+    sfg::Image::Ptr images[12];
+    for(int i=0;i<13;i++)
     {
-        image = sfg::Image::Create(sfImage);
-        queueBox->Pack(image);
+        images[i]=sfg::Image::Create(sfImage);
+        if (i==1) queueTable->Attach(separator,sf::Rect<sf::Uint32>( i, 0, 1, 1), sfg::Table::FILL, sfg::Table::FILL );
+        else queueTable->Attach(images[i],sf::Rect<sf::Uint32>( i, 0, 1, 1), sfg::Table::FILL, sfg::Table::FILL,sf::Vector2f(7,YINDENT));
     }
+
+
     //for debug end
 
     desktop.Add(queueWindow);
-    queueWindow->SetAllocation(sf::FloatRect( 0 , YINFO, app_window.getX(), app_window.getY() - YINFO));
+    queueWindow->SetAllocation(sf::FloatRect(0,app_window.getY() - YQTOTAL, app_window.getX(), YICON+FRAME*2+YSCROLLBAR));
 
     //Buttonwindow
 
@@ -75,12 +84,12 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     buttonBox->Pack(attackButton);
 
     desktop.Add(buttonWindow);
-    buttonWindow->SetAllocation(sf::FloatRect( XINFO , YINFO - YBUTTON, app_window.getX() - XINFO, YBUTTON));
+    buttonWindow->SetAllocation(sf::FloatRect( XINFO , app_window.getY() - YQTOTAL - YBUTTON, app_window.getX() - XINFO, YBUTTON));
 
     //Ifowindow
 
     //for debug start
-    sfImage.loadFromFile("src/debug/might.png");
+    sfImage.loadFromFile("res/img/images/sonic_img.png");
 
     image = sfg::Image::Create(sfImage);
     infoBox->Pack(image);
@@ -109,7 +118,7 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     //for debug end
 
     desktop.Add(infoWindow);
-    infoWindow->SetAllocation(sf::FloatRect( 0 , 0, XINFO, YINFO));
+    infoWindow->SetAllocation(sf::FloatRect( 0 , 0, XINFO,app_window.getY() - YQTOTAL));
 
     //Signals
     skillButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
