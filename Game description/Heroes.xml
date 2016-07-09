@@ -1,0 +1,18 @@
+<stats>
+	<hero name="Sagittarius" hp="90" dmg_min="30" dmg_max="35" kind="Kind::range" elem="Element::land" init="50" skill="NULL" price="5"/>
+	<hero name="Witch" hp="90" dmg_min="20" dmg_max="25" kind="Kind::range" elem="Element::land" init="30" skill="NULL" price="5"/>
+	<hero name="Doctor" hp="60" dmg_min="10" dmg_max="15" kind="Kind::range" elem="Element::land" init="40" skill="NULL" price="8"/>
+	<hero name="Hero" hp="140" dmg_min="50" dmg_max="55" kind="Kind::melee" elem="Element::land" init="40" skill="NULL" price="9"/>
+	<hero name="Sirena" hp="75" dmg_min="30" dmg_max="35" kind="Kind::melee" elem="Element::water" init="30" skill="NULL" price="6"/>
+	<hero name="Crab" hp="120" dmg_min="45" dmg_max="50" kind="Kind::melee" elem="Element::water" init="45" skill="NULL" price="8"/>
+	<hero name="Plankton" hp="45" dmg_min="20" dmg_max="25" kind="Kind::melee" elem="Element::water" init="40" skill="NULL" price="2"/>
+	<hero name="Well" hp="135" dmg_min="10" dmg_max="15" kind="Kind::range" elem="Element::water" init="30" skill="NULL" price="5"/>
+	<hero name="Dragon" hp="150" dmg_min="50" dmg_max="60" kind="Kind::melee" elem="Element::fire" init="40" skill="NULL" price="10"/>
+	<hero name="Lion" hp="130" dmg_min="45" dmg_max="50" kind="Kind::melee" elem="Element::fire" init="35" skill="NULL" price="8"/>
+	<hero name="Fenix" hp="75" dmg_min="40" dmg_max="45" kind="Kind::range" elem="Element::fire" init="45" skill="NULL" price="6"/>
+	<hero name="Fire" hp="45" dmg_min="15" dmg_max="20" kind="Kind::range" elem="Element::fire" init="60" skill="NULL" price="1"/>
+	<hero name="Ilya" hp="80" dmg_min="20" dmg_max="25" kind="Kind::melee" elem="Element::neutral" init="30" skill="NULL" price="6"/>
+	<hero name="Pacman" hp="100" dmg_min="20" dmg_max="25" kind="Kind::range" elem="Element::neutral" init="40" skill="NULL" price="4"/>
+	<hero name="Sonic" hp="20" dmg_min="40" dmg_max="45" kind="Kind::melee" elem="Element::neutral" init="80" skill="NULL" price="7"/>
+	<hero name="Mario" hp="90" dmg_min="40" dmg_max="50" kind="Kind::range" elem="Element::neutral" init="30" skill="NULL" price="4"/>
+</stats>			
