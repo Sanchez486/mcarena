@@ -10,6 +10,7 @@ private:
     sf::Image *image;
 public:
     Resources();
+    ~Resources();
     void loadAttackSound(const std::string&);
     void loadSkillSound(const std::string&);
     void loadTexture(const std::string&);
