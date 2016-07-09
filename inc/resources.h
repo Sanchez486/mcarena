@@ -7,7 +7,7 @@ class Resources
 private:
     sf::SoundBuffer *attackSound, *skillSound;
     sf::Texture *texture;
-    sf::Image *image;
+    sf::Image *image, *image2;
 public:
     Resources();
     ~Resources();

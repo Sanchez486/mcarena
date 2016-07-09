@@ -46,7 +46,9 @@ private:
     sfg::ScrolledWindow::Ptr scroll;
     sfg::Table::Ptr table;
     sfg::Box::Ptr tablebox;
-    std::vector<HeroTemplate *> heroesList;
+
+    HeroVector* heroesList;
+    int activeHeroNumber;
 
     //For main bar
     sfg::Window::Ptr buttonsWindow;
@@ -95,8 +97,6 @@ private slots:
 public slots:
     void show();  // Show this window
     void hide();  // Hide this window
-    void setHeroVector(const std::vector<HeroTemplate*> &heroVector);  // Change current list of heroes
-    void setActiveHero(HeroTemplate *hero);  // Change current hero
     void setHeroVector(HeroVector *heroVector);  // Change current list of heroes
     void setActiveHero(HeroTemplate *hero);  // Change current hero
     void setHeroGroup(HeroGroup*);  // Change current group

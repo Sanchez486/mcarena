@@ -37,6 +37,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
       scroll(sfg::ScrolledWindow::Create()),
       table(sfg::Table::Create()),
       tablebox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
+      activeHeroNumber(0),
 
       //Main box
       buttonsWindow(sfg::Window::Create(sfg::Window::Style::NO_STYLE)),
@@ -218,11 +219,11 @@ void SelectionGUI::hide()
     app_window.display();
 }
 
-void SelectionGUI::setHeroVector(HeroVector *)
+void SelectionGUI::setHeroVector(HeroVector *heroVector)
 {
     heroesList = heroVector;
     int i = 0;
-    for(std::vector<HeroTemplate *>::const_iterator it = heroesList.begin(), end = heroesList.end(); it != end; it++)
+    for(auto it = heroesList->begin(), end = heroesList->end(); it != end; it++)
     {
         sf::Image image = (*it)->getResources().getImage();
         sfg::Image::Ptr finalImage = sfg::Image::Create(image);
@@ -236,13 +237,39 @@ void SelectionGUI::setHeroVector(HeroVector *)
 
 void SelectionGUI::heroChosen(int i)
 {
-    clickedHero(heroesList[i]);
-    std::cout << i + 1 << "Hero chosen" << std::endl;
+    if(i != activeHeroNumber)
+    {
+        clickedHero(heroesList->at(i));
+        std::cout << i + 1 << "Hero chosen" << std::endl;
+    }
 }
 
 void SelectionGUI::setActiveHero(HeroTemplate *hero)
 {
+    //Heroes highlightin in left menu
 
+    if(!heroesList->size())
+        std::cerr << "SelectionGUI::setActiveHero(HeroTemplate *hero): No heroes in heroesList";
+
+    int i = 0, pos;
+    for(auto it = heroesList->begin(), end = heroesList->end(); it != end; it++, i++)
+    {
+        if(*it == hero)
+        {
+            sf::Image image = (*it)->getResources.getImage2();
+            sfg::Image::Ptr finalImage = sfg::Image::Create(image);
+            table->Attach(finalImage,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+            pos = i;
+        }
+        else if(i == activeHeroNumber)
+        {
+            sf::Image image = (*it)->getResources.getImage();
+            sfg::Image::Ptr finalImage = sfg::Image::Create(image);
+            table->Attach(finalImage,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+
+        }
+    }
+    activeHeroNumber = pos;
 }
 
 void SelectionGUI::setHeroGroup(HeroGroup *)
