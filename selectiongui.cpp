@@ -1,18 +1,15 @@
 #include "inc/selectiongui.h"
-#define XINFO 450
 #define YINFO 180
-#define XFIELD 270
+#define XFIELD 166
 #define YFIELD 300
-#define XFRAME 20
-#define YFRAME 20
-#define XPOINTS 125
+#define XPOINTS 180
 #define YPOINTS 130
-#define XSCROLL 350
-#define XBUTTONS 450
+#define XSCROLL 166
 #define YBUTTONS 80
-#define XBUTTONS2 135
-#define YBUTTONS2 200
+#define XPLAYERS 190
+#define YPLAYERS 200
 #define FRAME 10
+#define XSCROLLBAR 30 //default scroll width of sfg::ScrollWindow
 #define N 16 //debug
 
 SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
@@ -22,13 +19,13 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
       app_window(_app_window),
       //Boxes
       infoWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
-      infoBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),
+      infoBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL,FRAME)),
       infoTable(sfg::Table::Create()),
       pointsWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
-      pointsBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),
+      pointsBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, FRAME)),
       pointsLabel(sfg::Label::Create("POINTS: ")),
       fieldWindow(sfg::Window::Create(sfg::Window::Style::NO_STYLE)),
-      fieldBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),
+      fieldBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, FRAME)),
       fieldTable(sfg::Table::Create()),
 
       //Heroes menu
@@ -40,14 +37,14 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
 
       //Main box
       buttonsWindow(sfg::Window::Create(sfg::Window::Style::NO_STYLE)),
-      buttonsBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, 20)),
+      buttonsBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, 15)),
       menuButton(sfg::Button::Create( "MAIN MENU" )),
       discardButton(sfg::Button::Create( "DISCARD" )),
       startButton(sfg::Button::Create("START")),
 
       //Player box
       playerWindow(sfg::Window::Create(sfg::Window::Style::NO_STYLE)),
-      playerBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 15)),
+      playerBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 20)),
       player1Button(sfg::Button::Create( "PLAYER1" )),
       player2Button(sfg::Button::Create( "PLAYER2" ))
       
@@ -59,7 +56,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     //Boxes
     desktop.Add(infoWindow);
     infoWindow->Add(infoBox);
-    infoWindow->SetAllocation(sf::FloatRect(app_window.getX()-XINFO,0,XINFO,YINFO));
+    infoWindow->SetAllocation(sf::FloatRect(XSCROLL+FRAME*2+XSCROLLBAR,0,app_window.getX()-XSCROLL-FRAME*2-XSCROLLBAR,YINFO));
     infoBox->Pack(infoTable);
     desktop.Add(pointsWindow);
     pointsWindow->Add(pointsBox);
@@ -67,18 +64,17 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     pointsBox->Pack(pointsLabel);
     desktop.Add(fieldWindow);
     fieldWindow->Add(fieldBox);
-    fieldWindow->SetAllocation(sf::FloatRect(XSCROLL+XFRAME,YINFO+YFRAME,XFIELD,YFIELD));
+    fieldWindow->SetAllocation(sf::FloatRect((app_window.getX()+XSCROLL+FRAME*2+XSCROLLBAR-XPOINTS-XFIELD)/2,(app_window.getY()-FRAME*2-YBUTTONS+YINFO-YFIELD)/2,XFIELD,YFIELD));
     fieldBox->Pack(fieldTable);
     //debug
     sf::Image fieldImg;
-    fieldImg.loadFromFile("src/kek.jpg");
+    fieldImg.loadFromFile("res/img/images/sonic_img.png");
     for (int i=0;i<6;i++){
         sfg::Image::Ptr newimg = sfg::Image::Create(fieldImg);
         fieldTable->Attach(newimg,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
     }
     sf::Image icoImg;
     icoImg.loadFromFile("src/ico.jpg");
-    sfg::Image::Ptr pic1 = sfg::Image::Create(icoImg);
     sfg::Image::Ptr pic2 = sfg::Image::Create(fieldImg);
     sfg::Label::Ptr infoLabels[7];
     sfg::Image::Ptr infoPics[5];
@@ -92,7 +88,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     infoLabels[5]->SetText("X PTS");
     infoLabels[6]->SetText("Special Skill: very very long skill description, really long man, but it's OK");
 
-    infoTable->Attach(pic2,sf::Rect<sf::Uint32>(0, 0, 1, 3),sfg::Table::EXPAND , sfg::Table::EXPAND );
+    infoTable->Attach(pic2,sf::Rect<sf::Uint32>(0, 0, 1, 3),sfg::Table::EXPAND | sfg::Table::FILL , sfg::Table::EXPAND );
     infoTable->Attach(infoLabels[0],sf::Rect<sf::Uint32>(1, 0, 2, 1),sfg::Table::EXPAND | sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
     infoTable->Attach(infoPics[0],sf::Rect<sf::Uint32>(1, 1, 1, 1),sfg::Table::EXPAND | sfg::Table::FILL, sfg::Table::EXPAND | sfg::Table::FILL);
     infoTable->Attach(infoPics[1],sf::Rect<sf::Uint32>(1, 2, 1, 1),sfg::Table::EXPAND | sfg::Table::FILL, sfg::Table::EXPAND | sfg::Table::FILL);
@@ -104,12 +100,12 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     infoTable->Attach(infoLabels[3],sf::Rect<sf::Uint32>(4, 1, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
     infoTable->Attach(infoLabels[4],sf::Rect<sf::Uint32>(4, 2, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
     infoTable->Attach(infoLabels[5],sf::Rect<sf::Uint32>(4, 0, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
-    infoTable->Attach(infoLabels[6],sf::Rect<sf::Uint32>(0, 3, 7, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoLabels[6],sf::Rect<sf::Uint32>(0, 3, 7, 1),sfg::Table::EXPAND | sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
 
     //Buttons Window
     desktop.Add(buttonsWindow);
     buttonsWindow->Add(buttonsBox);
-    buttonsWindow->SetAllocation(sf::FloatRect( app_window.getX()-XBUTTONS , app_window.getY()-YBUTTONS, XBUTTONS, YBUTTONS));
+    buttonsWindow->SetAllocation(sf::FloatRect( XSCROLL + FRAME + XSCROLLBAR, app_window.getY()-YBUTTONS, app_window.getX()-XSCROLL - FRAME - XSCROLLBAR, YBUTTONS));
 
     buttonsBox->Pack(menuButton);
     buttonsBox->Pack(discardButton);
@@ -118,7 +114,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     //Player window
     desktop.Add(playerWindow);
     playerWindow->Add(playerBox);
-    playerWindow->SetAllocation(sf::FloatRect( app_window.getX()-XBUTTONS2, app_window.getY()-YBUTTONS2-YBUTTONS, XBUTTONS2, YBUTTONS2));
+    playerWindow->SetAllocation(sf::FloatRect( app_window.getX()-XPLAYERS, app_window.getY()-YPLAYERS-YBUTTONS, XPLAYERS, YPLAYERS));
     playerBox->Pack(player1Button);
     playerBox->Pack(player2Button);
 
@@ -138,7 +134,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
 
     //ОТЛАДОЧНОЕ ЗАПОЛНЕНИЕ!!!
     sf::Image heropic;
-    heropic.loadFromFile("src/heroPIC.jpg");
+    heropic.loadFromFile("res/img/images/sonic_img.png");
     sfg::Image::Ptr images[N];
     for(int i=0;i<N;i++){
         images[i]=sfg::Image::Create(heropic);
