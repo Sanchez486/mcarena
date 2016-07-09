@@ -11,9 +11,9 @@ Resources::Resources()
 Resources::~Resources()
 {
     if (attackSound!=nullptr) delete attackSound;
-    if (skillSound!=nullptr) delete attackSound;
-    if (texture!=nullptr) delete attackSound;
-    if (image!=nullptr) delete attackSound;
+    if (skillSound!=nullptr) delete skillSound;
+    if (texture!=nullptr) delete texture;
+    if (image!=nullptr) delete image;
 }
 
 sf::SoundBuffer& Resources::getAttackSound()
