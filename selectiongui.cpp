@@ -122,6 +122,11 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     playerBox->Pack(player1Button);
     playerBox->Pack(player2Button);
 
+    player1Button->SetId("p1");
+    player2Button->SetId("p2");
+    sfg::Context::Get().GetEngine().SetProperty("Button#p1", "BackgroundColor", sf::Color(96,26,67));
+    player1Button->SetState(sfg::Widget::State::INSENSITIVE);
+
     //Heroes window
     desktop.Add(scrollwin);
     scroll->SetScrollbarPolicy( sfg::ScrolledWindow::HORIZONTAL_NEVER| sfg::ScrolledWindow::VERTICAL_ALWAYS);
@@ -156,8 +161,24 @@ void SelectionGUI::clickedButton(ButtonPressed Button)
         case START: clickedStart(); break;
         case DISCARD: clickedDiscard(); break;
         case MENU: clickedMenu(); break;
-        case PLAYER1:clickedPlayer1();break;
-        case PLAYER2:clickedPlayer2(); break;
+        case PLAYER1:
+    {
+        sfg::Context::Get().GetEngine().SetProperty("Button#p1", "BackgroundColor", sf::Color(96,26,67));
+        sfg::Context::Get().GetEngine().SetProperty("Button#p2", "BackgroundColor", sf::Color(85,87,82));
+        player1Button->SetState(sfg::Widget::State::INSENSITIVE);
+        player2Button->SetState(sfg::Button::State::NORMAL);
+        clickedPlayer1();
+        break;
+    }
+        case PLAYER2:
+    {
+        sfg::Context::Get().GetEngine().SetProperty("Button#p2", "BackgroundColor", sf::Color(96,26,67));
+        sfg::Context::Get().GetEngine().SetProperty("Button#p1", "BackgroundColor", sf::Color(85,87,82));
+        player2Button->SetState(sfg::Widget::State::INSENSITIVE);
+        player1Button->SetState(sfg::Button::State::NORMAL);
+        clickedPlayer2();
+        break;
+    }
     }
 }
 
