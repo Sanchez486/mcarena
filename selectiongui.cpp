@@ -194,6 +194,7 @@ void SelectionGUI::show()
    fieldWindow->Show(true);
    buttonsWindow->Show(true);
    playerWindow->Show(true);
+   infoLabelWindow->Show(true);
    scrollwin->Show(true);
    timer = app_window.newTimer();
    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
@@ -238,6 +239,7 @@ void SelectionGUI::hide()
     fieldWindow->Show(false);
     buttonsWindow->Show(false);
     playerWindow->Show(false);
+    infoLabelWindow->Show(false);
     scrollwin->Show(false);
     app_window.deleteTimer();
     app_window.clear(sf::Color::Black);

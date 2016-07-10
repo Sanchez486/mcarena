@@ -8,7 +8,7 @@
 #define FRAME 15
 #define YSCROLLBAR 30
 #define YINDENT 10
-#define YQTOTAL (YICON+FRAME*2+YSCROLLBAR+YINDENT)
+#define YQTOTAL (YICON+FRAME*2+YSCROLLBAR+YINDENT - 10)
 
 BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     :
