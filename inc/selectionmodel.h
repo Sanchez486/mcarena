@@ -43,6 +43,7 @@ public slots:
 
 public:
     SelectionModel(QObject *parent = nullptr);
+    ~SelectionModel();
 
     void beginPlay(HeroVector *_heroes);
     void beginPlayOnline(HeroVector *_heroes);
@@ -51,4 +52,7 @@ public:
 
 private:
     void updateHero(HeroPosition pos, HeroTemplate *templ);  // delete old and create new hero to activePlayer
+    void createPlayer1(int maxCost);  // Regular player1 (delete old and create new)
+    void createPlayer2(int maxCost);  // Regular player2 (delete old and create new)
+    void createPlayerCPU(int maxCost);  // AI player2 (delete old and create new)
 };

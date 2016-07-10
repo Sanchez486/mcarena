@@ -14,6 +14,15 @@ SelectionModel::SelectionModel(QObject *parent)
 
 }
 
+SelectionModel::~SelectionModel()
+{
+    if(player1 != nullptr)
+        delete player1;
+
+    if(player2 != nullptr)
+        delete player2;
+}
+
 void SelectionModel::clickedHero(HeroTemplate *_hero)
 {
     activeHero = _hero;
@@ -104,19 +113,8 @@ void SelectionModel::beginPlay(HeroVector *_heroes)
 {
     heroes = _heroes;
 
-    if(player1 != nullptr)
-    {
-        delete player1;
-    }
-    player1 = new Player();
-    player1->setMaxCost(99);
-
-    if(player2 != nullptr)
-    {
-        delete player2;
-    }
-    player2 = new Player();
-    player2->setMaxCost(99);
+    createPlayer1(99);  // TODO: this number should not be defined here
+    createPlayer2(99);  // TODO: this number should not be defined here
 
     activePlayer = player1;
     activeHero = nullptr;
@@ -130,27 +128,16 @@ void SelectionModel::beginPlay(HeroVector *_heroes)
 // TODO
 void SelectionModel::beginPlayOnline(HeroVector *_heroes)
 {
+    cerr << "SelectionModel::beginPlayOnline(HeroVector *_heroes)" << endl;
     emit show();
 }
 
-// TODO
 void SelectionModel::beginPlayCPU(HeroVector *_heroes)
 {
     heroes = _heroes;
 
-    if(player1 != nullptr)
-    {
-        delete player1;
-    }
-    player1 = new Player();
-    player1->setMaxCost(99);
-
-    if(player2 != nullptr)
-    {
-        delete player2;
-    }
-    player2 = new Player();
-    player2->setMaxCost(99);
+    createPlayer1(99);  // TODO: this number should not be defined here
+    createPlayerCPU(99);  // TODO: this number should not be defined here
 
     activePlayer = player1;
     activeHero = nullptr;
@@ -159,6 +146,37 @@ void SelectionModel::beginPlayCPU(HeroVector *_heroes)
     emit setHeroVector(heroes);
     emit setActiveHero(activeHero);
     emit setHeroGroup( &(activePlayer->getHeroGroup()) );
+}
+
+void SelectionModel::createPlayer1(int maxCost)
+{
+    if(player1 != nullptr)
+    {
+        delete player1;
+    }
+    player1 = new Player();
+    player1->setMaxCost(maxCost);
+}
+
+void SelectionModel::createPlayer2(int maxCost)
+{
+    if(player2 != nullptr)
+    {
+        delete player2;
+    }
+    player2 = new Player();
+    player2->setMaxCost(maxCost);
+}
+
+// TODO: change to AI player
+void SelectionModel::createPlayerCPU(int maxCost)
+{
+    if(player2 != nullptr)
+    {
+        delete player2;
+    }
+    player2 = new Player();
+    player2->setMaxCost(maxCost);
 }
 
 void SelectionModel::hideGUI()
