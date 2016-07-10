@@ -5,12 +5,16 @@
 class Resources
 {
 private:
-    sf::SoundBuffer *attackSound, *skillSound;
+    sf::SoundBuffer *attackSound;
+    sf::SoundBuffer *skillSound;
     sf::Texture *texture;
-    sf::Image *image, *image2;
+    sf::Image *image;
+    sf::Image *image2;
+
 public:
     Resources();
     ~Resources();
+
     void loadAttackSound(const std::string&);
     void loadSkillSound(const std::string&);
     void loadTexture(const std::string&);
