@@ -81,8 +81,6 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     icoImg.loadFromFile("src/ico.jpg");
     sfg::Image::Ptr pic1 = sfg::Image::Create(icoImg);
     sfg::Image::Ptr pic2 = sfg::Image::Create(fieldImg);
-    sfg::Label::Ptr infoLabels[7];
-    sfg::Image::Ptr infoPics[5];
     for (int i=0;i<7;i++) infoLabels[i]= sfg::Label::Create("");
     for (int i=0;i<5;i++) infoPics[i]= sfg::Image::Create(icoImg);
     infoLabels[0]->SetText("Pretty Long Hero Name");
@@ -205,7 +203,7 @@ void SelectionGUI::update()
         sf::Event event;
         while (app_window.pollEvent(event))
         {
-              desktop.HandleEvent(event);
+            desktop.HandleEvent(event);
 
             if (event.type == sf::Event::Closed)
             {
@@ -260,8 +258,9 @@ void SelectionGUI::heroChosen(int i)
 {
     if(i != activeHeroNumber)
     {
+        std::cout << i << "Hero chosen" << std::endl;
         clickedHero(heroesList->at(i));
-        std::cout << i + 1 << "Hero chosen" << std::endl;
+
     }
 }
 
@@ -269,28 +268,55 @@ void SelectionGUI::setActiveHero(HeroTemplate *hero)
 {
     //Heroes highlightin in left menu
 
-    if(!heroesList->size())
+    if(!heroesList->size() || hero == nullptr)
         std::cerr << "SelectionGUI::setActiveHero(HeroTemplate *hero): No heroes in heroesList";
 
-    int i = 0, pos;
+    int i = 0, pos = -1;
     for(auto it = heroesList->begin(), end = heroesList->end(); it != end; it++, i++)
     {
         if(*it == hero)
         {
-            sf::Image image = (*it)->getResources.getImage2();
+            sf::Image image = (*it)->getResources().getImage2();
             sfg::Image::Ptr finalImage = sfg::Image::Create(image);
             table->Attach(finalImage,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
             pos = i;
         }
         else if(i == activeHeroNumber)
         {
-            sf::Image image = (*it)->getResources.getImage();
+            sf::Image image = (*it)->getResources().getImage();
             sfg::Image::Ptr finalImage = sfg::Image::Create(image);
             table->Attach(finalImage,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
 
         }
     }
     activeHeroNumber = pos;
+    std::cout << pos << "Set active hero" << std::endl;
+
+    //Active hero info on the top
+    if(activeHeroNumber == -1)
+    {
+
+    }
+    else
+    {
+        infoLabels[0]->SetText("Pretty Long Hero Name");
+        infoLabels[1]->SetText(std::to_string( hero->getStats().hp.max ) + " HP");
+        infoLabels[2]->SetText(std::to_string( hero->getStats().damage.max ) + " DMG");
+        infoLabels[3]->SetText(std::to_string( hero->getStats().initiative.limit ) + " INIT");
+        switch(hero->getStats().element)
+        {
+            case Element::neutral: infoLabels[4]->SetText("Neutral element");
+            case Element::fire: infoLabels[4]->SetText("Fire element");
+            case Element::water: infoLabels[4]->SetText("Water element");
+            case Element::earth: infoLabels[4]->SetText("Earth element");
+        }
+        infoLabels[5]->SetText(std::to_string( hero->getStats().cost ) + " COINS");
+        switch(hero->getStats().kind)
+        {
+            case Kind::melee: infoLabels[6]->SetText("Melee");
+            case Kind::range: infoLabels[6]->SetText("Range");
+        }
+    }
 }
 
 void SelectionGUI::setHeroGroup(HeroGroup *)

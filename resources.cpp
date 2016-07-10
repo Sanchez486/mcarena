@@ -6,6 +6,7 @@ Resources::Resources()
     skillSound = nullptr;
     texture = nullptr;
     image = nullptr;
+    image2 = nullptr;
 }
 
 Resources::~Resources()

@@ -63,6 +63,10 @@ private:
     sfg::Button::Ptr player1Button;
     sfg::Button::Ptr player2Button;
 
+    //For info
+    sfg::Label::Ptr infoLabels[7];
+    sfg::Image::Ptr infoPics[5];
+
 
     //for signals
     enum ButtonPressed
