@@ -136,7 +136,29 @@ void SelectionModel::beginPlayOnline(HeroVector *_heroes)
 // TODO
 void SelectionModel::beginPlayCPU(HeroVector *_heroes)
 {
+    heroes = _heroes;
+
+    if(player1 != nullptr)
+    {
+        delete player1;
+    }
+    player1 = new Player();
+    player1->setMaxCost(99);
+
+    if(player2 != nullptr)
+    {
+        delete player2;
+    }
+    player2 = new Player();
+    player2->setMaxCost(99);
+
+    activePlayer = player1;
+    activeHero = nullptr;
+
     emit show();
+    emit setHeroVector(heroes);
+    emit setActiveHero(activeHero);
+    emit setHeroGroup( &(activePlayer->getHeroGroup()) );
 }
 
 void SelectionModel::hideGUI()
