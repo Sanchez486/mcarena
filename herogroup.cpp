@@ -74,3 +74,33 @@ void HeroGroup::set(HeroPosition pos, Hero *hero)
         back3 = hero;
     }
 }
+
+int HeroGroup::count()
+{
+    int num = 0;
+
+    if(front1 != nullptr)
+        ++num;
+
+    if(front2 != nullptr)
+        ++num;
+
+    if(front3 != nullptr)
+        ++num;
+
+    if(back1 != nullptr)
+        ++num;
+
+    if(back2 != nullptr)
+        ++num;
+
+    if(back3 != nullptr)
+        ++num;
+
+    return num;
+}
+
+bool HeroGroup::isFull()
+{
+    return count() == 6;
+}

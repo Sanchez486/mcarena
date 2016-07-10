@@ -16,4 +16,6 @@ public:
     Cost& getCost();
     void updateCost();
     void setMaxCost(int max);
+
+    bool isValidGroup();
 };

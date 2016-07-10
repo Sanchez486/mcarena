@@ -24,3 +24,8 @@ void Player::setMaxCost(int max)
 {
     cost.setMax(max);
 }
+
+bool Player::isValidGroup()
+{
+    return (cost.getLeft() >= 0) && heroGroup.isFull();
+}

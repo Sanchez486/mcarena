@@ -80,12 +80,20 @@ void SelectionModel::updateHero(HeroPosition pos, HeroTemplate *templ)
     }
 }
 
-// TODO: check if both players ready
+// TODO: remove else branch (its for debug only!)
 void SelectionModel::clickedStart()
 {
-    cerr << "SelectionModel::clickedStart()" << endl;
+    if(player1->isValidGroup() && player2->isValidGroup())
+    {
+        emit clickedStartSignal(player1, player2);
+    }
+    else
+    {
+        cerr << "SelectionModel::clickedStart()" << endl
+             << "  Groups are not valid!!!" << endl;
 
-    emit clickedStartSignal(player1, player2);
+        emit clickedStartSignal(player1, player2);
+    }
 }
 
 void SelectionModel::clickedMenu()
