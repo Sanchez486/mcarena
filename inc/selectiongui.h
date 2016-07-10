@@ -65,10 +65,14 @@ private:
     sfg::Button::Ptr player1Button;
     sfg::Button::Ptr player2Button;
 
+    HeroGroup heroesGroup;
+
     //For info
     sfg::Label::Ptr infoLabels[7];
     sfg::Image::Ptr infoPics[5];
     sfg::Label::Ptr label;
+    sfg::Image::Ptr defaultImage[6];
+    sfg::Image::Ptr normImage[6];
 
 
     //for signals
@@ -81,14 +85,26 @@ private:
         PLAYER2
     };
 
+    enum Mouse
+    {
+        ENTER,
+        LEAVE
+    };
+
     //sfgui widget signals
 
     void clickedButton(ButtonPressed Button);
     void heroChosen(int i);
+    void clickedPlus(HeroPosition pos);
+    void mouseEvent(Mouse mouse);
+
+    //Additional functions
+    void setHeroImage(Hero* hero, Hero *myhero, int pos);
+    void signalSetting(int i);
 
 signals:
     void clickedHero(HeroTemplate *hero);  // After hero clicked (on the left)
-    void clickedPlace(HeroPosition);  // After empty seat clicked
+    void clickedPlace(HeroPosition pos);  // After empty seat clicked
     void clickedCross(HeroPosition);  // After cross clicked on seat
     void clickedDiscard();
     void clickedStart();

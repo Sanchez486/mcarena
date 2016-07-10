@@ -52,7 +52,8 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
       player1Button(sfg::Button::Create( "PLAYER1" )),
       player2Button(sfg::Button::Create( "PLAYER2" )),
 
-      label(sfg::Label::Create("Choose a hero!!!"))
+      label(sfg::Label::Create("Choose a hero!!!")),
+      heroesGroup()
 
 {
     app_window.resetGLStates();
@@ -75,25 +76,24 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     fieldWindow->Add(fieldBox);
     fieldWindow->SetAllocation(sf::FloatRect((app_window.getX()+XSCROLL+FRAME*2+XSCROLLBAR-XPOINTS-XFIELD)/2,(app_window.getY()-FRAME*2-YBUTTONS+YINFO-YFIELD)/2,XFIELD,YFIELD));
     fieldBox->Pack(fieldTable);
-    //debug
-    sf::Image fieldImg;
-    fieldImg.loadFromFile("res/img/images/sonic_img.png");
-    for (int i=0;i<6;i++){
-        sfg::Image::Ptr newimg = sfg::Image::Create(fieldImg);
-        fieldTable->Attach(newimg,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+
+    //Heroes Field
+    sf::Image plusImg;
+    plusImg.loadFromFile("res/img/icons/plus.png");
+    for (int i=0;i<6;i++)
+    {
+        normImage[i] = sfg::Image::Create(plusImg);
+        defaultImage[i] = normImage[i];
+        signalSetting(i);
+        fieldTable->Attach(normImage[i],sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
     }
+
+    //Info field
     sf::Image icoImg;
     icoImg.loadFromFile("src/ico.jpg");
-    sfg::Image::Ptr pic2 = sfg::Image::Create(fieldImg);
+    sfg::Image::Ptr pic2 = sfg::Image::Create(icoImg);
     for (int i=0;i<7;i++) infoLabels[i]= sfg::Label::Create("");
     for (int i=0;i<5;i++) infoPics[i]= sfg::Image::Create(icoImg);
-    infoLabels[0]->SetText("Pretty Long Hero Name");
-    infoLabels[1]->SetText("X HP");
-    infoLabels[2]->SetText("X DMG");
-    infoLabels[3]->SetText("X INIT");
-    infoLabels[4]->SetText("Element: Fire");
-    infoLabels[5]->SetText("X PTS");
-    infoLabels[6]->SetText("Special Skill: very very long skill description, really long man, but it's OK");
 
     infoTable->Attach(pic2,sf::Rect<sf::Uint32>(0, 0, 1, 3),sfg::Table::EXPAND | sfg::Table::FILL , sfg::Table::EXPAND );
     infoTable->Attach(infoLabels[0],sf::Rect<sf::Uint32>(1, 0, 2, 1),sfg::Table::EXPAND | sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
@@ -114,7 +114,8 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     //Buttons Window
     desktop.Add(buttonsWindow);
     buttonsWindow->Add(buttonsBox);
-    buttonsWindow->SetAllocation(sf::FloatRect( XSCROLL + FRAME + XSCROLLBAR, app_window.getY()-YBUTTONS, app_window.getX()-XSCROLL - FRAME - XSCROLLBAR, YBUTTONS));
+    buttonsWindow->SetAllocation(sf::FloatRect( XSCROLL + FRAME + XSCROLLBAR, app_window.getY()-YBUTTONS,
+                                                app_window.getX()-XSCROLL - FRAME - XSCROLLBAR, YBUTTONS));
 
     buttonsBox->Pack(menuButton);
     buttonsBox->Pack(discardButton);
@@ -252,13 +253,12 @@ void SelectionGUI::setHeroVector(HeroVector *heroVector)
 {
     heroesList = heroVector;
     int i = 0;
-    for(auto it = heroesList->begin(), end = heroesList->end(); it != end; it++)
+    for(auto it = heroesList->begin(), end = heroesList->end(); it != end; it++, i++)
     {
         sfg::Image::Ptr finalImage = sfg::Image::Create((*it)->getResources().getImage());
         table->Attach(finalImage,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
         //Signal setting
         finalImage->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::heroChosen, this, i));
-        i++;
     }
 }
 
@@ -266,9 +266,7 @@ void SelectionGUI::heroChosen(int i)
 {
     if(i != activeHeroNumber)
     {
-        std::cout << i << "Hero chosen" << std::endl;
         clickedHero(heroesList->at(i));
-
     }
 }
 
@@ -280,7 +278,7 @@ void SelectionGUI::setActiveHero(HeroTemplate *hero)
         std::cerr << "SelectionGUI::setActiveHero(HeroTemplate *hero): No heroes in heroesList";
 
     int i = 0, pos = -1;
-    for(auto it = heroesList->begin(), end = heroesList->end(); it != end; it++, i++)
+    for(auto it = heroesList->begin(), end = heroesList->end(); it != end; it++)
     {
         if(*it == hero)
         {
@@ -293,9 +291,10 @@ void SelectionGUI::setActiveHero(HeroTemplate *hero)
             pendingImage2->SetImage((*it)->getResources().getImage());
             table->Attach(pendingImage2,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
         }
+        i++;
     }
     activeHeroNumber = pos;
-    std::cout << pos << "Set active hero" << std::endl;
+    std::cout << pos << "  Set active hero" << std::endl;
 
     //Active hero info on the top
     if(activeHeroNumber == -1)
@@ -327,9 +326,85 @@ void SelectionGUI::setActiveHero(HeroTemplate *hero)
     }
 }
 
-void SelectionGUI::setHeroGroup(HeroGroup *)
+void SelectionGUI::setHeroGroup(HeroGroup *heroGroup)
 {
+    if(heroGroup != nullptr)
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            switch(i)
+            {
+                case 0: setHeroImage(heroGroup->at(HeroPosition::back1), heroesGroup.at(HeroPosition::back1), i); break;
+                case 1: setHeroImage(heroGroup->at(HeroPosition::front1), heroesGroup.at(HeroPosition::front1), i); break;
+                case 2: setHeroImage(heroGroup->at(HeroPosition::back2), heroesGroup.at(HeroPosition::back2), i); break;
+                case 3: setHeroImage(heroGroup->at(HeroPosition::front2), heroesGroup.at(HeroPosition::front2), i); break;
+                case 4: setHeroImage(heroGroup->at(HeroPosition::back3), heroesGroup.at(HeroPosition::back3), i); break;
+                case 5: setHeroImage(heroGroup->at(HeroPosition::front3), heroesGroup.at(HeroPosition::front3), i); break;
+            }
+        }
+        heroesGroup = *heroGroup;
+    }
 
+    std::cerr << "setHeroGroup main" << std::endl;
+}
+
+void SelectionGUI::setHeroImage(Hero *hero, Hero *myhero, int pos)
+{
+    if(hero != myhero)
+    {
+        if (hero != nullptr)
+        {
+
+            normImage[pos]->SetImage(hero->getResources().getImage());
+            normImage[pos]->GetSignal( sfg::Widget::OnMouseEnter ).Connect(
+                        std::bind( &SelectionGUI::mouseEvent, this, Mouse::ENTER ) );
+            normImage[pos]->GetSignal( sfg::Widget::OnMouseLeave ).Connect(
+                        std::bind( &SelectionGUI::mouseEvent, this, Mouse::LEAVE ) );
+            fieldTable->Attach(normImage[pos],sf::Rect<sf::Uint32>( pos%2, floor(pos/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+            std::cerr << pos << "  is full" << std::endl;
+        }
+        else
+        {
+            normImage[pos] = defaultImage[pos];
+            signalSetting(pos);
+            fieldTable->Attach(normImage[pos],sf::Rect<sf::Uint32>( pos%2, floor(pos/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+            std::cerr << pos << "  is empty" << std::endl;
+        }
+    }
+}
+
+void SelectionGUI::mouseEvent(Mouse mouse)
+{
+    switch(mouse)
+    {
+        case ENTER: break;
+        case LEAVE: break;
+    }
+}
+
+void SelectionGUI::clickedPlus(HeroPosition pos)
+{
+    if(activeHeroNumber != -1)
+        clickedPlace(pos);
+}
+
+void SelectionGUI::signalSetting(int i)
+{
+    switch(i)
+    {
+        case 0: normImage[0]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                    std::bind( &SelectionGUI::clickedPlus, this, HeroPosition::back1 ) ); break;
+        case 1: normImage[1]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                    std::bind( &SelectionGUI::clickedPlus, this, HeroPosition::front1 ) ); break;
+        case 2: normImage[2]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                    std::bind( &SelectionGUI::clickedPlus, this, HeroPosition::back2 ) ); break;
+        case 3: normImage[3]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                    std::bind( &SelectionGUI::clickedPlus, this, HeroPosition::front2 ) ); break;
+        case 4: normImage[4]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                   std::bind( &SelectionGUI::clickedPlus, this, HeroPosition::back3 ) ); break;
+        case 5: normImage[5]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                    std::bind( &SelectionGUI::clickedPlus, this, HeroPosition::front3 ) ); break;
+    }
 }
 
 void SelectionGUI::setCost()
