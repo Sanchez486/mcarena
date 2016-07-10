@@ -39,6 +39,7 @@ private:
     sfg::Window::Ptr fieldWindow;
     sfg::Box::Ptr fieldBox;
     sfg::Table::Ptr fieldTable;
+    sfg::Window::Ptr infoLabelWindow;
 
     //Heroes list
     sfg::Window::Ptr scrollwin;
@@ -66,6 +67,7 @@ private:
     //For info
     sfg::Label::Ptr infoLabels[7];
     sfg::Image::Ptr infoPics[5];
+    sfg::Label::Ptr label;
 
 
     //for signals

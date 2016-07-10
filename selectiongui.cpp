@@ -19,6 +19,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
       app_window(_app_window),
       //Boxes
       infoWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
+      infoLabelWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
       infoBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL,FRAME)),
       infoTable(sfg::Table::Create()),
       pointsWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
@@ -47,7 +48,9 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
       playerWindow(sfg::Window::Create(sfg::Window::Style::NO_STYLE)),
       playerBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 20)),
       player1Button(sfg::Button::Create( "PLAYER1" )),
-      player2Button(sfg::Button::Create( "PLAYER2" ))
+      player2Button(sfg::Button::Create( "PLAYER2" )),
+
+      label(sfg::Label::Create("Choose a hero!!!"))
       
 {
     app_window.resetGLStates();
@@ -58,6 +61,9 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     desktop.Add(infoWindow);
     infoWindow->Add(infoBox);
     infoWindow->SetAllocation(sf::FloatRect(XSCROLL+FRAME*2+XSCROLLBAR,0,app_window.getX()-XSCROLL-FRAME*2-XSCROLLBAR,YINFO));
+    desktop.Add(infoLabelWindow);
+    infoLabelWindow->Add(label);
+    infoLabelWindow->SetAllocation(infoWindow->GetAllocation());
     infoBox->Pack(infoTable);
     desktop.Add(pointsWindow);
     pointsWindow->Add(pointsBox);
@@ -101,6 +107,8 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     infoTable->Attach(infoLabels[5],sf::Rect<sf::Uint32>(4, 0, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
     infoTable->Attach(infoLabels[6],sf::Rect<sf::Uint32>(0, 3, 7, 1),sfg::Table::EXPAND | sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
 
+
+
     //Buttons Window
     desktop.Add(buttonsWindow);
     buttonsWindow->Add(buttonsBox);
@@ -119,7 +127,9 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
 
     player1Button->SetId("p1");
     player2Button->SetId("p2");
+    label->SetId("l1");
     sfg::Context::Get().GetEngine().SetProperty("Button#p1", "BackgroundColor", sf::Color(96,26,67));
+    sfg::Context::Get().GetEngine().SetProperty("Label#l1", "FontSize", 20);
     player1Button->SetState(sfg::Widget::State::INSENSITIVE);
 
     //Heroes window
@@ -291,10 +301,13 @@ void SelectionGUI::setActiveHero(HeroTemplate *hero)
     //Active hero info on the top
     if(activeHeroNumber == -1)
     {
-
+        infoLabelWindow->Show(true);
+        infoWindow->Show(false);
     }
     else
     {
+        infoLabelWindow->Show(false);
+        infoWindow->Show(true);
         infoLabels[0]->SetText("Pretty Long Hero Name");
         infoLabels[1]->SetText(std::to_string( hero->getStats().hp.max ) + " HP");
         infoLabels[2]->SetText(std::to_string( hero->getStats().damage.max ) + " DMG");
