@@ -37,7 +37,7 @@ public slots:
     void closedMenu();
 
     // SelectionModel -> Game
-    void clickedStart();
+    void clickedStart(Player *player1, Player *player2);
     void clickedMenu();
     void closedSelection();
 

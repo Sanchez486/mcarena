@@ -1,13 +1,17 @@
 #pragma once
 #include <QObject>
+
 #include "hero.h"
 #include "heroqueue.h"
 #include "action.h"
+#include "player.h"
 
 class BattleModel : public QObject
 {
 Q_OBJECT
 private:
+    Player *player1;
+    Player *player2;
 
 signals:
     // BattleModel -> BattleGUI
@@ -30,5 +34,6 @@ public slots:
 public:
     BattleModel(QObject *parent = nullptr);
 
-   void hideGUI();
+    void beginBattle(Player *_player1, Player *_player2);
+    void hideGUI();
 };

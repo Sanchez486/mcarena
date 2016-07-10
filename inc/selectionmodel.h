@@ -26,7 +26,7 @@ signals:
     void setCost(Cost*); // Change cost amount: 'curr/max'
 
     // SelectionModel -> Game
-    void clickedStartSignal();
+    void clickedStartSignal(Player *player1, Player *player2);
     void clickedMenuSignal();
     void closedSignal();
 

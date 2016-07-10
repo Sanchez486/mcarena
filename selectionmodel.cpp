@@ -80,11 +80,12 @@ void SelectionModel::updateHero(HeroPosition pos, HeroTemplate *templ)
     }
 }
 
-// TODO
+// TODO: check if both players ready
 void SelectionModel::clickedStart()
 {
     cerr << "SelectionModel::clickedStart()" << endl;
-    emit clickedStartSignal();
+
+    emit clickedStartSignal(player1, player2);
 }
 
 void SelectionModel::clickedMenu()
