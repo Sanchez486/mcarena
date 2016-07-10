@@ -109,12 +109,14 @@ void SelectionModel::beginPlay(HeroVector *_heroes)
         delete player1;
     }
     player1 = new Player();
+    player1->setMaxCost(99);
 
     if(player2 != nullptr)
     {
         delete player2;
     }
     player2 = new Player();
+    player2->setMaxCost(99);
 
     activePlayer = player1;
     activeHero = nullptr;

@@ -15,4 +15,5 @@ public:
     HeroGroup& getHeroGroup();
     Cost& getCost();
     void updateCost();
+    void setMaxCost(int max);
 };

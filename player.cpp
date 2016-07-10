@@ -1,8 +1,8 @@
 #include "inc/player.h"
 
-Player::Player() : heroGroup()
+Player::Player() : heroGroup(), cost()
 {
-
+    updateCost();
 }
 
 HeroGroup& Player::getHeroGroup()
@@ -18,4 +18,9 @@ Cost &Player::getCost()
 void Player::updateCost()
 {
     cost.countUsed(heroGroup);
+}
+
+void Player::setMaxCost(int max)
+{
+    cost.setMax(max);
 }
