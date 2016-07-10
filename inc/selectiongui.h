@@ -107,6 +107,6 @@ public slots:
     void setHeroVector(HeroVector *heroVector);  // Change current list of heroes
     void setActiveHero(HeroTemplate *hero);  // Change current hero
     void setHeroGroup(HeroGroup*);  // Change current group
-    void setCost(/* cost */); // Change cost amount: 'curr/max'
+    void setCost(Cost*); // Change cost amount: 'curr/max'
     void showCross(HeroPosition);  // Show cross on seat  [this -> this]
 };

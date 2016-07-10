@@ -43,7 +43,7 @@ Game::Game(int argc, char *argv[]) : app(argc, argv), heroes()
     connect(selectionModel, SIGNAL(setHeroVector(HeroVector*)), selectionGUI, SLOT(setHeroVector(HeroVector*)));
     connect(selectionModel, SIGNAL(setActiveHero(HeroTemplate*)), selectionGUI, SLOT(setActiveHero(HeroTemplate*)));
     connect(selectionModel, SIGNAL(setHeroGroup(HeroGroup*)), selectionGUI, SLOT(setHeroGroup(HeroGroup*)));
-    connect(selectionModel, SIGNAL(setCost()), selectionGUI, SLOT(setCost()));
+    connect(selectionModel, SIGNAL(setCost(Cost*)), selectionGUI, SLOT(setCost(Cost*)));
 
     // Signals Battle GUI -> Model
     connect(battleGUI, SIGNAL(selectedAction(Action*)), battleModel, SLOT(selectedAction(Action*)));
