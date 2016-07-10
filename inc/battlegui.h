@@ -48,7 +48,6 @@ private:
     sfg::Box::Ptr queueSBox;
     sfg::ScrolledWindow::Ptr qScroll;
     sfg::Box::Ptr queueBox;
-    sfg::Table::Ptr queueTable;
     sfg::Separator::Ptr separator;
 
     //ButtonWindow

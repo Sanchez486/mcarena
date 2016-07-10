@@ -22,8 +22,7 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
       //Queuewindow
       queueSBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, FRAME)),
       qScroll(sfg::ScrolledWindow::Create()),
-      queueBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),
-      queueTable(sfg::Table::Create()),
+      queueBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, 10)),
       separator(sfg::Separator::Create(sfg::Separator::Orientation::VERTICAL)),
 
       //Buttonwindow
@@ -54,7 +53,6 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     queueWindow->Add(queueSBox);
     queueSBox->Pack(qScroll, false, true);
     qScroll->AddWithViewport(queueBox);
-    queueBox->Pack(queueTable);
     qScroll->SetScrollbarPolicy( sfg::ScrolledWindow::VERTICAL_NEVER| sfg::ScrolledWindow::HORIZONTAL_ALWAYS);
     qScroll->SetRequisition( sf::Vector2f(app_window.getX() - FRAME*2, YICON ) );
 
@@ -62,13 +60,16 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
 
     sf::Image sfImage;
     sfImage.loadFromFile("res/img/images/sonic_img.png");
-    image = sfg::Image::Create(sfImage);
-    sfg::Image::Ptr images[12];
+
     for(int i=0;i<13;i++)
     {
-        images[i]=sfg::Image::Create(sfImage);
-        if (i==1) queueTable->Attach(separator,sf::Rect<sf::Uint32>( i, 0, 1, 1), sfg::Table::FILL, sfg::Table::FILL );
-        else queueTable->Attach(images[i],sf::Rect<sf::Uint32>( i, 0, 1, 1), sfg::Table::FILL, sfg::Table::FILL,sf::Vector2f(7,YINDENT));
+        if(i == 1)
+            queueBox->Pack(separator);
+        else
+        {
+            image = sfg::Image::Create(sfImage);
+            queueBox->Pack(image);
+        }
     }
 
 

@@ -298,7 +298,7 @@ void SelectionGUI::setActiveHero(HeroTemplate *hero)
         infoLabels[0]->SetText("Pretty Long Hero Name");
         infoLabels[1]->SetText(std::to_string( hero->getStats().hp.max ) + " HP");
         infoLabels[2]->SetText(std::to_string( hero->getStats().damage.max ) + " DMG");
-        infoLabels[3]->SetText(std::to_string( hero->getStats().initiative.limit ) + " INIT");
+        infoLabels[3]->SetText(std::to_string( hero->getStats().initiative.val ) + " INIT");
         switch(hero->getStats().element)
         {
             case Element::neutral: infoLabels[4]->SetText("Neutral element");
