@@ -50,6 +50,7 @@ private:
 
     HeroVector* heroesList;
     int activeHeroNumber;
+    sfg::Image::Ptr pendingImage, pendingImage2;
 
     //For main bar
     sfg::Window::Ptr buttonsWindow;

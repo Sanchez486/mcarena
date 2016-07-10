@@ -36,6 +36,8 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
       table(sfg::Table::Create()),
       tablebox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
       activeHeroNumber(0),
+      pendingImage(sfg::Image::Create()),
+      pendingImage2(sfg::Image::Create()),
 
       //Main box
       buttonsWindow(sfg::Window::Create(sfg::Window::Style::NO_STYLE)),
@@ -51,7 +53,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
       player2Button(sfg::Button::Create( "PLAYER2" )),
 
       label(sfg::Label::Create("Choose a hero!!!"))
-      
+
 {
     app_window.resetGLStates();
     backgroundT.loadFromFile("src/selectBACK.jpg");
@@ -252,12 +254,10 @@ void SelectionGUI::setHeroVector(HeroVector *heroVector)
     int i = 0;
     for(auto it = heroesList->begin(), end = heroesList->end(); it != end; it++)
     {
-        sf::Image image = (*it)->getResources().getImage();
-        sfg::Image::Ptr finalImage = sfg::Image::Create(image);
+        sfg::Image::Ptr finalImage = sfg::Image::Create((*it)->getResources().getImage());
         table->Attach(finalImage,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
         //Signal setting
         finalImage->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::heroChosen, this, i));
-
         i++;
     }
 }
@@ -284,17 +284,14 @@ void SelectionGUI::setActiveHero(HeroTemplate *hero)
     {
         if(*it == hero)
         {
-            sf::Image image = (*it)->getResources().getImage2();
-            sfg::Image::Ptr finalImage = sfg::Image::Create(image);
-            table->Attach(finalImage,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+            pendingImage->SetImage((hero)->getResources().getImage2());
+            table->Attach(pendingImage,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
             pos = i;
         }
         else if(i == activeHeroNumber)
         {
-            sf::Image image = (*it)->getResources().getImage();
-            sfg::Image::Ptr finalImage = sfg::Image::Create(image);
-            table->Attach(finalImage,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
-
+            pendingImage2->SetImage((*it)->getResources().getImage());
+            table->Attach(pendingImage2,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
         }
     }
     activeHeroNumber = pos;
