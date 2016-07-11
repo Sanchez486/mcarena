@@ -10,19 +10,25 @@ BattleModel::BattleModel(QObject *parent)
 
 }
 
-void BattleModel::selectedAction(Action *)
+void BattleModel::selectedAction(Action *_action)
 {
-    cerr << "BattleModel::selectedAction(Action *)" << endl;
+    action = _action;
+    emit showTargets(action);
 }
 
-void BattleModel::selectedTarget(Hero *)
+void BattleModel::selectedTarget(Hero *target)
 {
-    cerr << "BattleModel::selectedTarget(Hero *)" << endl;
+    action->setTarget(target);
+    action->doAction();
+    emit playAction(action);
+
+    heroQueue.rotate();
+    emit setQueue(&heroQueue);
+    emit setActiveHero(heroQueue.first());
 }
 
 void BattleModel::closed()
 {
-    cerr << "BattleModel::closed()" << endl;
     emit closedSignal();
 }
 
