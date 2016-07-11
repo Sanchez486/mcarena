@@ -62,16 +62,22 @@ void HeroGroup::set(HeroPosition pos, Hero *hero)
     {
     case HeroPosition::front1:
         front1 = hero;
+        break;
     case HeroPosition::front2:
         front2 = hero;
+        break;
     case HeroPosition::front3:
         front3 = hero;
+        break;
     case HeroPosition::back1:
         back1 = hero;
+        break;
     case HeroPosition::back2:
         back2 = hero;
+        break;
     case HeroPosition::back3:
         back3 = hero;
+        break;
     }
 }
 
