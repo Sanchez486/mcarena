@@ -28,7 +28,8 @@ SOURCES += main.cpp \
     player.cpp \
     herogroup.cpp \
     resources.cpp \
-    cost.cpp
+    cost.cpp \
+    heroqueue.cpp
 
 HEADERS += \
     inc/menugui.h \
