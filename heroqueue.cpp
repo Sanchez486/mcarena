@@ -1,5 +1,10 @@
 #include "inc/heroqueue.h"
 
+HeroQueue::HeroQueue() : heroList()
+{
+
+}
+
 HeroQueue::HeroQueue(const HeroGroup &group1, const HeroGroup &group2)
 {
     setHeroes(group1, group2);
@@ -54,6 +59,7 @@ Hero* HeroQueue::first() const
 // TODO: use accumulated initiative
 void HeroQueue::rotate()
 {
-    Hero *front = heroList.pop_front();
+    Hero *front = heroList.front();
+    heroList.pop_front();
     heroList.push_back(front);
 }

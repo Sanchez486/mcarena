@@ -4,7 +4,8 @@
 using namespace std;
 
 BattleModel::BattleModel(QObject *parent)
-    : QObject(parent)
+    : QObject(parent),
+      heroQueue()
 {
 
 }
@@ -30,7 +31,11 @@ void BattleModel::beginBattle(Player *_player1, Player *_player2)
     player1 = _player1;
     player2 = _player2;
 
+    heroQueue.setHeroes(player1->getHeroGroup(), player2->getHeroGroup());
+
     emit show();
+    emit setQueue(&heroQueue);
+    emit setActiveHero(heroQueue.first());
 }
 
 void BattleModel::hideGUI()

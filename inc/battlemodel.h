@@ -12,6 +12,7 @@ Q_OBJECT
 private:
     Player *player1;
     Player *player2;
+    HeroQueue heroQueue;
 
 signals:
     // BattleModel -> BattleGUI

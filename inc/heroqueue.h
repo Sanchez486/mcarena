@@ -11,6 +11,7 @@ private:
     std::list<Hero*> heroList;
 
 public:
+    HeroQueue();
     HeroQueue(const HeroGroup &group1, const HeroGroup &group2);
 
     void setHeroes(const HeroGroup &group1, const HeroGroup &group2);
