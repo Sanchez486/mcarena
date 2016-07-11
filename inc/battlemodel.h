@@ -18,6 +18,7 @@ signals:
     // BattleModel -> BattleGUI
     void show();  // Show GUI window
     void hide();  // Hide GUI window
+    void setPlayers(Player *player1, Player *player2);
     void setActiveHero(Hero*);  // Change current hero
     void setQueue(HeroQueue*);  // Change queue
     void showTargets(Action*);  // Highlight avaliable targets

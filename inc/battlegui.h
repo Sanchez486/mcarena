@@ -86,6 +86,7 @@ signals:
 public slots:
     void show();  // Show this window
     void hide();  // Hide this window
+    void setPlayers(Player *player1, Player *player2);
     void setActiveHero(Hero*);  // Change current hero
     void setQueue(HeroQueue*);  // Change queue
     void showInfo(Hero*);  // Show info about Hero  [this -> this]

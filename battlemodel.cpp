@@ -34,6 +34,7 @@ void BattleModel::beginBattle(Player *_player1, Player *_player2)
     heroQueue.setHeroes(player1->getHeroGroup(), player2->getHeroGroup());
 
     emit show();
+    emit setPlayers(player1, player2);
     emit setQueue(&heroQueue);
     emit setActiveHero(heroQueue.first());
 }
