@@ -122,33 +122,24 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
                                              (app_window.getY()-FRAME*2-YBUTTONS+YINFO-YFIELD)/2, XFIELD, YFIELD));
 
     plusImg.loadFromFile("res/img/icons/plus.png");
+    crossImg.loadFromFile("res/img/icons/cross.png");
     for (int i=0;i<6;i++)
     {
         imageArray[i] = sfg::Image::Create(plusImg);
         imageType[i] = Image::DEFAULT;
+
+        crossImageArray[i] = sfg::Image::Create(crossImg);
 
         //Signals connection
         imageArray[i]->GetSignal( sfg::Widget::OnMouseEnter ).Connect(
                     std::bind( &SelectionGUI::mouseEvent, this, Mouse::ENTER, i ) );
         imageArray[i]->GetSignal( sfg::Widget::OnMouseLeave ).Connect(
                     std::bind( &SelectionGUI::mouseEvent, this, Mouse::LEAVE, i ) );
-        switch(i)
-        {
-            case 0: imageArray[0]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
-                        std::bind( &SelectionGUI::clickedPlus, this, HeroPosition::back1, 0 ) ); break;
-            case 1: imageArray[1]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
-                        std::bind( &SelectionGUI::clickedPlus, this, HeroPosition::front1, 1 ) ); break;
-            case 2: imageArray[2]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
-                        std::bind( &SelectionGUI::clickedPlus, this, HeroPosition::back2, 2 ) ); break;
-            case 3: imageArray[3]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
-                        std::bind( &SelectionGUI::clickedPlus, this, HeroPosition::front2, 3 ) ); break;
-            case 4: imageArray[4]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
-                       std::bind( &SelectionGUI::clickedPlus, this, HeroPosition::back3, 4 ) ); break;
-            case 5: imageArray[5]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
-                        std::bind( &SelectionGUI::clickedPlus, this, HeroPosition::front3, 5 ) ); break;
-        }
+        connectSignals(i);
 
         fieldTable->Attach(imageArray[i],sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+        fieldTable->Attach(crossImageArray[i], sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1));
+        crossImageArray[i]->Show(false);
     }
 
     //Buttons
@@ -208,6 +199,26 @@ void SelectionGUI::clickedButton(ButtonPressed Button)
             break;
         }
     }
+}
+
+void SelectionGUI::_clickedHero(int i)
+{
+    if(i != activeHeroNumber)
+    {
+        clickedHero(heroesList->at(i));
+    }
+}
+
+void SelectionGUI::_clickedPlace(HeroPosition pos, int i)
+{
+    if(imageType[i] == Image::DEFAULT && activeHeroNumber != -1)
+        clickedPlace(pos);
+}
+
+void SelectionGUI::_clickedCross(HeroPosition pos, int i)
+{
+    crossImageArray[i]->Show(false);
+    clickedCross(pos);
 }
 
 void SelectionGUI::show()
@@ -270,15 +281,7 @@ void SelectionGUI::setHeroVector(HeroVector *heroVector)
         sfg::Image::Ptr finalImage = sfg::Image::Create((*it)->getResources().getImage());
         table->Attach(finalImage,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
         //Signal setting
-        finalImage->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::heroChosen, this, i));
-    }
-}
-
-void SelectionGUI::heroChosen(int i)
-{
-    if(i != activeHeroNumber)
-    {
-        clickedHero(heroesList->at(i));
+        finalImage->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::_clickedHero, this, i));
     }
 }
 
@@ -376,16 +379,51 @@ void SelectionGUI::mouseEvent(Mouse mouse, int i)
     {
         switch(mouse)
         {
-            case ENTER: break;
-            case LEAVE: break;
+            case ENTER:
+                crossImageArray[i]->Show(true);
+                break;
+            case LEAVE:
+                crossImageArray[i]->Show(false);
+                break;
         }
     }
 }
 
-void SelectionGUI::clickedPlus(HeroPosition pos, int i)
+void SelectionGUI::connectSignals(int pos)
 {
-    if(imageType[i] == Image::DEFAULT && activeHeroNumber != -1)
-        clickedPlace(pos);
+    switch(pos)
+    {
+        case 0: imageArray[pos]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                    std::bind( &SelectionGUI::_clickedPlace, this, HeroPosition::back1, pos ) );
+                crossImageArray[pos]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                                std::bind( &SelectionGUI::_clickedCross, this, HeroPosition::back1, pos) );
+                break;
+        case 1: imageArray[pos]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                    std::bind( &SelectionGUI::_clickedPlace, this, HeroPosition::front1, pos ) );
+                crossImageArray[pos]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                                std::bind( &SelectionGUI::_clickedCross, this, HeroPosition::front1, pos) );
+                break;
+        case 2: imageArray[pos]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                    std::bind( &SelectionGUI::_clickedPlace, this, HeroPosition::back2, pos ) );
+                crossImageArray[pos]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                                std::bind( &SelectionGUI::_clickedCross, this, HeroPosition::back2, pos) );
+                break;
+        case 3: imageArray[pos]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                    std::bind( &SelectionGUI::_clickedPlace, this, HeroPosition::front2, pos ) );
+                crossImageArray[pos]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                                std::bind( &SelectionGUI::_clickedCross, this, HeroPosition::front2, pos) );
+                break;
+        case 4: imageArray[pos]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                   std::bind( &SelectionGUI::_clickedPlace, this, HeroPosition::back3, pos ) );
+                crossImageArray[pos]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                                std::bind( &SelectionGUI::_clickedCross, this, HeroPosition::back3, pos) );
+                break;
+        case 5: imageArray[pos]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                    std::bind( &SelectionGUI::_clickedPlace, this, HeroPosition::front3, pos ) );
+                crossImageArray[pos]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                                std::bind( &SelectionGUI::_clickedCross, this, HeroPosition::front3, pos) );
+                break;
+    }
 }
 
 void SelectionGUI::setCost()

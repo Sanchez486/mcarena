@@ -65,6 +65,8 @@ private:
 
     sf::Image plusImg;
     sfg::Image::Ptr imageArray[6];
+    sf::Image crossImg;
+    sfg::Image::Ptr crossImageArray[6];
 
     //Buttons
     sfg::Window::Ptr buttonsWindow;
@@ -101,14 +103,16 @@ private:
 
     Image imageType[6];
 
-    //sfgui widget signals
-    void clickedButton(ButtonPressed Button);
-    void heroChosen(int i);
-    void clickedPlus(HeroPosition pos, int i);
-    void mouseEvent(Mouse mouse, int i);
-
     //Additional functions
     void setHeroImage(Hero* hero, Hero *myhero, int pos);
+    void connectSignals(int pos);
+
+    //sfgui widget signals
+    void _clickedHero(int i);
+    void _clickedPlace(HeroPosition pos, int i);
+    void _clickedCross(HeroPosition pos, int i);
+    void clickedButton(ButtonPressed Button);
+    void mouseEvent(Mouse mouse, int i);
 
 signals:
     void clickedHero(HeroTemplate *hero);  // After hero clicked (on the left)
@@ -120,7 +124,6 @@ signals:
     void clickedPlayer1();
     void clickedPlayer2();
     void closed();  // After closing window
-    void mouseOnSeat(HeroPosition);  // After mouse moved on hero (show cross)  [this -> this]
 
 private slots:
     void update();
