@@ -230,9 +230,8 @@ void SelectionGUI::show()
    playerWindow->Show(true);
    infoLabelWindow->Show(true);
    scrollwin->Show(true);
-   timer = app_window.newTimer();
-   connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-   timer->start(10);
+   connect(app_window.getTimer(), SIGNAL(timeout()), this, SLOT(update()));
+   app_window.getTimer()->start(10);
 }
 
 void SelectionGUI::hide()
@@ -244,7 +243,7 @@ void SelectionGUI::hide()
     playerWindow->Show(false);
     infoLabelWindow->Show(false);
     scrollwin->Show(false);
-    app_window.deleteTimer();
+    disconnect(app_window.getTimer(), SIGNAL(timeout()), this, SLOT(update()));
     app_window.clear(sf::Color::Black);
     app_window.display();
 }
