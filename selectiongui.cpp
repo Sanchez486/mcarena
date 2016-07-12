@@ -1,9 +1,9 @@
 #include "inc/selectiongui.h"
-#define YINFO 180
+#define YINFO 140
 #define XFIELD 166
 #define YFIELD 300
-#define XPOINTS 180
-#define YPOINTS 130
+#define XPOINTS 140
+#define YPOINTS 80
 #define XSCROLL 166
 #define YBUTTONS 80
 #define XPLAYERS 190
@@ -87,12 +87,19 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     pointsWindow->SetAllocation(sf::FloatRect(app_window.getX()-XPOINTS, YINFO, XPOINTS, YPOINTS));
 
     for (int i=0;i<7;i++) infoLabels[i]= sfg::Label::Create("");
-    for (int i=0;i<5;i++)
-    {
-        sf::Image icoImg;
-        icoImg.loadFromFile("src/ico.jpg");
-        infoPics[i]= sfg::Image::Create(icoImg);
-    }
+
+    //loading pics
+    sf::Image icoImg;
+    icoImg.loadFromFile("res/img/icons/hp.png");
+    infoPics[0]= sfg::Image::Create(icoImg);
+    icoImg.loadFromFile("res/img/icons/attack.png");
+    infoPics[1]= sfg::Image::Create(icoImg);
+    icoImg.loadFromFile("res/img/icons/init.png");
+    infoPics[2]= sfg::Image::Create(icoImg);
+    icoImg.loadFromFile("res/img/icons/coin.png");
+    infoPics[3]= sfg::Image::Create(icoImg);
+    icoImg.loadFromFile("res/img/icons/coin.png");
+    infoPics[4]= sfg::Image::Create(icoImg);
 
     infoTable->Attach(infoPics[0],sf::Rect<sf::Uint32>(1, 1, 1, 1),sfg::Table::EXPAND | sfg::Table::FILL, sfg::Table::EXPAND | sfg::Table::FILL);
     infoTable->Attach(infoPics[1],sf::Rect<sf::Uint32>(1, 2, 1, 1),sfg::Table::EXPAND | sfg::Table::FILL, sfg::Table::EXPAND | sfg::Table::FILL);
