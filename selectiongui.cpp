@@ -141,7 +141,8 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
         connectSignals(i);
 
         fieldTable->Attach(imageArray[i],sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
-        fieldTable->Attach(crossImageArray[i], sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1));
+        fieldTable->Attach(crossImageArray[i], sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),
+                           sfg::Table::EXPAND, sfg::Table::EXPAND);
         crossImageArray[i]->Show(false);
     }
 
