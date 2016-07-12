@@ -1,3 +1,4 @@
+#include "inc/action.h"
 #include "inc/actions.h"
 
 Actions::Actions() : attack(nullptr), skill(nullptr)
@@ -24,6 +25,15 @@ Actions::Actions(const Actions &actions)
     {
         skill = actions.getSkill()->clone();
     }
+}
+
+Actions::~Actions()
+{
+    if(attack != nullptr)
+        delete attack;
+
+    if(skill != nullptr)
+        delete skill;
 }
 
 void Actions::setAttack(Action *action)
@@ -56,12 +66,38 @@ void Actions::setSkill(Action *action)
     }
 }
 
-Action *Actions::getAttack()
+Action *Actions::getAttack() const
 {
     return attack;
 }
 
-Action *Actions::getSkill()
+Action *Actions::getSkill() const
 {
     return skill;
+}
+
+void Actions::setPlayers(Player *player1, Player *player2)
+{
+    if(attack != nullptr)
+    {
+        attack->setPlayers(player1, player2);
+    }
+
+    if(skill != nullptr)
+    {
+        skill->setPlayers(player1, player2);
+    }
+}
+
+void Actions::setSender(Hero *sender)
+{
+    if(attack != nullptr)
+    {
+        attack->setSender(sender);
+    }
+
+    if(skill != nullptr)
+    {
+        skill->setSender(sender);
+    }
 }

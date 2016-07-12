@@ -6,6 +6,11 @@ Action::Action()
 
 }
 
+Action::~Action()
+{
+
+}
+
 Action* Action::clone()
 {
     return new Action(*this);

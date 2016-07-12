@@ -1,6 +1,8 @@
 #pragma once
 
-#include "action.h"
+class Action;
+class Player;
+class Hero;
 
 class Actions
 {
@@ -11,9 +13,13 @@ private:
 public:
     Actions();
     Actions(const Actions &actions);
+    ~Actions();
 
     void setAttack(Action *action);
     void setSkill(Action *action);
-    Action* getAttack();
-    Action* getSkill();
+    Action* getAttack() const;
+    Action* getSkill() const;
+
+    void setPlayers(Player *player1, Player *player2);  // for all actions
+    void setSender(Hero *sender);  // for all actions
 };

@@ -13,6 +13,7 @@ private:
 
 public:
     Action();
+    virtual ~Action();
 
     virtual Action* clone();  // return new Action(*this);
 

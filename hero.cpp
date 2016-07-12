@@ -5,6 +5,7 @@ Hero::Hero(HeroTemplate *_templ) : heroTemplate(_templ)
     if(heroTemplate != nullptr)
     {
         stats = new Stats(heroTemplate->getStats());
+        stats->actions.setSender(this);
     }
     else
     {

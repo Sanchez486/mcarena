@@ -1,7 +1,6 @@
 #pragma once
 
 #include "herotemplate.h"
-#include "stats.h"
 
 class Hero
 {
@@ -17,3 +16,5 @@ public:
     Stats& getTemplateStats();  // return heroTemplate->getStats
     Resources& getResources();
 };
+
+#include "stats.h"
