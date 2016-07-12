@@ -3,6 +3,12 @@
 MainWindow::MainWindow() : RenderWindow()
 {
     create(sf::VideoMode(XSIZE,YSIZE), "McArena", sf::Style::Titlebar | sf::Style::Close);
+    timer = new QTimer();
+}
+
+MainWindow::~MainWindow()
+{
+    delete timer;
 }
 
 int MainWindow::getX()
@@ -15,14 +21,7 @@ int MainWindow::getY()
     return YSIZE;
 }
 
-QTimer* MainWindow::newTimer()
+QTimer* MainWindow::getTimer()
 {
-    timer = new QTimer();
     return timer;
 }
-
-void MainWindow::deleteTimer()
-{
-    delete timer;
-}
-

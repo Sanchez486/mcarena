@@ -16,8 +16,8 @@ private:
     const int YSIZE = 600;
 public:
     MainWindow();
-    QTimer* newTimer();
-    void deleteTimer();
+    ~MainWindow();
+    QTimer* getTimer();
     int getX();
     int getY();
 };
