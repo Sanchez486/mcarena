@@ -34,7 +34,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
       pendingImage(sfg::Image::Create()),
       pendingImage2(sfg::Image::Create()),
 
-      activeHeroNumber(0),
+      activeHeroNumber(-1),
 
       //Left heroes list
       scrollwin(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
