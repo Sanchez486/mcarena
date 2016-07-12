@@ -87,13 +87,13 @@ void SelectionModel::clickedStart()
     {
         emit clickedStartSignal(player1, player2);
     }
-    else
-    {
-        cerr << "SelectionModel::clickedStart()" << endl
-             << "  Groups are not valid!!!" << endl;
+//    else
+//    {
+//        cerr << "SelectionModel::clickedStart()" << endl
+//             << "  Groups are not valid!!!" << endl;
 
-        emit clickedStartSignal(player1, player2);
-    }
+//        emit clickedStartSignal(player1, player2);
+//    }
 }
 
 void SelectionModel::clickedMenu()
@@ -105,12 +105,14 @@ void SelectionModel::clickedPlayer1()
 {
     activePlayer = player1;
     emit setHeroGroup( &(activePlayer->getHeroGroup()) );
+    emit setCost( &(activePlayer->getCost()) );
 }
 
 void SelectionModel::clickedPlayer2()
 {
     activePlayer = player2;
     emit setHeroGroup( &(activePlayer->getHeroGroup()) );
+    emit setCost( &(activePlayer->getCost()) );
 }
 
 void SelectionModel::closed()
@@ -132,6 +134,7 @@ void SelectionModel::beginPlay(HeroVector *_heroes)
     emit setHeroVector(heroes);
     emit setActiveHero(activeHero);
     emit setHeroGroup( &(activePlayer->getHeroGroup()) );
+    emit setCost( &(activePlayer->getCost()) );
 }
 
 // TODO
