@@ -43,6 +43,8 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
       table(sfg::Table::Create()),
       tablebox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
 
+      heroImages(),
+
       //Central hero pick list
       fieldWindow(sfg::Window::Create(sfg::Window::Style::NO_STYLE)),
       fieldBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, FRAME)),
@@ -104,6 +106,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     infoTable->Attach(infoLabels[4],sf::Rect<sf::Uint32>(4, 2, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
     infoTable->Attach(infoLabels[5],sf::Rect<sf::Uint32>(4, 0, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
     infoTable->Attach(infoLabels[6],sf::Rect<sf::Uint32>(0, 3, 7, 1),sfg::Table::EXPAND | sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoPic,sf::Rect<sf::Uint32>(0, 0, 1, 3),sfg::Table::EXPAND | sfg::Table::FILL , sfg::Table::EXPAND );
 
     //Left heroes list
     desktop.Add(scrollwin);
@@ -275,12 +278,20 @@ void SelectionGUI::setHeroVector(HeroVector *heroVector)
 {
     heroesList = heroVector;
     int i = 0;
+
+    if(!heroImages.empty())
+    {
+        for(auto it = heroImages.begin(), end = heroImages.end(); it != end; it++)
+            table->Remove(*it);
+
+        heroImages.clear();
+    }
     for(auto it = heroesList->begin(), end = heroesList->end(); it != end; it++, i++)
     {
-        sfg::Image::Ptr finalImage = sfg::Image::Create((*it)->getResources().getImage());
-        table->Attach(finalImage,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
-        //Signal setting
-        finalImage->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::_clickedHero, this, i));
+
+        heroImages.push_back(sfg::Image::Create((*it)->getResources().getImage()));
+        table->Attach(heroImages[i],sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+        heroImages[i]->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::_clickedHero, this, i));
     }
 }
 
@@ -292,14 +303,12 @@ void SelectionGUI::setActiveHero(HeroTemplate *hero)
     {
         if(*it == hero)
         {
-            pendingImage->SetImage((hero)->getResources().getImage2());
-            table->Attach(pendingImage,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+            heroImages[i]->SetImage((hero)->getResources().getImage2());
             pos = i;
         }
         else if(i == activeHeroNumber)
         {
-            pendingImage2->SetImage((*it)->getResources().getImage());
-            table->Attach(pendingImage2,sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
+            heroImages[i]->SetImage((*it)->getResources().getImage());
         }
         i++;
     }
@@ -334,7 +343,6 @@ void SelectionGUI::setActiveHero(HeroTemplate *hero)
         }
 
         infoPic->SetImage(hero->getResources().getImage());
-        infoTable->Attach(infoPic,sf::Rect<sf::Uint32>(0, 0, 1, 3),sfg::Table::EXPAND | sfg::Table::FILL , sfg::Table::EXPAND );
     }
 }
 

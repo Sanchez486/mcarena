@@ -56,6 +56,8 @@ private:
     sfg::Table::Ptr table;
     sfg::Box::Ptr tablebox;
 
+    std::vector<sfg::Image::Ptr> heroImages;
+
     //Central heroes pick list
     sfg::Window::Ptr fieldWindow;
     sfg::Box::Ptr fieldBox;
