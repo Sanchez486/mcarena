@@ -243,6 +243,7 @@ void SelectionGUI::show()
    scrollwin->Show(true);
    connect(app_window.getTimer(), SIGNAL(timeout()), this, SLOT(update()));
    app_window.getTimer()->start(10);
+   clickedButton(ButtonPressed::PLAYER1);
 }
 
 void SelectionGUI::hide()
