@@ -6,6 +6,11 @@ Action::Action()
 
 }
 
+Action* Action::clone()
+{
+    return new Action(*this);
+}
+
 void Action::setPlayers(Player *_player1, Player *_player2)
 {
     player1 = _player1;

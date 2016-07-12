@@ -14,6 +14,8 @@ private:
 public:
     Action();
 
+    virtual Action* clone();  // return new Action(*this);
+
     void setPlayers(Player *_player1, Player *_player2);
     void setSender(Hero *_sender);
     void setTarget(Hero *_target);
