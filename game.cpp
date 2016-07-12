@@ -1,4 +1,5 @@
 #include "inc/game.h"
+#include <tinyxml.h>
 #include <iostream>
 
 using namespace std;
@@ -147,90 +148,88 @@ int Game::exec()
 
 void Game::loadHeroes()
 {
-    Resources *resource = new Resources();
-    resource->loadAttackSound("res/sfx/sonic_attack.wav");
-    resource->loadSkillSound("res/sfx/sonic_attack.wav");
-    resource->loadTexture("res/img/sprites/sonic_sprite.png");
-    resource->loadImage("res/img/images/sonic_img.png");
-    resource->loadImage2("res/img/images/sonic_img2.png");
+    TiXmlDocument *document = new TiXmlDocument("res/Heroes.xml");
+    if(!document->LoadFile(TIXML_ENCODING_UTF8))
+    {
+        std::cout << "Error! file .... ";
+        return;
+    }
 
-    HeroTemplate *hero1 = new HeroTemplate();
-    hero1->setResources(*resource);
-    hero1->setStats(Stats(HP(90),Damage(30,35),Kind::range,Element::earth,Initiative(50),Actions(),5));
-    heroes.push_back(hero1);
+    TiXmlElement *xml_resources = document->FirstChildElement("resources");
+    if (xml_resources == nullptr)
+        return;
 
-    HeroTemplate *hero2 = new HeroTemplate();
-    hero2->setResources(*resource);
-    hero2->setStats(Stats(HP(90),Damage(20,25),Kind::range,Element::earth,Initiative(30),Actions(),5));
-    heroes.push_back(hero2);
+    TiXmlElement *xml_hero = xml_resources->FirstChildElement("hero");
+    if (xml_hero == nullptr)
+        return;
 
-    HeroTemplate *hero3 = new HeroTemplate();
-    hero3->setResources(*resource);
-    hero3->setStats(Stats(HP(60),Damage(10,15),Kind::range,Element::earth,Initiative(40),Actions(),8));
-    heroes.push_back(hero3);
+    while(xml_hero != nullptr)
+    {
+        HeroTemplate *hero = new HeroTemplate();
 
-    HeroTemplate *hero4 = new HeroTemplate();
-    hero4->setResources(*resource);
-    hero4->setStats(Stats(HP(140),Damage(50,55),Kind::melee,Element::earth,Initiative(40),Actions(),9));
-    heroes.push_back(hero4);
+        // resource load
+        Resources resource;
 
-    HeroTemplate *hero5 = new HeroTemplate();
-    hero5->setResources(*resource);
-    hero5->setStats(Stats(HP(75),Damage(30,35),Kind::melee,Element::water,Initiative(30),Actions(),6));
-    heroes.push_back(hero5);
+        string atk_snd = xml_hero->Attribute("atk_snd");
+        string skl_snd = xml_hero->Attribute("skl_snd");
+        string texture = xml_hero->Attribute("texture");
+        string image = xml_hero->Attribute("image");
+        string image2 = xml_hero->Attribute("image2");
 
-    HeroTemplate *hero6 = new HeroTemplate();
-    hero6->setResources(*resource);
-    hero6->setStats(Stats(HP(120),Damage(45,50),Kind::melee,Element::water,Initiative(45),Actions(),8));
-    heroes.push_back(hero6);
+        resource.loadAttackSound(atk_snd);
+        resource.loadSkillSound(skl_snd);
+        resource.loadTexture(texture);
+        resource.loadImage(image);
+        resource.loadImage2(image2);
 
-    HeroTemplate *hero7 = new HeroTemplate();
-    hero7->setResources(*resource);
-    hero7->setStats(Stats(HP(45),Damage(20,25),Kind::melee,Element::water,Initiative(40),Actions(),2));
-    heroes.push_back(hero7);
+        hero->setResources(resource);
 
-    HeroTemplate *hero8 = new HeroTemplate();
-    hero8->setResources(*resource);
-    hero8->setStats(Stats(HP(135),Damage(10,15),Kind::range,Element::water,Initiative(30),Actions(),5));
-    heroes.push_back(hero8);
+        // stats load
+        int hp, dmg_min, dmg_max, init, cost;
+        Kind kind;
+        Element element;
 
-    HeroTemplate *hero9 = new HeroTemplate();
-    hero9->setResources(*resource);
-    hero9->setStats(Stats(HP(150),Damage(50,60),Kind::melee,Element::fire,Initiative(40),Actions(),10));
-    heroes.push_back(hero9);
+        xml_hero->QueryIntAttribute("hp", &hp);
+        xml_hero->QueryIntAttribute("dmg_min", &dmg_min);
+        xml_hero->QueryIntAttribute("dmg_max", &dmg_max);
+        kind = strToKind(xml_hero->Attribute("kind"));
+        element = strToElement(xml_hero->Attribute("elem"));
+        xml_hero->QueryIntAttribute("init", &init);
+        xml_hero->QueryIntAttribute("cost", &cost);
 
-    HeroTemplate *hero10 = new HeroTemplate();
-    hero10->setResources(*resource);
-    hero10->setStats(Stats(HP(130),Damage(45,50),Kind::melee,Element::fire,Initiative(35),Actions(),8));
-    heroes.push_back(hero10);
+        hero->setStats(Stats(HP(hp), Damage(dmg_min, dmg_max), Kind(kind), Element(element),
+                             Initiative(init), Actions(), cost));
 
-    HeroTemplate *hero11 = new HeroTemplate();
-    hero11->setResources(*resource);
-    hero11->setStats(Stats(HP(75),Damage(40,45),Kind::range,Element::fire,Initiative(45),Actions(),6));
-    heroes.push_back(hero11);
+        heroes.push_back(hero);
 
-    HeroTemplate *hero12 = new HeroTemplate();
-    hero12->setResources(*resource);
-    hero12->setStats(Stats(HP(45),Damage(15,20),Kind::range,Element::fire,Initiative(60),Actions(),1));
-    heroes.push_back(hero12);
+        xml_hero = xml_hero->NextSiblingElement("hero");
+    }
+}
 
-    HeroTemplate *hero13 = new HeroTemplate();
-    hero13->setResources(*resource);
-    hero13->setStats(Stats(HP(80),Damage(20,25),Kind::melee,Element::neutral,Initiative(30),Actions(),6));
-    heroes.push_back(hero13);
+Kind Game::strToKind(const string &str)
+{
+    if(!str.compare("range"))
+        return Kind::range;
 
-    HeroTemplate *hero14 = new HeroTemplate();
-    hero14->setResources(*resource);
-    hero14->setStats(Stats(HP(100),Damage(20,25),Kind::range,Element::neutral,Initiative(40),Actions(),4));
-    heroes.push_back(hero14);
+    if(!str.compare("melee"))
+        return Kind::melee;
 
-    HeroTemplate *hero15 = new HeroTemplate();
-    hero15->setResources(*resource);
-    hero15->setStats(Stats(HP(20),Damage(40,45),Kind::melee,Element::neutral,Initiative(80),Actions(),7));
-    heroes.push_back(hero15);
+    return Kind(-1);
+}
 
-    HeroTemplate *hero16 = new HeroTemplate();
-    hero16->setResources(*resource);
-    hero16->setStats(Stats(HP(90),Damage(40,50),Kind::range,Element::neutral,Initiative(30),Actions(),4));
-    heroes.push_back(hero16);
+Element Game::strToElement(const string &str)
+{
+    if(!str.compare("neutral"))
+        return Element::neutral;
+
+    if(!str.compare("fire"))
+        return Element::fire;
+
+    if(!str.compare("water"))
+        return Element::water;
+
+    if(!str.compare("earth"))
+        return Element::earth;
+
+    return Element(-1);
 }

@@ -59,7 +59,8 @@ HEADERS += \
 
 LIBS += \
     -lsfml-graphics \
-    -lsfml-window\
-    -lsfml-system\
-    -lsfml-audio\
-    -lsfgui
+    -lsfml-window \
+    -lsfml-system \
+    -lsfml-audio \
+    -lsfgui \
+    -ltinyxml

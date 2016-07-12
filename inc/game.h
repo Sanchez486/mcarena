@@ -50,4 +50,8 @@ public:
 
     int exec();
     void loadHeroes();
+
+private:
+    Kind strToKind(const std::string &str);
+    Element strToElement(const std::string &str);
 };
