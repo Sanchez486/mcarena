@@ -12,11 +12,14 @@ Q_OBJECT
 private:
     Player *player1;
     Player *player2;
+    HeroQueue heroQueue;
+    Action *action;  // Last chosen Action
 
 signals:
     // BattleModel -> BattleGUI
     void show();  // Show GUI window
     void hide();  // Hide GUI window
+    void setPlayers(Player*, Player*);
     void setActiveHero(Hero*);  // Change current hero
     void setQueue(HeroQueue*);  // Change queue
     void showTargets(Action*);  // Highlight avaliable targets
@@ -27,8 +30,8 @@ signals:
     void closedSignal();
 
 public slots:
-    void selectedAction(Action*);  // After attack or skill clicked
-    void selectedTarget(Hero*);  // After Hero clicked
+    void selectedAction(Action *_action);  // After attack or skill clicked
+    void selectedTarget(Hero *target);  // After Hero clicked
     void closed();
 
 public:

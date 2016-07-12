@@ -190,6 +190,11 @@ void BattleGUI::hide()
     app_window.display();
 }
 
+void BattleGUI::setPlayers(Player *player1, Player *player2)
+{
+
+}
+
 void BattleGUI::setActiveHero(Hero *)
 {
 
