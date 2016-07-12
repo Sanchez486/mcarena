@@ -14,37 +14,44 @@ SelectionModel::SelectionModel(QObject *parent)
 
 }
 
+SelectionModel::~SelectionModel()
+{
+    if(player1 != nullptr)
+        delete player1;
+
+    if(player2 != nullptr)
+        delete player2;
+}
+
 void SelectionModel::clickedHero(HeroTemplate *_hero)
 {
-    cerr << "SelectionModel::clickedHero(Hero *)" << endl;
-
     activeHero = _hero;
     emit setActiveHero(activeHero);
 }
 
 void SelectionModel::clickedPlace(HeroPosition pos)
 {
-    cerr << "SelectionModel::clickedPlace()" << endl;
-
     if(activeHero == nullptr)
         return;
 
     updateHero(pos, activeHero);
     emit setHeroGroup( &(activePlayer->getHeroGroup()) );
+
+    activePlayer->updateCost();
+    emit setCost( &(activePlayer->getCost()) );
 }
 
 void SelectionModel::clickedCross(HeroPosition pos)
 {
-    cerr << "SelectionModel::clickedCross(Hero *)" << endl;
-
     updateHero(pos, nullptr);
     emit setHeroGroup( &(activePlayer->getHeroGroup()) );
+
+    activePlayer->updateCost();
+    emit setCost( &(activePlayer->getCost()) );
 }
 
 void SelectionModel::clickedDiscard()
 {
-    cerr << "SelectionModel::clickedDiscard()" << endl;
-
     updateHero(HeroPosition::front1, nullptr);
     updateHero(HeroPosition::front2, nullptr);
     updateHero(HeroPosition::front3, nullptr);
@@ -52,6 +59,9 @@ void SelectionModel::clickedDiscard()
     updateHero(HeroPosition::back2, nullptr);
     updateHero(HeroPosition::back3, nullptr);
     emit setHeroGroup( &(activePlayer->getHeroGroup()) );
+
+    activePlayer->updateCost();
+    emit setCost( &(activePlayer->getCost()) );
 }
 
 void SelectionModel::updateHero(HeroPosition pos, HeroTemplate *templ)
@@ -70,40 +80,41 @@ void SelectionModel::updateHero(HeroPosition pos, HeroTemplate *templ)
     }
 }
 
-// TODO
+// TODO: remove else branch (its for debug only!)
 void SelectionModel::clickedStart()
 {
-    cerr << "SelectionModel::clickedStart()" << endl;
-    emit clickedStartSignal();
+    if(player1->isValidGroup() && player2->isValidGroup())
+    {
+        emit clickedStartSignal(player1, player2);
+    }
+    else
+    {
+        cerr << "SelectionModel::clickedStart()" << endl
+             << "  Groups are not valid!!!" << endl;
+
+        emit clickedStartSignal(player1, player2);
+    }
 }
 
 void SelectionModel::clickedMenu()
 {
-    cerr << "SelectionModel::clickedMenu()" << endl;
-
     emit clickedMenuSignal();
 }
 
 void SelectionModel::clickedPlayer1()
 {
-    cerr << "SelectionModel::clickedPlayer1()" << endl;
-
     activePlayer = player1;
     emit setHeroGroup( &(activePlayer->getHeroGroup()) );
 }
 
 void SelectionModel::clickedPlayer2()
 {
-    cerr << "SelectionModel::clickedPlayer2()" << endl;
-
     activePlayer = player2;
     emit setHeroGroup( &(activePlayer->getHeroGroup()) );
 }
 
 void SelectionModel::closed()
 {
-    cerr << "SelectionModel::closed()" << endl;
-
     emit closedSignal();
 }
 
@@ -111,17 +122,8 @@ void SelectionModel::beginPlay(HeroVector *_heroes)
 {
     heroes = _heroes;
 
-    if(player1 != nullptr)
-    {
-        delete player1;
-    }
-    player1 = new Player();
-
-    if(player2 != nullptr)
-    {
-        delete player2;
-    }
-    player2 = new Player();
+    createPlayer1(99);  // TODO: this number should not be defined here
+    createPlayer2(99);  // TODO: this number should not be defined here
 
     activePlayer = player1;
     activeHero = nullptr;
@@ -135,13 +137,55 @@ void SelectionModel::beginPlay(HeroVector *_heroes)
 // TODO
 void SelectionModel::beginPlayOnline(HeroVector *_heroes)
 {
+    cerr << "SelectionModel::beginPlayOnline(HeroVector *_heroes)" << endl;
     emit show();
 }
 
-// TODO
 void SelectionModel::beginPlayCPU(HeroVector *_heroes)
 {
+    heroes = _heroes;
+
+    createPlayer1(99);  // TODO: this number should not be defined here
+    createPlayerCPU(99);  // TODO: this number should not be defined here
+
+    activePlayer = player1;
+    activeHero = nullptr;
+
     emit show();
+    emit setHeroVector(heroes);
+    emit setActiveHero(activeHero);
+    emit setHeroGroup( &(activePlayer->getHeroGroup()) );
+}
+
+void SelectionModel::createPlayer1(int maxCost)
+{
+    if(player1 != nullptr)
+    {
+        delete player1;
+    }
+    player1 = new Player();
+    player1->setMaxCost(maxCost);
+}
+
+void SelectionModel::createPlayer2(int maxCost)
+{
+    if(player2 != nullptr)
+    {
+        delete player2;
+    }
+    player2 = new Player();
+    player2->setMaxCost(maxCost);
+}
+
+// TODO: change to AI player
+void SelectionModel::createPlayerCPU(int maxCost)
+{
+    if(player2 != nullptr)
+    {
+        delete player2;
+    }
+    player2 = new Player();
+    player2->setMaxCost(maxCost);
 }
 
 void SelectionModel::hideGUI()

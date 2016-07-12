@@ -23,10 +23,10 @@ signals:
     void setHeroVector(HeroVector*);  // Change current list of heroes
     void setActiveHero(HeroTemplate*);  // Change current hero
     void setHeroGroup(HeroGroup*);  // Change current group
-    void setCost(/* cost */); // Change cost amount: 'curr/max'
+    void setCost(Cost*); // Change cost amount: 'curr/max'
 
     // SelectionModel -> Game
-    void clickedStartSignal();
+    void clickedStartSignal(Player *player1, Player *player2);
     void clickedMenuSignal();
     void closedSignal();
 
@@ -43,6 +43,7 @@ public slots:
 
 public:
     SelectionModel(QObject *parent = nullptr);
+    ~SelectionModel();
 
     void beginPlay(HeroVector *_heroes);
     void beginPlayOnline(HeroVector *_heroes);
@@ -51,4 +52,7 @@ public:
 
 private:
     void updateHero(HeroPosition pos, HeroTemplate *templ);  // delete old and create new hero to activePlayer
+    void createPlayer1(int maxCost);  // Regular player1 (delete old and create new)
+    void createPlayer2(int maxCost);  // Regular player2 (delete old and create new)
+    void createPlayerCPU(int maxCost);  // AI player2 (delete old and create new)
 };

@@ -426,7 +426,7 @@ void SelectionGUI::connectSignals(int pos)
     }
 }
 
-void SelectionGUI::setCost()
+void SelectionGUI::setCost(Cost *)
 {
 
 }

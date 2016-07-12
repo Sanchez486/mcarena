@@ -43,7 +43,7 @@ Game::Game(int argc, char *argv[]) : app(argc, argv), heroes()
     connect(selectionModel, SIGNAL(setHeroVector(HeroVector*)), selectionGUI, SLOT(setHeroVector(HeroVector*)));
     connect(selectionModel, SIGNAL(setActiveHero(HeroTemplate*)), selectionGUI, SLOT(setActiveHero(HeroTemplate*)));
     connect(selectionModel, SIGNAL(setHeroGroup(HeroGroup*)), selectionGUI, SLOT(setHeroGroup(HeroGroup*)));
-    connect(selectionModel, SIGNAL(setCost()), selectionGUI, SLOT(setCost()));
+    connect(selectionModel, SIGNAL(setCost(Cost*)), selectionGUI, SLOT(setCost(Cost*)));
 
     // Signals Battle GUI -> Model
     connect(battleGUI, SIGNAL(selectedAction(Action*)), battleModel, SLOT(selectedAction(Action*)));
@@ -65,7 +65,7 @@ Game::Game(int argc, char *argv[]) : app(argc, argv), heroes()
     connect(menuModel, SIGNAL(closedSignal()), SLOT(closedMenu()));
 
     // Signals SelectionModel -> Game
-    connect(selectionModel, SIGNAL(clickedStartSignal()), SLOT(clickedStart()));
+    connect(selectionModel, SIGNAL(clickedStartSignal(Player*, Player*)), SLOT(clickedStart(Player*, Player*)));
     connect(selectionModel, SIGNAL(clickedMenuSignal()), SLOT(clickedMenu()));
     connect(selectionModel, SIGNAL(closedSignal()), SLOT(closedSelection()));
 
@@ -76,71 +76,63 @@ Game::Game(int argc, char *argv[]) : app(argc, argv), heroes()
 
 void Game::clickedPlay()
 {
-    cerr << "Game::clickedPlay()" << endl;
     menuModel->hideGUI();
     selectionModel->beginPlay(&heroes);
 }
 
 void Game::clickedPlayOnline()
 {
-    cerr << "Game::clickedPlayOnline()" << endl;
     menuModel->hideGUI();
     selectionModel->beginPlayOnline(&heroes);
 }
 
 void Game::clickedPlayCPU()
 {
-    cerr << "Game::clickedPlayCPU()" << endl;
     menuModel->hideGUI();
     selectionModel->beginPlayCPU(&heroes);
 }
 
 void Game::clickedExit()
 {
-    cerr << "Game::clickedExit()" << endl;
     menuModel->hideGUI();
     app.quit();
 }
 
 void Game::closedMenu()
 {
-    cerr << "Game::closedMenu()" << endl;
     menuModel->hideGUI();
     app.quit();
 }
 
-// TODO: recieve and send data [Selection->Battle]
-void Game::clickedStart()
+void Game::clickedStart(Player *player1, Player *player2)
 {
-    cerr << "Game::clickedStart()" << endl;
     selectionModel->hideGUI();
-    battleGUI->show();
+    battleModel->beginBattle(player1, player2);
 }
 
 void Game::clickedMenu()
 {
-    cerr << "Game::clickedMenu()" << endl;
     selectionModel->hideGUI();
     menuModel->showGUI();
 }
 
 void Game::closedSelection()
 {
-    cerr << "Game::closedSelection()" << endl;
     selectionModel->hideGUI();
     app.quit();
 }
 
+// TODO
 void Game::finished()
 {
     cerr << "Game::finished()" << endl;
+
     battleModel->hideGUI();
     menuModel->showGUI();
 }
 
 void Game::closedBattle()
 {
-    cerr << "Game::closedBattle()" << endl;
     battleModel->hideGUI();
     app.quit();
 }

@@ -1,7 +1,7 @@
 #include "inc/herotemplate.h"
 
 HeroTemplate::HeroTemplate()
-    : stats(nullptr), resources(nullptr)
+    : stats(nullptr), resources(nullptr), name()
 {
 
 }
@@ -29,6 +29,11 @@ Resources& HeroTemplate::getResources()
     return *resources;
 }
 
+const std::string &HeroTemplate::getName() const
+{
+    return name;
+}
+
 void HeroTemplate::setStats(const Stats &_stats)
 {
     if(stats != nullptr)
@@ -47,4 +52,9 @@ void HeroTemplate::setResources(const Resources &_resources)
     }
 
     resources = new Resources(_resources);
+}
+
+void HeroTemplate::setName(const std::string &_name)
+{
+    name = _name;
 }

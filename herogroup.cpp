@@ -62,15 +62,51 @@ void HeroGroup::set(HeroPosition pos, Hero *hero)
     {
     case HeroPosition::front1:
         front1 = hero;
+        break;
     case HeroPosition::front2:
         front2 = hero;
+        break;
     case HeroPosition::front3:
         front3 = hero;
+        break;
     case HeroPosition::back1:
         back1 = hero;
+        break;
     case HeroPosition::back2:
         back2 = hero;
+        break;
     case HeroPosition::back3:
         back3 = hero;
+        break;
     }
+}
+
+int HeroGroup::count()
+{
+    int num = 0;
+
+    if(front1 != nullptr)
+        ++num;
+
+    if(front2 != nullptr)
+        ++num;
+
+    if(front3 != nullptr)
+        ++num;
+
+    if(back1 != nullptr)
+        ++num;
+
+    if(back2 != nullptr)
+        ++num;
+
+    if(back3 != nullptr)
+        ++num;
+
+    return num;
+}
+
+bool HeroGroup::isFull()
+{
+    return count() == 6;
 }
