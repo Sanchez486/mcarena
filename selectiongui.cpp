@@ -25,7 +25,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
 
       pointsWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
       pointsBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, FRAME)),
-      pointsLabel(sfg::Label::Create("POINTS: ")),
+      pointsLabel(sfg::Label::Create("")),
 
       infoLabelWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
       label(sfg::Label::Create("Choose a hero!!!")),
@@ -426,12 +426,15 @@ void SelectionGUI::connectSignals(int pos)
     }
 }
 
-void SelectionGUI::setCost(Cost *)
+void SelectionGUI::setCost(Cost *cost)
 {
+    pointsLabel->SetText(std::to_string( cost->getUsed() ) + " \\ " +
+                     std::to_string( cost->getMax() ) + "\nCOINS");
+    pointsLabel->SetId("l2");
+    sfg::Context::Get().GetEngine().SetProperty("Label#l2", "FontSize", 18);
 
-}
-
-void SelectionGUI::showCross(HeroPosition)
-{
-
+    if(cost->getUsed() > cost->getMax())
+        sfg::Context::Get().GetEngine().SetProperty("Label#l2", "Color", sf::Color::Red);
+    else
+        sfg::Context::Get().GetEngine().SetProperty("Label#l2", "Color", sf::Color::White);
 }
