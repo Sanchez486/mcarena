@@ -117,7 +117,7 @@ private:
 signals:
     void clickedHero(HeroTemplate *hero);  // After hero clicked (on the left)
     void clickedPlace(HeroPosition pos);  // After empty seat clicked
-    void clickedCross(HeroPosition);  // After cross clicked on seat
+    void clickedCross(HeroPosition pos);  // After cross clicked on seat
     void clickedDiscard();
     void clickedStart();
     void clickedMenu();
@@ -133,7 +133,6 @@ public slots:
     void hide();  // Hide this window
     void setHeroVector(HeroVector *heroVector);  // Change current list of heroes
     void setActiveHero(HeroTemplate *hero);  // Change current hero
-    void setHeroGroup(HeroGroup*);  // Change current group
-    void setCost(Cost*); // Change cost amount: 'curr/max'
-    void showCross(HeroPosition);  // Show cross on seat  [this -> this]
+    void setHeroGroup(HeroGroup *heroGroup);  // Change current group
+    void setCost(Cost *cost); // Change cost amount: 'curr/max'
 };
