@@ -330,16 +330,17 @@ void SelectionGUI::setActiveHero(HeroTemplate *hero)
         infoLabels[3]->SetText(std::to_string( hero->getStats().initiative.val ) + " INIT");
         switch(hero->getStats().element)
         {
-            case Element::neutral: infoLabels[4]->SetText("Neutral element");
-            case Element::fire: infoLabels[4]->SetText("Fire element");
-            case Element::water: infoLabels[4]->SetText("Water element");
-            case Element::earth: infoLabels[4]->SetText("Earth element");
+            case Element::neutral: infoLabels[4]->SetText("Neutral element"); break;
+            case Element::fire: infoLabels[4]->SetText("Fire element"); break;
+            case Element::water: infoLabels[4]->SetText("Water element"); break;
+            case Element::earth: infoLabels[4]->SetText("Earth element"); break;
+            default: infoLabels[4]->SetText("Cannot access Element"); break;
         }
         infoLabels[5]->SetText(std::to_string( hero->getStats().cost ) + " COINS");
         switch(hero->getStats().kind)
         {
-            case Kind::melee: infoLabels[6]->SetText("Melee");
-            case Kind::range: infoLabels[6]->SetText("Range");
+            case Kind::melee: infoLabels[6]->SetText("Melee"); break;
+            case Kind::range: infoLabels[6]->SetText("Range"); break;
         }
 
         infoPic->SetImage(hero->getResources().getImage());
