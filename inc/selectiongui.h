@@ -20,6 +20,7 @@ class SelectionGUI : public QObject
 Q_OBJECT
 public:
     SelectionGUI(MainWindow&, QObject *parent = nullptr);
+
 private:
     QTimer *timer;
 
@@ -29,51 +30,52 @@ private:
     sfg::SFGUI sfgui;
     sfg::Desktop desktop;
 
-    //Boxes
+    //Info
     sfg::Window::Ptr infoWindow;
     sfg::Box::Ptr infoBox;
     sfg::Table::Ptr infoTable;
     sfg::Window::Ptr pointsWindow;
     sfg::Box::Ptr pointsBox;
     sfg::Label::Ptr pointsLabel;
-    sfg::Window::Ptr fieldWindow;
-    sfg::Box::Ptr fieldBox;
-    sfg::Table::Ptr fieldTable;
     sfg::Window::Ptr infoLabelWindow;
+    sfg::Label::Ptr label;
 
-    //Heroes list
+    sfg::Image::Ptr infoPic;
+    sfg::Image::Ptr pendingImage, pendingImage2;
+
+    sfg::Label::Ptr infoLabels[7];
+    sfg::Image::Ptr infoPics[5];
+
+    HeroGroup heroesGroup;
+    int activeHeroNumber;
+
+    //Left heroes list
     sfg::Window::Ptr scrollwin;
     sfg::Box::Ptr scrollwinbox;
     sfg::ScrolledWindow::Ptr scroll;
     sfg::Table::Ptr table;
     sfg::Box::Ptr tablebox;
 
-    HeroVector* heroesList;
-    int activeHeroNumber;
-    sfg::Image::Ptr pendingImage, pendingImage2;
+    //Central heroes pick list
+    sfg::Window::Ptr fieldWindow;
+    sfg::Box::Ptr fieldBox;
+    sfg::Table::Ptr fieldTable;
 
-    //For main bar
+    HeroVector* heroesList;
+
+    sf::Image plusImg;
+    sfg::Image::Ptr imageArray[6];
+
+    //Buttons
     sfg::Window::Ptr buttonsWindow;
     sfg::Box::Ptr buttonsBox;
     sfg::Button::Ptr menuButton;
     sfg::Button::Ptr discardButton;
     sfg::Button::Ptr startButton;
 
-    //For players choice
     sfg::Window::Ptr playerWindow;
     sfg::Box::Ptr playerBox;
-    sfg::Button::Ptr player1Button;
-    sfg::Button::Ptr player2Button;
-
-    HeroGroup heroesGroup;
-
-    //For info
-    sfg::Label::Ptr infoLabels[7];
-    sfg::Image::Ptr infoPics[5];
-    sfg::Label::Ptr label;
-    sfg::Image::Ptr defaultImage[6];
-    sfg::Image::Ptr normImage[6];
-
+    sfg::Button::Ptr player1Button, player2Button;
 
     //for signals
     enum ButtonPressed
@@ -91,16 +93,22 @@ private:
         LEAVE
     };
 
-    //sfgui widget signals
+    enum Image
+    {
+        DEFAULT,
+        NORMAL
+    };
 
+    Image imageType[6];
+
+    //sfgui widget signals
     void clickedButton(ButtonPressed Button);
     void heroChosen(int i);
-    void clickedPlus(HeroPosition pos);
-    void mouseEvent(Mouse mouse);
+    void clickedPlus(HeroPosition pos, int i);
+    void mouseEvent(Mouse mouse, int i);
 
     //Additional functions
     void setHeroImage(Hero* hero, Hero *myhero, int pos);
-    void signalSetting(int i);
 
 signals:
     void clickedHero(HeroTemplate *hero);  // After hero clicked (on the left)
@@ -122,7 +130,7 @@ public slots:
     void hide();  // Hide this window
     void setHeroVector(HeroVector *heroVector);  // Change current list of heroes
     void setActiveHero(HeroTemplate *hero);  // Change current hero
-    void setHeroGroup(HeroGroup*);  // Change current group
+    void setHeroGroup(HeroGroup *heroGroup);  // Change current group
     void setCost(/* cost */); // Change cost amount: 'curr/max'
     void showCross(HeroPosition);  // Show cross on seat  [this -> this]
 };
