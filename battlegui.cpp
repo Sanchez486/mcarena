@@ -142,9 +142,8 @@ void BattleGUI::show()
    queueWindow->Show(true);
    buttonWindow->Show(true);
    infoWindow->Show(true);
-   timer = app_window.newTimer();
-   connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-   timer->start(TIMEUPDATE);
+   connect(app_window.getTimer(), SIGNAL(timeout()), this, SLOT(update()));
+   app_window.getTimer()->start(TIMEUPDATE);
 }
 
 void BattleGUI::update()
@@ -185,7 +184,7 @@ void BattleGUI::hide()
     queueWindow->Show(false);
     buttonWindow->Show(false);
     infoWindow->Show(false);
-    app_window.deleteTimer();
+    disconnect(app_window.getTimer(), SIGNAL(timeout()), this, SLOT(update()));
     app_window.clear(sf::Color::Black);
     app_window.display();
 }

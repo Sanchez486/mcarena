@@ -95,9 +95,8 @@ void MenuGUI::clickedButton(ButtonPressed Button)
 void MenuGUI::show()
 {
    window->Show(true);
-   timer = app_window.newTimer();
-   connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-   timer->start(TIMEUPDATE);
+   connect(app_window.getTimer(), SIGNAL(timeout()), this, SLOT(update()));
+   app_window.getTimer()->start(TIMEUPDATE);
 }
 
 void MenuGUI::update()
@@ -135,8 +134,7 @@ void MenuGUI::hide()
 {
     window->Show(false);
     settingsWindow->Show(false);
-    desktop.Add(settingsWindow);
-    app_window.deleteTimer();
+    disconnect(app_window.getTimer(), SIGNAL(timeout()), this, SLOT(update()));
     app_window.clear(sf::Color::Black);
     app_window.display();
 }
