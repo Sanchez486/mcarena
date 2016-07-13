@@ -44,7 +44,7 @@ private:
     sfg::Image::Ptr pendingImage, pendingImage2;
 
     sfg::Label::Ptr infoLabels[7];
-    sfg::Image::Ptr infoPics[5];
+    sfg::Image::Ptr infoPics[6];
 
     HeroGroup heroesGroup;
     int activeHeroNumber;

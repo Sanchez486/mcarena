@@ -85,11 +85,11 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     pointsBox->Pack(pointsLabel);
     pointsWindow->SetAllocation(sf::FloatRect(app_window.getX()-XPOINTS, YINFO, XPOINTS, YPOINTS));
 
-    for (int i=0;i<7;i++) infoLabels[i]= sfg::Label::Create("");
+    for (int i=0;i<8;i++) infoLabels[i]= sfg::Label::Create("");
 
-    //loading pics
+    //loading pics in info window
     sf::Image icoImg;
-    icoImg.loadFromFile("res/img/icons/attack.png");
+    icoImg.loadFromFile("res/img/icons/near.png");
     infoPics[0]= sfg::Image::Create(icoImg);
     icoImg.loadFromFile("res/img/icons/element.png");
     infoPics[1]= sfg::Image::Create(icoImg);
@@ -99,18 +99,22 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     infoPics[3]= sfg::Image::Create(icoImg);
     icoImg.loadFromFile("res/img/icons/hp.png");
     infoPics[4]= sfg::Image::Create(icoImg);
+    icoImg.loadFromFile("res/img/icons/further.png");
+    infoPics[5]= sfg::Image::Create(icoImg);
 
-    //infoTable->Attach(infoPics[0],sf::Rect<sf::Uint32>(1, 1, 1, 1),sfg::Table::EXPAND | sfg::Table::FILL, sfg::Table::EXPAND | sfg::Table::FILL);
+
+    infoTable->Attach(infoPics[0],sf::Rect<sf::Uint32>(1, 1, 1, 1));
     infoTable->Attach(infoPics[1],sf::Rect<sf::Uint32>(1, 2, 1, 1));
     infoTable->Attach(infoPics[2],sf::Rect<sf::Uint32>(3, 1, 1, 1));
     infoTable->Attach(infoPics[3],sf::Rect<sf::Uint32>(3, 2, 1, 1));
     infoTable->Attach(infoPics[4],sf::Rect<sf::Uint32>(3, 0, 1, 1));
-    infoTable->Attach(infoLabels[0],sf::Rect<sf::Uint32>(1, 0, 2, 1));
-    infoTable->Attach(infoLabels[1],sf::Rect<sf::Uint32>(2, 1, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
-    infoTable->Attach(infoLabels[2],sf::Rect<sf::Uint32>(2, 2, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
-    infoTable->Attach(infoLabels[3],sf::Rect<sf::Uint32>(4, 1, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
-    infoTable->Attach(infoLabels[4],sf::Rect<sf::Uint32>(4, 2, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
-    infoTable->Attach(infoLabels[5],sf::Rect<sf::Uint32>(4, 0, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoPics[5],sf::Rect<sf::Uint32>(1, 1, 1, 1));
+    infoTable->Attach(infoLabels[0],sf::Rect<sf::Uint32>(1, 0, 2, 1),sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoLabels[1],sf::Rect<sf::Uint32>(2, 1, 1, 1),sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoLabels[2],sf::Rect<sf::Uint32>(2, 2, 1, 1),sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoLabels[3],sf::Rect<sf::Uint32>(4, 1, 1, 1),sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoLabels[4],sf::Rect<sf::Uint32>(4, 2, 1, 1),sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoLabels[5],sf::Rect<sf::Uint32>(4, 0, 1, 1),sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
     infoTable->Attach(infoLabels[6],sf::Rect<sf::Uint32>(0, 3, 7, 1),sfg::Table::EXPAND | sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
     infoTable->Attach(infoPic,sf::Rect<sf::Uint32>(0, 0, 1, 3));
 
@@ -337,8 +341,16 @@ void SelectionGUI::setActiveHero(HeroTemplate *hero)
         sfg::Context::Get().GetEngine().SetProperty("Label#l0", "FontSize", 15);
         switch(hero->getStats().kind)
         {
-            case Kind::melee: infoLabels[1]->SetText("MELEE ATTACK"); break;
-            case Kind::range: infoLabels[1]->SetText("RANGE ATTACK"); break;
+            case Kind::melee:
+                infoLabels[1]->SetText("MELEE ATTACK");
+                infoPics[0]->Show(true);
+                infoPics[5]->Show(false);
+                break;
+            case Kind::range:
+                infoLabels[1]->SetText("RANGE ATTACK");
+                infoPics[5]->Show(true);
+                infoPics[0]->Show(false);
+                break;
         }
         infoLabels[2]->SetId("l3");
         switch(hero->getStats().element)
