@@ -35,3 +35,13 @@ Resources& Hero::getResources()
 {
     return heroTemplate->getResources();
 }
+
+Action* Hero::getAttack()
+{
+    return stats->actions.getAttack();
+}
+
+Action* Hero::getSkill()
+{
+    return stats->actions.getSkill();
+}

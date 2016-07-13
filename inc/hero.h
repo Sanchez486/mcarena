@@ -15,6 +15,9 @@ public:
     Stats& getStats();  // return stats
     Stats& getTemplateStats();  // return heroTemplate->getStats
     Resources& getResources();
+
+    Action* getAttack();
+    Action* getSkill();
 };
 
 #include "stats.h"
