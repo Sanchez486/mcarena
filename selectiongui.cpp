@@ -10,7 +10,6 @@
 #define YPLAYERS 200
 #define FRAME 10
 #define XSCROLLBAR 30 //default scroll width of sfg::ScrollWindow
-#define N 16 //debug
 
 SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     :
@@ -90,30 +89,30 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
 
     //loading pics
     sf::Image icoImg;
-    icoImg.loadFromFile("res/img/icons/hp.png");
-    infoPics[0]= sfg::Image::Create(icoImg);
     icoImg.loadFromFile("res/img/icons/attack.png");
+    infoPics[0]= sfg::Image::Create(icoImg);
+    icoImg.loadFromFile("res/img/icons/element.png");
     infoPics[1]= sfg::Image::Create(icoImg);
-    icoImg.loadFromFile("res/img/icons/init.png");
+    icoImg.loadFromFile("res/img/icons/attack.png");
     infoPics[2]= sfg::Image::Create(icoImg);
-    icoImg.loadFromFile("res/img/icons/coin.png");
+    icoImg.loadFromFile("res/img/icons/init.png");
     infoPics[3]= sfg::Image::Create(icoImg);
-    icoImg.loadFromFile("res/img/icons/coin.png");
+    icoImg.loadFromFile("res/img/icons/hp.png");
     infoPics[4]= sfg::Image::Create(icoImg);
 
-    infoTable->Attach(infoPics[0],sf::Rect<sf::Uint32>(1, 1, 1, 1),sfg::Table::EXPAND | sfg::Table::FILL, sfg::Table::EXPAND | sfg::Table::FILL);
-    infoTable->Attach(infoPics[1],sf::Rect<sf::Uint32>(1, 2, 1, 1),sfg::Table::EXPAND | sfg::Table::FILL, sfg::Table::EXPAND | sfg::Table::FILL);
-    infoTable->Attach(infoPics[2],sf::Rect<sf::Uint32>(3, 1, 1, 1),sfg::Table::EXPAND | sfg::Table::FILL, sfg::Table::EXPAND | sfg::Table::FILL);
-    infoTable->Attach(infoPics[3],sf::Rect<sf::Uint32>(3, 2, 1, 1),sfg::Table::EXPAND | sfg::Table::FILL, sfg::Table::EXPAND | sfg::Table::FILL);
-    infoTable->Attach(infoPics[4],sf::Rect<sf::Uint32>(3, 0, 1, 1),sfg::Table::EXPAND | sfg::Table::FILL, sfg::Table::EXPAND | sfg::Table::FILL);
-    infoTable->Attach(infoLabels[0],sf::Rect<sf::Uint32>(1, 0, 2, 1),sfg::Table::EXPAND | sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
+    //infoTable->Attach(infoPics[0],sf::Rect<sf::Uint32>(1, 1, 1, 1),sfg::Table::EXPAND | sfg::Table::FILL, sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoPics[1],sf::Rect<sf::Uint32>(1, 2, 1, 1));
+    infoTable->Attach(infoPics[2],sf::Rect<sf::Uint32>(3, 1, 1, 1));
+    infoTable->Attach(infoPics[3],sf::Rect<sf::Uint32>(3, 2, 1, 1));
+    infoTable->Attach(infoPics[4],sf::Rect<sf::Uint32>(3, 0, 1, 1));
+    infoTable->Attach(infoLabels[0],sf::Rect<sf::Uint32>(1, 0, 2, 1));
     infoTable->Attach(infoLabels[1],sf::Rect<sf::Uint32>(2, 1, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
     infoTable->Attach(infoLabels[2],sf::Rect<sf::Uint32>(2, 2, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
     infoTable->Attach(infoLabels[3],sf::Rect<sf::Uint32>(4, 1, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
     infoTable->Attach(infoLabels[4],sf::Rect<sf::Uint32>(4, 2, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
     infoTable->Attach(infoLabels[5],sf::Rect<sf::Uint32>(4, 0, 1, 1),sfg::Table::EXPAND , sfg::Table::EXPAND | sfg::Table::FILL);
     infoTable->Attach(infoLabels[6],sf::Rect<sf::Uint32>(0, 3, 7, 1),sfg::Table::EXPAND | sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
-    infoTable->Attach(infoPic,sf::Rect<sf::Uint32>(0, 0, 1, 3),sfg::Table::EXPAND | sfg::Table::FILL , sfg::Table::EXPAND );
+    infoTable->Attach(infoPic,sf::Rect<sf::Uint32>(0, 0, 1, 3));
 
     //Left heroes list
     desktop.Add(scrollwin);
@@ -334,25 +333,42 @@ void SelectionGUI::setActiveHero(HeroTemplate *hero)
         infoLabelWindow->Show(false);
         infoWindow->Show(true);
         infoLabels[0]->SetText(hero->getName());
-        infoLabels[1]->SetText(std::to_string( hero->getStats().hp.max ) + " HP");
-        infoLabels[2]->SetText(std::to_string( hero->getStats().damage.max ) + " DMG");
-        infoLabels[3]->SetText(std::to_string( hero->getStats().initiative.val ) + " INIT");
-        switch(hero->getStats().element)
-        {
-            case Element::neutral: infoLabels[4]->SetText("Neutral element"); break;
-            case Element::fire: infoLabels[4]->SetText("Fire element"); break;
-            case Element::water: infoLabels[4]->SetText("Water element"); break;
-            case Element::earth: infoLabels[4]->SetText("Earth element"); break;
-            default: infoLabels[4]->SetText("Cannot access Element"); break;
-        }
-        infoLabels[5]->SetText(std::to_string( hero->getStats().cost ) + " COINS");
+        infoLabels[0]->SetId("l0");
+        sfg::Context::Get().GetEngine().SetProperty("Label#l0", "FontSize", 15);
         switch(hero->getStats().kind)
         {
-            case Kind::melee: infoLabels[6]->SetText("Melee"); break;
-            case Kind::range: infoLabels[6]->SetText("Range"); break;
+            case Kind::melee: infoLabels[1]->SetText("MELEE ATTACK"); break;
+            case Kind::range: infoLabels[1]->SetText("RANGE ATTACK"); break;
         }
+        infoLabels[2]->SetId("l3");
+        switch(hero->getStats().element)
+        {
+            case Element::neutral:
+                infoLabels[2]->SetText("NEUTRAL");
+                sfg::Context::Get().GetEngine().SetProperty("Label#l3", "Color", sf::Color::Magenta);
+                break;
+            case Element::fire:
+                infoLabels[2]->SetText("FIRE");
+                sfg::Context::Get().GetEngine().SetProperty("Label#l3", "Color", sf::Color::Red);
+                break;
+            case Element::water:
+                infoLabels[2]->SetText("WATER");
+                sfg::Context::Get().GetEngine().SetProperty("Label#l3", "Color", sf::Color::Blue);
+                break;
+            case Element::earth:
+                infoLabels[2]->SetText("EARTH");
+                sfg::Context::Get().GetEngine().SetProperty("Label#l3", "Color", sf::Color::Green);
+                break;
+            default:
+                infoLabels[2]->SetText("Cannot access Element");
+                break;
+        }
+        infoLabels[3]->SetText(std::to_string( hero->getStats().damage.max ) + " DMG");
+        infoLabels[4]->SetText(std::to_string( hero->getStats().initiative.val ) + " INIT");
+        infoLabels[5]->SetText(std::to_string( hero->getStats().hp.max ) + " HP");
+        infoLabels[6]->SetText("Special skill:");
 
-        infoPic->SetImage(hero->getResources().getImage());
+        infoPic->SetImage(hero->getResources().getImage2());
     }
 }
 
