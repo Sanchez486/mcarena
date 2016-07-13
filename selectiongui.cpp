@@ -227,6 +227,8 @@ void SelectionGUI::_clickedPlace(HeroPosition pos, int i)
 {
     if(imageType[i] == Image::DEFAULT && activeHeroNumber != -1)
         clickedPlace(pos);
+    else if(imageType[i] == Image::NORMAL)
+        clickedHero(heroesGroup.at(pos)->getTemplate());
 }
 
 void SelectionGUI::_clickedCross(HeroPosition pos, int i)

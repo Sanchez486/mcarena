@@ -46,7 +46,6 @@ private:
     sfg::Label::Ptr infoLabels[7];
     sfg::Image::Ptr infoPics[6];
 
-    HeroGroup heroesGroup;
     int activeHeroNumber;
 
     //Left heroes list
@@ -57,13 +56,15 @@ private:
     sfg::Box::Ptr tablebox;
 
     std::vector<sfg::Image::Ptr> heroImages;
+    HeroVector* heroesList;
 
     //Central heroes pick list
     sfg::Window::Ptr fieldWindow;
     sfg::Box::Ptr fieldBox;
     sfg::Table::Ptr fieldTable;
 
-    HeroVector* heroesList;
+    HeroGroup heroesGroup;
+
 
     sf::Image plusImg;
     sfg::Image::Ptr imageArray[6];
