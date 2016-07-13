@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "player.h"
 #include "targets.h"
 
@@ -15,17 +17,20 @@ public:
     Action();
     virtual ~Action();
 
-    virtual Action* clone();  // return new Action(*this);
+    virtual Action* clone() const;  // return new Action(*this);
 
     void setPlayers(Player *_player1, Player *_player2);
     void setSender(Hero *_sender);
     void setTarget(Hero *_target);
 
-    Hero* getSender();
-    virtual Targets getAvaliableTargetsPlayer1();  // After setSender()
-    virtual Targets getAvaliableTargetsPlayer2();  // After setSender()
-    virtual Targets getTargetsPlayer1();  // After setTarget()
-    virtual Targets getTargetsPlayer2();  // After setTarget()
+    Hero* getSender() const;
+    virtual Targets getAvaliableTargetsPlayer1() const;  // After setSender()
+    virtual Targets getAvaliableTargetsPlayer2() const;  // After setSender()
+    virtual Targets getTargetsPlayer1() const;  // After setTarget()
+    virtual Targets getTargetsPlayer2() const;  // After setTarget()
+
+    virtual const std::string& getName() const;
+    virtual const std::string& getDescription() const;
 
     virtual void doAction();
 };
