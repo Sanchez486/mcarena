@@ -36,6 +36,11 @@ Resources& Hero::getResources()
     return heroTemplate->getResources();
 }
 
+const HeroTemplate *Hero::getTemplate() const
+{
+    return heroTemplate;
+}
+
 Action* Hero::getAttack()
 {
     return stats->actions.getAttack();
