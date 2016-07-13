@@ -10,7 +10,7 @@
 		dmg_min="30" 
 		dmg_max="35" 
 		kind="range" 
-		elem="land" 
+		elem="earth" 
 		init="50" 
 		skill="NULL" 
 		cost="5"/>
@@ -24,7 +24,7 @@
 		dmg_min="20" 
 		dmg_max="25" 
 		kind="range" 
-		elem="land" 
+		elem="earth" 
 		init="30" 
 		skill="NULL" 
 		cost="5"/>
@@ -38,7 +38,7 @@
 		dmg_min="10" 
 		dmg_max="15" 
 		kind="range" 
-		elem="land" 
+		elem="earth" 
 		init="40" 
 		skill="NULL" 
 		cost="8"/>
@@ -52,7 +52,7 @@
 		dmg_min="50" 
 		dmg_max="55" 
 		kind="melee" 
-		elem="land" 
+		elem="earth" 
 		init="40" 
 		skill="NULL" 
 		cost="9"/>

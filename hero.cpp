@@ -5,6 +5,7 @@ Hero::Hero(HeroTemplate *_templ) : heroTemplate(_templ)
     if(heroTemplate != nullptr)
     {
         stats = new Stats(heroTemplate->getStats());
+        stats->actions.setSender(this);
     }
     else
     {
@@ -33,4 +34,19 @@ Stats& Hero::getTemplateStats()
 Resources& Hero::getResources()
 {
     return heroTemplate->getResources();
+}
+
+const HeroTemplate *Hero::getTemplate() const
+{
+    return heroTemplate;
+}
+
+Action* Hero::getAttack()
+{
+    return stats->actions.getAttack();
+}
+
+Action* Hero::getSkill()
+{
+    return stats->actions.getSkill();
 }

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "herotemplate.h"
-#include "stats.h"
 
 class Hero
 {
@@ -16,4 +15,10 @@ public:
     Stats& getStats();  // return stats
     Stats& getTemplateStats();  // return heroTemplate->getStats
     Resources& getResources();
+    const HeroTemplate* getTemplate() const;
+
+    Action* getAttack();
+    Action* getSkill();
 };
+
+#include "stats.h"

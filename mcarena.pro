@@ -31,7 +31,8 @@ SOURCES += main.cpp \
     cost.cpp \
     heroqueue.cpp \
     action.cpp \
-    targets.cpp
+    targets.cpp \
+    actions.cpp
 
 HEADERS += \
     inc/menugui.h \

@@ -76,7 +76,10 @@ void SelectionModel::updateHero(HeroPosition pos, HeroTemplate *templ)
     }
     else
     {
-        activePlayer->getHeroGroup().set(pos, new Hero(templ));
+        Hero *hero = new Hero(templ);
+        hero->getStats().actions.setPlayers(player1, player2);
+        activePlayer->getHeroGroup().set(pos, hero);
+
     }
 }
 

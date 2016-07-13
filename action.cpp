@@ -6,6 +6,16 @@ Action::Action()
 
 }
 
+Action::~Action()
+{
+
+}
+
+Action* Action::clone() const
+{
+    return new Action(*this);
+}
+
 void Action::setPlayers(Player *_player1, Player *_player2)
 {
     player1 = _player1;
@@ -22,12 +32,12 @@ void Action::setTarget(Hero *_target)
     target = _target;
 }
 
-Hero* Action::getSender()
+Hero* Action::getSender() const
 {
     return sender;
 }
 
-Targets Action::getAvaliableTargetsPlayer1()
+Targets Action::getAvaliableTargetsPlayer1() const
 {
     if(player2->getHeroGroup().find(sender) != HeroPosition::NONE)
     {
@@ -37,7 +47,7 @@ Targets Action::getAvaliableTargetsPlayer1()
     return Targets(false);
 }
 
-Targets Action::getAvaliableTargetsPlayer2()
+Targets Action::getAvaliableTargetsPlayer2() const
 {
     if(player1->getHeroGroup().find(sender) != HeroPosition::NONE)
     {
@@ -47,7 +57,7 @@ Targets Action::getAvaliableTargetsPlayer2()
     return Targets(false);
 }
 
-Targets Action::getTargetsPlayer1()
+Targets Action::getTargetsPlayer1() const
 {
     Targets targets;
     targets.set(player1->getHeroGroup().find(target));
@@ -55,12 +65,22 @@ Targets Action::getTargetsPlayer1()
     return targets;
 }
 
-Targets Action::getTargetsPlayer2()
+Targets Action::getTargetsPlayer2() const
 {
     Targets targets;
     targets.set(player2->getHeroGroup().find(target));
 
     return targets;
+}
+
+const std::string &Action::getName() const
+{
+    return "Action";
+}
+
+const std::string &Action::getDescription() const
+{
+    return "description for action";
 }
 
 void Action::doAction()
