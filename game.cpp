@@ -170,13 +170,12 @@ void Game::loadHeroes()
 
         // resource load
         Resources resource;
-
+        hero.setName(xml_hero->Attribute("name"));
         string atk_snd = xml_hero->Attribute("atk_snd");
         string skl_snd = xml_hero->Attribute("skl_snd");
         string texture = xml_hero->Attribute("texture");
         string image = xml_hero->Attribute("image");
         string image2 = xml_hero->Attribute("image2");
-
         resource.loadAttackSound(atk_snd);
         resource.loadSkillSound(skl_snd);
         resource.loadTexture(texture);
