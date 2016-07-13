@@ -36,7 +36,7 @@ Resources& Hero::getResources()
     return heroTemplate->getResources();
 }
 
-const HeroTemplate *Hero::getTemplate() const
+HeroTemplate *Hero::getTemplate() const
 {
     return heroTemplate;
 }

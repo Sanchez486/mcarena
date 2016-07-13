@@ -15,7 +15,7 @@ public:
     Stats& getStats();  // return stats
     Stats& getTemplateStats();  // return heroTemplate->getStats
     Resources& getResources();
-    const HeroTemplate* getTemplate() const;
+    HeroTemplate* getTemplate() const;
 
     Action* getAttack();
     Action* getSkill();
