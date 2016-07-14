@@ -3,3 +3,4 @@
 #pragma once
 
 #include "attack.h"
+#include "attackrandom.h"
