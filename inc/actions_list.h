@@ -6,3 +6,6 @@
 #include "attackrandom.h"
 #include "heal.h"
 #include "lifesteal.h"
+#include "attackall.h"
+#include "attackfrontline.h"
+#include "attacksingle.h"
