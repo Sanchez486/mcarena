@@ -36,13 +36,7 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
       picBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, FRAME)),
       labelBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, FRAME)),
 
-
-      hp(sfg::Label::Create(sf::String("80 hp"))),
-      dmg(sfg::Label::Create(sf::String(" 27 dmg"))),
-      init(sfg::Label::Create(sf::String("70 init"))),
-      element(sfg::Label::Create(sf::String("fire"))),
-
-      frame(sfg::Frame::Create(sf::String("Hero Name"))),
+      frame(sfg::Frame::Create(sf::String(""))),
 
       //Sprite Field
       spritesField(nullptr)
@@ -79,13 +73,8 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
 
     //Ifowindow
 
-    //for debug start
-    sf::Image sfImage;
-    sfImage.loadFromFile("res/img/images/sonic_img.png");
-
-    image = sfg::Image::Create(sfImage);
-    infoBox->Pack(image);
-    //for debug start
+    infoImage = sfg::Image::Create(sf::Image());
+    infoBox->Pack(infoImage);
 
     infoWindow->Add(frame);
     frame->Add(infoBox);
@@ -93,16 +82,18 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     skillsBox->Pack(picBox);
     skillsBox->Pack(labelBox);
 
-    labelBox->Pack(hp);
-    labelBox->Pack(dmg);
-    labelBox->Pack(init);
-    labelBox->Pack(element);
+    for(int i = 0; i < 6; i++)
+        stats[i] = sfg::Label::Create(sf::String(""));
+
+    for(int i = 1; i < 6; i++)
+        labelBox->Pack(stats[i]);
 
     //for debug start
+    sf::Image sfImage;
     sfImage.loadFromFile("res/img/icons/icon.png");
 
-
-    for(int i = 0; i < 4 ; i++)
+    sfg::Image::Ptr image;
+    for(int i = 0; i < 5 ; i++)
     {
         image = sfg::Image::Create(sfImage);
         picBox->Pack(image);
@@ -196,21 +187,27 @@ void BattleGUI::setPlayers(Player *player1, Player *player2)
     spritesField->updateDesktop(desktop);
 }
 
-void BattleGUI::setActiveHero(Hero *)
+void BattleGUI::setActiveHero(Hero *hero)
 {
-
+    infoImage->SetImage(hero->getResources().getImage2());
+    completeStats(stats, hero);
+    frame->SetLabel(stats[0]->GetText());
+    std::cerr << "asadaf" << std::endl;
 }
 
 void BattleGUI::setQueue(HeroQueue *queue)
 {
+    //Setting the queue
     if(queue == nullptr)
         std::cerr << "queue is nullptr" << std::endl;
 
-    int i = 0;
-    for(auto it = queue->begin(), end = queue->end(); it != end; it++)
+    auto it = queue->begin(), end = queue->end();
+    queueImages[0]->SetImage((*it++)->getResources().getImage2());
+    int i = 1;
+    for(; it != end; it++)
     {
         queueImages[i]->SetImage((*it)->getResources().getImage());
-        queueImages[i]->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &BattleGUI::showInfoSignal, this, (*it) ) );
+        queueImages[i]->GetSignal( sfg::Widget::OnRightClick ).Connect(  std::bind( &BattleGUI::showInfoSignal, this, (*it) ) );
         i++;
     }
 }
@@ -228,4 +225,42 @@ void BattleGUI::showTargets(Action *)
 void BattleGUI::playAction(Action *)
 {
 
+}
+
+void BattleGUI::completeStats(sfg::Label::Ptr* array, Hero* hero)
+{
+
+    array[0]->SetText(hero->getTemplate()->getName());
+    array[1]->SetText(std::to_string( hero->getStats().hp.max ) + " HP");
+    array[2]->SetText(std::to_string(hero->getStats().damage.min) + " - " + std::to_string(hero->getStats().damage.max) + " DMG");
+    switch(hero->getStats().kind)
+    {
+        case Kind::melee:
+            array[3]->SetText("MELEE ATTACK");
+            break;
+        case Kind::range:
+            array[3]->SetText("RANGE ATTACK");
+            break;
+    }
+    array[4]->SetText(std::to_string( hero->getStats().initiative.val ) + " INIT");
+    array[5]->SetId("element");
+    switch(hero->getStats().element)
+    {
+        case Element::neutral:
+            array[5]->SetText("NEUTRAL");
+            sfg::Context::Get().GetEngine().SetProperty("Label#element", "Color", sf::Color::Magenta);
+            break;
+        case Element::fire:
+            array[5]->SetText("FIRE");
+            sfg::Context::Get().GetEngine().SetProperty("Label#element", "Color", sf::Color::Red);
+            break;
+        case Element::water:
+            array[5]->SetText("WATER");
+            sfg::Context::Get().GetEngine().SetProperty("Label#element", "Color", sf::Color::Blue);
+            break;
+        case Element::earth:
+            array[5]->SetText("EARTH");
+            sfg::Context::Get().GetEngine().SetProperty("Label#element", "Color", sf::Color::Green);
+            break;
+    }
 }

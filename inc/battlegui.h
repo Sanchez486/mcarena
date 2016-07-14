@@ -35,7 +35,6 @@ private:
     sfg::SFGUI sfgui;
     sfg::Desktop desktop;
 
-    sfg::Image::Ptr image;
 
     MainWindow& app_window;
     
@@ -66,12 +65,10 @@ private:
     sfg::Box::Ptr picBox;
     sfg::Box::Ptr labelBox;
 
-    sfg::Label::Ptr hp;
-    sfg::Label::Ptr dmg;
-    sfg::Label::Ptr init;
-    sfg::Label::Ptr element;
+    sfg::Label::Ptr stats[6];
 
     sfg::Frame::Ptr frame;
+    sfg::Image::Ptr infoImage;
 
     //Sprite window
 
@@ -86,6 +83,9 @@ private:
 
     void clickedButton(ButtonPressed Button);
 
+    //Additional functions
+    void completeStats(sfg::Label::Ptr* array, Hero *hero);
+
 signals:
     void selectedAction(Action*);  // After attack or skill clicked
     void selectedTarget(Hero*);  // After Hero clicked
@@ -96,7 +96,7 @@ public slots:
     void show();  // Show this window
     void hide();  // Hide this window
     void setPlayers(Player *player1, Player *player2);
-    void setActiveHero(Hero*);  // Change current hero
+    void setActiveHero(Hero *hero);  // Change current hero
     void setQueue(HeroQueue* queue);  // Change queue
     void showInfo(Hero*);  // Show info about Hero  [this -> this]
     void showTargets(Action*);  // Highlight avaliable targets
