@@ -204,7 +204,8 @@ void BattleGUI::setPlayers(Player *player1, Player *player2)
     if(spritesField != nullptr)
         delete spritesField;
 
-    spritesField = new SpritesField(player1, player2);
+    spritesField = new SpritesField(this, player1, player2);
+    spritesField->updateDesktop(desktop);
 }
 
 void BattleGUI::setActiveHero(Hero *)

@@ -14,10 +14,11 @@
 #define YINDENT 20
 #define XBREAK 100
 
-SpritesField::SpritesField(Player* _firstPlayer, Player* _secondPlayer)
+SpritesField::SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _secondPlayer)
     :
       firstPlayer(_firstPlayer),
-      secondPlayer(_secondPlayer)
+      secondPlayer(_secondPlayer),
+      parent(_parent)
 {
     if(_firstPlayer == nullptr || _secondPlayer == nullptr)
         std::cerr << "Player is nullptr";
@@ -35,9 +36,20 @@ SpritesField::SpritesField(Player* _firstPlayer, Player* _secondPlayer)
         secondPlayerSprite[i] = sf::Sprite(firstPlayer->getHeroGroup().at(iToPos(i))->getResources().getTexture());
         secondPlayerSprite[i].setTextureRect(sf::IntRect((NCOL - 1)*XSPRITE, 0, XSPRITE, YSPRITE));
         secondPlayerSprite[i].setScale(-SCALE, SCALE);
-        secondPlayerSprite[i].setOrigin(XSPR, 0);
+        secondPlayerSprite[i].setOrigin(XSPRITE, 0);
         secondPlayerSprite[i].setPosition(iToVector2(i));
+
+        firstPlayerWindow[i] = sfg::Window::Create(sfg::Window::Style::NO_STYLE);
+        secondPlayerWindow[i] = sfg::Window::Create(sfg::Window::Style::NO_STYLE);
+        firstPlayerWindow[i]->SetAllocation(sf::FloatRect(iToVector1(i), sf::Vector2f(XSPR, YSPR)));
+        secondPlayerWindow[i]->SetAllocation(sf::FloatRect(iToVector2(i), sf::Vector2f(XSPR, YSPR)));
+
+        firstPlayerWindow[i]->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SpritesField::firstPlayerClicked , this, i) );
+        secondPlayerWindow[i]->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SpritesField::secondPlayerClicked , this, i) );
+
     }
+    //for debug
+    std::cerr << "/*\n* 0 == back1\n* 1 == front1\n* 2 == back2\n* 3 == front2\n* 4 == back3\n* 5 == front3\n*/\n";
 }
 
 HeroPosition SpritesField::iToPos(int i)
@@ -86,4 +98,25 @@ void SpritesField::draw(sf::RenderWindow& app_window)
         app_window.draw(firstPlayerSprite[i]);
         app_window.draw(secondPlayerSprite[i]);
     }
+}
+
+void SpritesField::updateDesktop(sfg::Desktop& desktop)
+{
+    for(int i = 0; i < 6; i++)
+    {
+        desktop.Add(firstPlayerWindow[i]);
+        desktop.Add(secondPlayerWindow[i]);
+    }
+}
+
+void SpritesField::firstPlayerClicked(int i)
+{
+    std::cerr << "FirstPlayer:" << std::endl;
+    std::cerr << i << " clicked" << std::endl;
+}
+
+void SpritesField::secondPlayerClicked(int i)
+{
+    std::cerr << "SecondPlayer:" << std::endl;
+    std::cerr << i << " clicked" << std::endl;
 }

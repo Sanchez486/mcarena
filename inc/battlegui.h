@@ -20,6 +20,8 @@
 #include "action.h"
 #include "spritesfield.h"
 
+class SpritesField;
+
 class BattleGUI : public QObject
 {
 Q_OBJECT

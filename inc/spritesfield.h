@@ -1,22 +1,27 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <SFGUI/Widget.hpp>
+#include <SFGUI/Window.hpp>
+#include <SFGUI/Desktop.hpp>
 
 #include "player.h"
 #include "heroposition.h"
+#include "battlegui.h"
+
+class BattleGUI;
 
 class SpritesField
 {
 private:
+    BattleGUI* parent;
     Player* firstPlayer;
     Player* secondPlayer;
     sf::Sprite firstPlayerSprite[6];
     sf::Sprite secondPlayerSprite[6];
     //sf::Texture firstPlayerTexture[6];
     //sf::Texture secondPlayerTexture[6];
-    sfg::Widget::Ptr firstPlayerwidget[6];
-    sfg::Widget::Ptr secondPlayerwidget[6];
+    sfg::Window::Ptr firstPlayerWindow[6];
+    sfg::Window::Ptr secondPlayerWindow[6];
 
     //Additional functions
     HeroPosition iToPos(int i);
@@ -31,7 +36,12 @@ private:
      * 5 == front3
     */
 
+    //Functions connected to sFGUI widget signals
+    void firstPlayerClicked(int i);
+    void secondPlayerClicked(int i);
+
 public:
-    SpritesField(Player* _firstPlayer, Player* _secondPlayer);
+    SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _secondPlayer);
     void draw(sf::RenderWindow& app_window);
+    void updateDesktop(sfg::Desktop& desktop);
 };
