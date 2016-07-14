@@ -70,6 +70,8 @@ private:
     sfg::Image::Ptr imageArray[6];
     sf::Image crossImg;
     sfg::Image::Ptr crossImageArray[6];
+    sf::Texture enemyImgT;
+    sf::Sprite enemyImg;
 
     //Buttons
     sfg::Window::Ptr buttonsWindow;
