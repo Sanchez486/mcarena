@@ -1,11 +1,18 @@
-#include "inc/attack.h"
+#include "inc/lifesteal.h"
 
-Action *Attack::clone() const
+Lifesteal::Lifesteal(const Damage &_damage)
+    : Action(),
+      damage(_damage)
 {
-    return new Attack(*this);
+
 }
 
-Targets Attack::getAvaliableTargetsPlayer1() const
+Action *Lifesteal::clone() const
+{
+    return new Lifesteal(*this);
+}
+
+Targets Lifesteal::getAvaliableTargetsPlayer1() const
 {
     if(!player1->has(sender))
     {
@@ -22,7 +29,7 @@ Targets Attack::getAvaliableTargetsPlayer1() const
     return Targets();
 }
 
-Targets Attack::getAvaliableTargetsPlayer2() const
+Targets Lifesteal::getAvaliableTargetsPlayer2() const
 {
     if(!player2->has(sender))
     {
@@ -39,7 +46,7 @@ Targets Attack::getAvaliableTargetsPlayer2() const
     return Targets();
 }
 
-Targets Attack::getTargetsPlayer1() const
+Targets Lifesteal::getTargetsPlayer1() const
 {
     HeroPosition pos = player1->find(target);
     Targets targets;
@@ -48,7 +55,7 @@ Targets Attack::getTargetsPlayer1() const
     return targets;
 }
 
-Targets Attack::getTargetsPlayer2() const
+Targets Lifesteal::getTargetsPlayer2() const
 {
     HeroPosition pos = player2->find(target);
     Targets targets;
@@ -57,20 +64,20 @@ Targets Attack::getTargetsPlayer2() const
     return targets;
 }
 
-const std::string &Attack::getName() const
+const std::string &Lifesteal::getName() const
 {
-    return "Attack";
+    return "Lifesteal";
 }
 
-const std::string &Attack::getDescription() const
+const std::string &Lifesteal::getDescription() const
 {
-    return "deal damage equal to this hero`s attack";
+    return "deal " + std::to_string(damage.min) + "-" + std::to_string(damage.max) +
+            " damage and heal back for the same amount";
 }
 
-void Attack::doAction()
+void Lifesteal::doAction()
 {
-    Damage damage = sender->getStats().damage;
-    int realDamage = getRandom(damage.min, damage.max);
+    int realDamage = getRandom(damage);
 
     if(sender->getStats().element > target->getStats().element)
         realDamage *= 1.25;
@@ -79,4 +86,5 @@ void Attack::doAction()
         realDamage *= 0.8;
 
     target->getStats().hp.curr -= realDamage;
+    sender->getStats().hp.add(realDamage);
 }

@@ -4,3 +4,5 @@
 
 #include "attack.h"
 #include "attackrandom.h"
+#include "heal.h"
+#include "lifesteal.h"
