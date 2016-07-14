@@ -50,6 +50,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
       fieldTable(sfg::Table::Create()),
 
       heroesGroup(),
+      isCrossActive(false),
 
       //Buttons
       playerWindow(sfg::Window::Create(sfg::Window::Style::NO_STYLE)),
@@ -148,6 +149,10 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
                     std::bind( &SelectionGUI::mouseEvent, this, Mouse::ENTER, i ) );
         imageArray[i]->GetSignal( sfg::Widget::OnMouseLeave ).Connect(
                     std::bind( &SelectionGUI::mouseEvent, this, Mouse::LEAVE, i ) );
+        crossImageArray[i]->GetSignal( sfg::Widget::OnMouseEnter ).Connect(
+                    std::bind( &SelectionGUI::crossActivated, this, Mouse::ENTER ) );
+        crossImageArray[i]->GetSignal( sfg::Widget::OnMouseLeave ).Connect(
+                    std::bind( &SelectionGUI::crossActivated, this, Mouse::LEAVE ) );
         connectSignals(i);
 
         fieldTable->Attach(imageArray[i],sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
@@ -227,7 +232,7 @@ void SelectionGUI::_clickedPlace(HeroPosition pos, int i)
 {
     if(imageType[i] == Image::DEFAULT && activeHeroNumber != -1)
         clickedPlace(pos);
-    else if(imageType[i] == Image::NORMAL)
+    else if(imageType[i] == Image::NORMAL && (!isCrossActive))
         clickedHero(heroesGroup.at(pos)->getTemplate());
 }
 
@@ -235,6 +240,19 @@ void SelectionGUI::_clickedCross(HeroPosition pos, int i)
 {
     crossImageArray[i]->Show(false);
     clickedCross(pos);
+}
+
+void SelectionGUI::crossActivated(Mouse mouse)
+{
+    switch(mouse)
+    {
+        case Mouse::ENTER:
+            isCrossActive = true;
+            break;
+        case Mouse::LEAVE:
+            isCrossActive = false;
+            break;
+    }
 }
 
 void SelectionGUI::show()
@@ -377,7 +395,8 @@ void SelectionGUI::setActiveHero(HeroTemplate *hero)
                 infoLabels[2]->SetText("Cannot access Element");
                 break;
         }
-        infoLabels[3]->SetText(std::to_string( hero->getStats().damage.max ) + " DMG");
+        infoLabels[3]->SetText(std::to_string( hero->getStats().damage.min ) + " - " +
+                               std::to_string( hero->getStats().damage.max ) + " DMG");
         infoLabels[4]->SetText(std::to_string( hero->getStats().initiative.val ) + " INIT");
         infoLabels[5]->SetText(std::to_string( hero->getStats().hp.max ) + " HP");
         infoLabels[6]->SetText("Special skill:");
@@ -430,6 +449,8 @@ void SelectionGUI::mouseEvent(Mouse mouse, int i)
                 crossImageArray[i]->Show(true);
                 break;
             case LEAVE:
+                if(isCrossActive == true)
+                    isCrossActive = false;
                 crossImageArray[i]->Show(false);
                 break;
         }
