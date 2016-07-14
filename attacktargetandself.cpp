@@ -2,8 +2,8 @@
 
 AttackTargetAndSelf::AttackTargetAndSelf(const Damage &_damageTarget, const Damage &_damageSelf)
     : Action(),
-      damage(_damageTarget),
-      damage(_damageSelf)
+      damageTarget(_damageTarget),
+      damageSelf(_damageSelf)
 {
 
 }
@@ -76,7 +76,7 @@ const std::string &AttackTargetAndSelf::getDescription() const
         + std::to_string(damageSelf.min) + "-" +std::to_string(damageSelf.max);
 }
 
-void AttackSingle::doAction()
+void AttackTargetAndSelf::doAction()
 {
     int realDamageTarget = getRandom(damageTarget);
     int realDamageSelf = getRandom(damageSelf);
