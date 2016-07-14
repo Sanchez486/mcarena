@@ -1,7 +1,9 @@
 #include "inc/attackrandom.h"
 
 AttackRandom::AttackRandom(int _numTargets, const Damage &_damage)
-    : numTargets(_numTargets), damage(_damage)
+    : Action(),
+      numTargets(_numTargets),
+      damage(_damage)
 {
 
 }
