@@ -17,8 +17,10 @@ public:
     Resources& getResources();
     HeroTemplate* getTemplate() const;
 
-    Action* getAttack();
-    Action* getSkill();
+    Action* getAttack() const;
+    Action* getSkill() const;
+
+    bool isAlive() const;
 };
 
 #include "stats.h"

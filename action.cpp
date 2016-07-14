@@ -87,3 +87,53 @@ void Action::doAction()
 {
 
 }
+
+Targets Action::getAliveTargets(Player *player) const
+{
+    Targets targets;
+    if(player->getHeroGroup().at(HeroPosition::front1)->isAlive())
+        targets.set(HeroPosition::front1);
+    if(player->getHeroGroup().at(HeroPosition::front2)->isAlive())
+        targets.set(HeroPosition::front2);
+    if(player->getHeroGroup().at(HeroPosition::front3)->isAlive())
+        targets.set(HeroPosition::front3);
+    if(player->getHeroGroup().at(HeroPosition::back1)->isAlive())
+        targets.set(HeroPosition::back1);
+    if(player->getHeroGroup().at(HeroPosition::back2)->isAlive())
+        targets.set(HeroPosition::back2);
+    if(player->getHeroGroup().at(HeroPosition::back3)->isAlive())
+        targets.set(HeroPosition::back3);
+
+    return targets;
+}
+
+Targets Action::getAliveTargetsFrontLine(Player *player) const
+{
+    Targets targets;
+    if(player->getHeroGroup().at(HeroPosition::front1)->isAlive())
+        targets.set(HeroPosition::front1);
+    if(player->getHeroGroup().at(HeroPosition::front2)->isAlive())
+        targets.set(HeroPosition::front2);
+    if(player->getHeroGroup().at(HeroPosition::front3)->isAlive())
+        targets.set(HeroPosition::front3);
+
+    return targets;
+}
+
+Targets Action::getAliveTargetsBackLine(Player *player) const
+{
+    Targets targets;
+    if(player->getHeroGroup().at(HeroPosition::back1)->isAlive())
+        targets.set(HeroPosition::back1);
+    if(player->getHeroGroup().at(HeroPosition::back2)->isAlive())
+        targets.set(HeroPosition::back2);
+    if(player->getHeroGroup().at(HeroPosition::back3)->isAlive())
+        targets.set(HeroPosition::back3);
+
+    return targets;
+}
+
+int Action::getRandom(int from, int to) const
+{
+    return rand()%(to-from + 1) + from;
+}

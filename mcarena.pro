@@ -33,7 +33,8 @@ SOURCES += main.cpp \
     action.cpp \
     targets.cpp \
     actions.cpp \
-    spritesfield.cpp
+    spritesfield.cpp \
+    attack.cpp
 
 HEADERS += \
     inc/menugui.h \
@@ -62,7 +63,8 @@ HEADERS += \
     inc/herovector.h \
     inc/cost.h \
     inc/targets.h \
-    inc/spritesfield.h
+    inc/spritesfield.h \
+    inc/attack.h
 
 LIBS += \
     -lsfml-graphics \

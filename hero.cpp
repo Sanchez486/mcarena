@@ -41,12 +41,17 @@ HeroTemplate *Hero::getTemplate() const
     return heroTemplate;
 }
 
-Action* Hero::getAttack()
+Action* Hero::getAttack() const
 {
     return stats->actions.getAttack();
 }
 
-Action* Hero::getSkill()
+Action* Hero::getSkill() const
 {
     return stats->actions.getSkill();
+}
+
+bool Hero::isAlive() const
+{
+    return stats->hp.curr > 0;
 }

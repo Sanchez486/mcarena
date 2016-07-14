@@ -7,7 +7,7 @@
 
 class Action
 {
-private:
+protected:
     Player *player1;
     Player *player2;
     Hero *sender;
@@ -33,4 +33,11 @@ public:
     virtual const std::string& getDescription() const;
 
     virtual void doAction();
+
+protected:
+    Targets getAliveTargets(Player *player) const;
+    Targets getAliveTargetsFrontLine(Player *player) const;
+    Targets getAliveTargetsBackLine(Player *player) const;
+
+    int getRandom(int from, int to) const;  // random int from range [from, to]
 };
