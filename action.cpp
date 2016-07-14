@@ -107,19 +107,6 @@ Targets Action::getAliveTargets(Player *player) const
     return targets;
 }
 
-int Action::countAlive(Player *player)
-{
-    Target alive = getAliveTargets(player);
-    int count = alive.front1 + alive.front2 + alive.front3 + alive.back1 + alive.back2 + alive.back3;
-    return count;
-}
-
-Targets Action::getRandomAliveTargets(int num) const
-{
-            
-}
-
-
 Targets Action::getAliveTargetsFrontLine(Player *player) const
 {
     Targets targets;
@@ -144,6 +131,23 @@ Targets Action::getAliveTargetsBackLine(Player *player) const
         targets.set(HeroPosition::back3);
 
     return targets;
+}
+
+// TODO: return [num] random alive targets
+Targets Action::getRandomAliveTargets(int num) const
+{
+    Targets targets;
+    targets.set(HeroPosition::front1);
+    targets.set(HeroPosition::front2);
+    targets.set(HeroPosition::front3);
+
+    return targets;
+}
+
+int Action::countAlive(Player *player) const
+{
+    Targets targets = getAliveTargets(player);
+    return targets.front1 + targets.front2 + targets.front3 + targets.back1 + targets.back2 + targets.back3;
 }
 
 int Action::getRandom(int from, int to) const

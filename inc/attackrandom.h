@@ -2,9 +2,16 @@
 
 #include "action.h"
  
-class threeAttack : public Action
+class AttackRandom : public Action
 {
+private:
+    int numTargets;
+    Damage damage;
+    Targets targets;
+
 public:
+    AttackRandom(int _numTargets, const Damage &_damage);
+
     virtual Action* clone() const;  // return new Attack(*this);
 
     virtual Targets getAvaliableTargetsPlayer1() const;  // After setSender()

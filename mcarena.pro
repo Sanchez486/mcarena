@@ -34,7 +34,8 @@ SOURCES += main.cpp \
     targets.cpp \
     actions.cpp \
     spritesfield.cpp \
-    attack.cpp
+    attack.cpp \
+    attackrandom.cpp
 
 HEADERS += \
     inc/menugui.h \
@@ -64,7 +65,8 @@ HEADERS += \
     inc/cost.h \
     inc/targets.h \
     inc/spritesfield.h \
-    inc/attack.h
+    inc/attack.h \
+    inc/attackrandom.h
 
 LIBS += \
     -lsfml-graphics \
