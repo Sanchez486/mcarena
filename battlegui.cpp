@@ -59,24 +59,11 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     qScroll->SetScrollbarPolicy( sfg::ScrolledWindow::VERTICAL_NEVER| sfg::ScrolledWindow::HORIZONTAL_ALWAYS);
     qScroll->SetRequisition( sf::Vector2f(app_window.getX() - FRAME*2, YICON ) );
 
-    //for debug start
-
-    sf::Image sfImage;
-    sfImage.loadFromFile("res/img/images/sonic_img.png");
-
-    for(int i=0;i<13;i++)
+    for(int i = 0; i < 12; i++)
     {
-        if(i == 1)
-            queueBox->Pack(separator);
-        else
-        {
-            image = sfg::Image::Create(sfImage);
-            queueBox->Pack(image);
-        }
+        queueImages[i] = sfg::Image::Create();
+        queueBox->Pack(queueImages[i]);
     }
-
-
-    //for debug end
 
     desktop.Add(queueWindow);
     queueWindow->SetAllocation(sf::FloatRect(0,app_window.getY() - YQTOTAL, app_window.getX(), YICON+FRAME*2+YSCROLLBAR));
@@ -93,6 +80,7 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     //Ifowindow
 
     //for debug start
+    sf::Image sfImage;
     sfImage.loadFromFile("res/img/images/sonic_img.png");
 
     image = sfg::Image::Create(sfImage);
@@ -213,9 +201,18 @@ void BattleGUI::setActiveHero(Hero *)
 
 }
 
-void BattleGUI::setQueue(HeroQueue *)
+void BattleGUI::setQueue(HeroQueue *queue)
 {
+    if(queue == nullptr)
+        std::cerr << "queue is nullptr" << std::endl;
 
+    int i = 0;
+    for(auto it = queue->begin(), end = queue->end(); it != end; it++)
+    {
+        queueImages[i]->SetImage((*it)->getResources().getImage());
+        queueImages[i]->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &BattleGUI::showInfoSignal, this, (*it) ) );
+        i++;
+    }
 }
 
 void BattleGUI::showInfo(Hero *)

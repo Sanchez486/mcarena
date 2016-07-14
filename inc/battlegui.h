@@ -53,6 +53,8 @@ private:
     sfg::Box::Ptr queueBox;
     sfg::Separator::Ptr separator;
 
+    sfg::Image::Ptr queueImages[12];
+
     //ButtonWindow
     sfg::Box::Ptr buttonBox;
     sfg::Button::Ptr attackButton;
@@ -95,7 +97,7 @@ public slots:
     void hide();  // Hide this window
     void setPlayers(Player *player1, Player *player2);
     void setActiveHero(Hero*);  // Change current hero
-    void setQueue(HeroQueue*);  // Change queue
+    void setQueue(HeroQueue* queue);  // Change queue
     void showInfo(Hero*);  // Show info about Hero  [this -> this]
     void showTargets(Action*);  // Highlight avaliable targets
     void playAction(Action*);  // Play animation/sounds, show numbers
