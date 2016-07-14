@@ -25,6 +25,7 @@ private:
 
     //Additional functions
     HeroPosition iToPos(int i);
+    sf::Vector2f iToVector(int i);
     sf::Vector2f iToVector1(int i); //Returns position on the field to i unit of 1st player
     sf::Vector2f iToVector2(int i); //-||-||- of 2nd player
     /*

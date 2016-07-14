@@ -8,8 +8,10 @@
 #define NCOL 9
 #define NROW 4
 
-#define XBACK1 270
-#define YBACK1 40
+#define X 800
+#define XINFO 220
+#define XBOUND 20
+#define YBOUND 40
 #define XINDENT 30
 #define YINDENT 20
 #define XBREAK 100
@@ -28,13 +30,13 @@ SpritesField::SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _se
 
         //firstPlayerTexture[i] = firstPlayer->getHeroGroup().at(iToPos(i))->getResources().getTexture();
         firstPlayerSprite[i] = sf::Sprite(firstPlayer->getHeroGroup().at(iToPos(i))->getResources().getTexture());
-        firstPlayerSprite[i].setTextureRect(sf::IntRect((NCOL - 1)*XSPRITE, 0, XSPRITE, YSPRITE));
-        firstPlayerSprite[i].setPosition(iToVector1(i));
+        firstPlayerSprite[i].setTextureRect(sf::IntRect(0, 0, XSPRITE, YSPRITE));
         firstPlayerSprite[i].setScale(SCALE, SCALE);
+        firstPlayerSprite[i].setPosition(iToVector1(i));
 
         //secondPlayerTexture[i] = secondPlayer->getHeroGroup().at(iToPos(i))->getResources().getTexture();
         secondPlayerSprite[i] = sf::Sprite(secondPlayer->getHeroGroup().at(iToPos(i))->getResources().getTexture());
-        secondPlayerSprite[i].setTextureRect(sf::IntRect((NCOL - 1)*XSPRITE, 0, XSPRITE, YSPRITE));
+        secondPlayerSprite[i].setTextureRect(sf::IntRect(0, 0, XSPRITE, YSPRITE));
         secondPlayerSprite[i].setScale(-SCALE, SCALE);
         secondPlayerSprite[i].setOrigin(XSPRITE, 0);
         secondPlayerSprite[i].setPosition(iToVector2(i));
@@ -67,27 +69,30 @@ HeroPosition SpritesField::iToPos(int i)
 
 sf::Vector2f SpritesField::iToVector1(int i)
 {
-    switch(i)
-    {
-        case 0: return sf::Vector2f(XBACK1, YBACK1);
-        case 1: return sf::Vector2f(XBACK1 + XSPR + XINDENT, YBACK1);
-        case 2: return sf::Vector2f(XBACK1, YBACK1 + YSPR + YINDENT);
-        case 3: return sf::Vector2f(XBACK1 + XSPR + XINDENT, YBACK1 + YSPR + YINDENT);
-        case 4: return sf::Vector2f(XBACK1, YBACK1 + 2*YSPR + 2*YINDENT);
-        case 5: return sf::Vector2f(XBACK1 + XSPR + XINDENT, YBACK1 + 2*YSPR + 2*YINDENT);
-    }
+   sf::Vector2f vector = iToVector(i);
+   return sf::Vector2f(vector.x + XINFO, vector.y);
 }
 
 sf::Vector2f SpritesField::iToVector2(int i)
 {
+    sf::Vector2f vector;
+    if(i%2)
+        vector = iToVector(i - 1);
+    else
+        vector = iToVector(i + 1);
+    return sf::Vector2f(X - XSPR - vector.x, vector.y);
+}
+
+sf::Vector2f SpritesField::iToVector(int i)
+{
     switch(i)
     {
-        case 0: return sf::Vector2f(XBACK1 + 3*XSPR + 2*XINDENT + XBREAK, YBACK1);
-        case 1: return sf::Vector2f(XBACK1 + 2*XSPR + XINDENT + XBREAK, YBACK1);
-        case 2: return sf::Vector2f(XBACK1 + 3*XSPR + 2*XINDENT + XBREAK, YBACK1 + YSPR + YINDENT);
-        case 3: return sf::Vector2f(XBACK1 + 2*XSPR + XINDENT + XBREAK, YBACK1 + YSPR + YINDENT);
-        case 4: return sf::Vector2f(XBACK1 + 3*XSPR + 2*XINDENT + XBREAK, YBACK1 + 2*YSPR + 2*YINDENT);
-        case 5: return sf::Vector2f(XBACK1 + 2*XSPR + XINDENT + XBREAK, YBACK1 + 2*YSPR + 2*YINDENT);
+        case 0: return sf::Vector2f(XBOUND, YBOUND);
+        case 1: return sf::Vector2f(XBOUND + XSPR + XINDENT, YBOUND);
+        case 2: return sf::Vector2f(XBOUND, YBOUND + YSPR + YINDENT);
+        case 3: return sf::Vector2f(XBOUND + XSPR + XINDENT, YBOUND + YSPR + YINDENT);
+        case 4: return sf::Vector2f(XBOUND, YBOUND + 2*YSPR + 2*YINDENT);
+        case 5: return sf::Vector2f(XBOUND + XSPR + XINDENT, YBOUND + 2*YSPR + 2*YINDENT);
     }
 }
 

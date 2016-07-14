@@ -2,7 +2,7 @@
 
 #define XICON 83
 #define YICON 100
-#define XINFO 200
+#define XINFO 220
 #define YBUTTON 50
 #define TIMEUPDATE 25
 #define FRAME 15
@@ -23,7 +23,6 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
       queueSBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, FRAME)),
       qScroll(sfg::ScrolledWindow::Create()),
       queueBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, 10)),
-      separator(sfg::Separator::Create(sfg::Separator::Orientation::VERTICAL)),
 
       //Buttonwindow
       buttonBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, 75)),
@@ -31,10 +30,10 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
       skillButton(sfg::Button::Create( "SKILL" )),
 
       //InfoWindow
-      infoBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, FRAME)),
-      skillsBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, FRAME)),
-      picBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, FRAME)),
-      labelBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, FRAME)),
+      infoBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
+      skillsBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),
+      picBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
+      labelBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
 
       frame(sfg::Frame::Create(sf::String(""))),
 
@@ -192,7 +191,6 @@ void BattleGUI::setActiveHero(Hero *hero)
     infoImage->SetImage(hero->getResources().getImage2());
     completeStats(stats, hero);
     frame->SetLabel(stats[0]->GetText());
-    std::cerr << "asadaf" << std::endl;
 }
 
 void BattleGUI::setQueue(HeroQueue *queue)
