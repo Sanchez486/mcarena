@@ -43,6 +43,7 @@ protected:
 
     int getRandom(int from, int to) const;  // random int from range [from, to]
     int getRandom(const Damage &damage) const;  // random int from range [min, max]
+    bool rollChance(double chance);  // returns true with a probability of [chance]
 
     void attack(Hero *hero, const Damage &damage);
     void attackAllTargets(Player *player, const Targets &targets, const Damage &damage);

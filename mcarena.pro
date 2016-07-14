@@ -41,7 +41,8 @@ SOURCES += main.cpp \
     attackall.cpp \
     attackfrontline.cpp \
     attacksingle.cpp \
-    attacktargetandself.cpp
+    attacktargetandself.cpp \
+    attackwithchance.cpp
 
 HEADERS += \
     inc/menugui.h \
@@ -79,7 +80,8 @@ HEADERS += \
     inc/attackall.h \
     inc/attackfrontline.h \
     inc/attacksingle.h \
-    inc/attacktargetandself.h
+    inc/attacktargetandself.h \
+    inc/attackwithchance.h
 
 LIBS += \
     -lsfml-graphics \

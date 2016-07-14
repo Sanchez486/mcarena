@@ -10,3 +10,4 @@
 #include "attackfrontline.h"
 #include "attacksingle.h"
 #include "attacktargetandself.h"
+#include "attackwithchance.h"

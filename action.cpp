@@ -104,6 +104,11 @@ int Action::getRandom(const Damage &damage) const
     return getRandom(damage.min, damage.max);
 }
 
+bool Action::rollChance(double chance)
+{
+    return rand()%100 < chance * 100;
+}
+
 void Action::attack(Hero *hero, const Damage &damage)
 {
     hero->getStats().hp.curr -= getRandom(damage);
