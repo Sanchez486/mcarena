@@ -185,7 +185,7 @@
 	<hero name="Pacman" 
 		atk_snd="res/sfx/sonic_attack.wav" 
 		skl_snd="res/sfx/sonic_attack.wav" 
-		texture="res/img/sprites/pacman_sprite.bmp" 
+		texture="res/img/sprites/pacman_sprite.png" 
 		image="res/img/images/pacman_img.png" 
 		image2="res/img/images/pacman_img2.png"
 		hp="100" 
