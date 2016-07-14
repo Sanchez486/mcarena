@@ -32,7 +32,8 @@ SOURCES += main.cpp \
     heroqueue.cpp \
     action.cpp \
     targets.cpp \
-    actions.cpp
+    actions.cpp \
+    spritesfield.cpp
 
 HEADERS += \
     inc/menugui.h \
@@ -60,7 +61,8 @@ HEADERS += \
     inc/heroposition.h \
     inc/herovector.h \
     inc/cost.h \
-    inc/targets.h
+    inc/targets.h \
+    inc/spritesfield.h
 
 LIBS += \
     -lsfml-graphics \

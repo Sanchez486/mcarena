@@ -1,7 +1,6 @@
 #pragma once
 #include <QObject>
 #include <QTimer>
-#include "inc/mainwindow.h"
 
 #include <SFGUI/SFGUI.hpp>
 #include <SFGUI/Widgets.hpp>
@@ -15,16 +14,18 @@
 #include <SFGUI/Separator.hpp>
 #include <SFGUI/Label.hpp>
 
-
+#include "mainwindow.h"
 #include "hero.h"
 #include "heroqueue.h"
 #include "action.h"
+#include "spritesfield.h"
 
 class BattleGUI : public QObject
 {
 Q_OBJECT
 public:
     BattleGUI(MainWindow& , QObject *parent = nullptr);
+    ~BattleGUI();
 
 private:
     QTimer *timer;
@@ -67,6 +68,10 @@ private:
     sfg::Label::Ptr element;
 
     sfg::Frame::Ptr frame;
+
+    //Sprite window
+
+    SpritesField* spritesField;
 
     //for signals
     enum ButtonPressed

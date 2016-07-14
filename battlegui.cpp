@@ -42,7 +42,10 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
       init(sfg::Label::Create(sf::String("70 init"))),
       element(sfg::Label::Create(sf::String("fire"))),
 
-      frame(sfg::Frame::Create(sf::String("Hero Name")))
+      frame(sfg::Frame::Create(sf::String("Hero Name"))),
+
+      //Sprite Field
+      spritesField(nullptr)
 
 {
     app_window.resetGLStates();
@@ -128,6 +131,12 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
                 std::bind( &BattleGUI::clickedButton, this, ButtonPressed::ATTACK ) );
 }
 
+BattleGUI::~BattleGUI()
+{
+    if(spritesField != nullptr)
+        delete spritesField;
+}
+
 void BattleGUI::clickedButton(ButtonPressed Button)
 {
     switch (Button)
@@ -144,6 +153,16 @@ void BattleGUI::show()
    infoWindow->Show(true);
    connect(app_window.getTimer(), SIGNAL(timeout()), this, SLOT(update()));
    app_window.getTimer()->start(TIMEUPDATE);
+}
+
+void BattleGUI::hide()
+{
+    queueWindow->Show(false);
+    buttonWindow->Show(false);
+    infoWindow->Show(false);
+    disconnect(app_window.getTimer(), SIGNAL(timeout()), this, SLOT(update()));
+    app_window.clear(sf::Color::Black);
+    app_window.display();
 }
 
 void BattleGUI::update()
@@ -168,6 +187,8 @@ void BattleGUI::update()
         app_window.clear();
         app_window.draw(background);
         sfgui.Display(app_window);
+        if(spritesField != nullptr)
+            spritesField->draw(app_window);
         app_window.display();
     }
 
@@ -178,20 +199,12 @@ void BattleGUI::update()
     }
 }
 
-
-void BattleGUI::hide()
-{
-    queueWindow->Show(false);
-    buttonWindow->Show(false);
-    infoWindow->Show(false);
-    disconnect(app_window.getTimer(), SIGNAL(timeout()), this, SLOT(update()));
-    app_window.clear(sf::Color::Black);
-    app_window.display();
-}
-
 void BattleGUI::setPlayers(Player *player1, Player *player2)
 {
+    if(spritesField != nullptr)
+        delete spritesField;
 
+    spritesField = new SpritesField(player1, player2);
 }
 
 void BattleGUI::setActiveHero(Hero *)
