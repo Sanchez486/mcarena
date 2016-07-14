@@ -38,7 +38,8 @@ SOURCES += main.cpp \
     attackrandom.cpp \
     heal.cpp \
     lifesteal.cpp \
-    attackall.cpp
+    attackall.cpp \
+    attackfrontline.cpp
 
 HEADERS += \
     inc/menugui.h \
@@ -73,7 +74,8 @@ HEADERS += \
     inc/attackrandom.h \
     inc/heal.h \
     inc/lifesteal.h \
-    inc/attackall.h
+    inc/attackall.h \
+    inc/attackfrontline.h
 
 LIBS += \
     -lsfml-graphics \
