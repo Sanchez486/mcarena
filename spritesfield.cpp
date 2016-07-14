@@ -1,15 +1,15 @@
 #include "inc/spritesfield.h"
 
-#define SCALE 0.7
-#define XSPRITE 105
-#define YSPRITE 120
+#define SCALE 0.8
+#define XSPRITE 106
+#define YSPRITE 105
 #define XSPR (XSPRITE * SCALE)
 #define YSPR (YSPRITE * SCALE)
 #define NCOL 9
 #define NROW 4
 
-#define XBACK1 280
-#define YBACK1 50
+#define XBACK1 270
+#define YBACK1 40
 #define XINDENT 30
 #define YINDENT 20
 #define XBREAK 100
@@ -46,8 +46,8 @@ SpritesField::SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _se
 
         firstPlayerWindow[i]->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SpritesField::firstPlayerClicked , this, i) );
         secondPlayerWindow[i]->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SpritesField::secondPlayerClicked , this, i) );
-
     }
+
     //for debug
     std::cerr << "/*\n* 0 == back1\n* 1 == front1\n* 2 == back2\n* 3 == front2\n* 4 == back3\n* 5 == front3\n*/\n";
 }
