@@ -65,7 +65,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
 
 {
     app_window.resetGLStates();
-    backgroundT.loadFromFile("src/selectBACK.jpg");
+    backgroundT.loadFromFile("res/img/background/selectionBACK.jpg");
     background.setTexture(backgroundT);
 
     //Info

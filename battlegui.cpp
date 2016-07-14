@@ -49,7 +49,7 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
 
 {
     app_window.resetGLStates();
-    backgroundT.loadFromFile("src/battleBACK.jpg");
+    backgroundT.loadFromFile("res/img/background/battleBACK.jpg");
     background.setTexture(backgroundT);
 
     //Queuewindow
@@ -111,7 +111,7 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     labelBox->Pack(element);
 
     //for debug start
-    sfImage.loadFromFile("src/debug/icon.png");
+    sfImage.loadFromFile("res/img/icons/icon.png");
 
 
     for(int i = 0; i < 4 ; i++)

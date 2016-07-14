@@ -28,7 +28,7 @@ MenuGUI::MenuGUI(MainWindow& _app_window, QObject *parent)
 
 {
     app_window.resetGLStates();
-    backgroundT.loadFromFile("src/menuBACK.jpg");
+    backgroundT.loadFromFile("res/img/background/menuBACK.jpg");
     background.setTexture(backgroundT);
     desktop.Add(window);
     desktop.Add(settingsWindow);
