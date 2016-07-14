@@ -9,3 +9,4 @@
 #include "attackall.h"
 #include "attackfrontline.h"
 #include "attacksingle.h"
+#include "attackwithchance.h"
