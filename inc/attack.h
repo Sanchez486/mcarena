@@ -5,7 +5,7 @@
 class Attack : public Action
 {
 public:
-    virtual Action* clone() const;  // return new Attack(*this);
+    virtual Action* clone() const;
 
     virtual Targets getAvaliableTargetsPlayer1() const;  // After setSender()
     virtual Targets getAvaliableTargetsPlayer2() const;  // After setSender()

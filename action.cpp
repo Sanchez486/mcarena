@@ -78,7 +78,7 @@ Targets Action::getAliveTargetsBackLine(Player *player) const
 }
 
 // TODO: return [num] random alive targets
-Targets Action::getRandomAliveTargets(int num) const
+Targets Action::getRandomAliveTargets(Player *player, int num) const
 {
     Targets targets;
     targets.set(HeroPosition::front1);
@@ -97,4 +97,9 @@ int Action::countAlive(Player *player) const
 int Action::getRandom(int from, int to) const
 {
     return rand()%(to-from + 1) + from;
+}
+
+int Action::getRandom(const Damage &damage) const
+{
+    return getRandom(damage.min, damage.max);
 }

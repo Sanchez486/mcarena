@@ -29,3 +29,18 @@ bool Player::isValidGroup()
 {
     return (cost.getLeft() >= 0) && heroGroup.isFull();
 }
+
+bool Player::has(Hero *hero)
+{
+    return heroGroup.find(hero) != HeroPosition::NONE;
+}
+
+Hero *Player::at(HeroPosition pos)
+{
+    return heroGroup.at(pos);
+}
+
+HeroPosition Player::find(Hero *hero)
+{
+    return heroGroup.find(hero);
+}

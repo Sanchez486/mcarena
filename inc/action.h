@@ -38,8 +38,9 @@ protected:
     Targets getAliveTargets(Player *player) const;
     Targets getAliveTargetsFrontLine(Player *player) const;
     Targets getAliveTargetsBackLine(Player *player) const;
-    Targets getRandomAliveTargets(int num) const;
+    Targets getRandomAliveTargets(Player *player, int num = 1) const;
     int countAlive(Player *player) const;
 
     int getRandom(int from, int to) const;  // random int from range [from, to]
+    int getRandom(const Damage &damage) const;  // random int from range [min, max]
 };

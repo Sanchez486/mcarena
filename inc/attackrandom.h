@@ -12,7 +12,7 @@ private:
 public:
     AttackRandom(int _numTargets, const Damage &_damage);
 
-    virtual Action* clone() const;  // return new Attack(*this);
+    virtual Action* clone() const;
 
     virtual Targets getAvaliableTargetsPlayer1() const;  // After setSender()
     virtual Targets getAvaliableTargetsPlayer2() const;  // After setSender()

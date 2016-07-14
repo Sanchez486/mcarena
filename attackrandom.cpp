@@ -15,7 +15,7 @@ Action *AttackRandom::clone() const
 
 Targets AttackRandom::getAvaliableTargetsPlayer1() const
 {
-    if(player1->getHeroGroup().find(sender) == HeroPosition::NONE)
+    if(!player1->has(sender))
     {
         return getAliveTargets(player1);
     }
@@ -25,7 +25,7 @@ Targets AttackRandom::getAvaliableTargetsPlayer1() const
 
 Targets AttackRandom::getAvaliableTargetsPlayer2() const
 {
-    if(player2->getHeroGroup().find(sender) == HeroPosition::NONE)
+    if(!player2->has(sender))
     {
         return getAliveTargets(player2);
     }
@@ -35,7 +35,7 @@ Targets AttackRandom::getAvaliableTargetsPlayer2() const
 
 Targets AttackRandom::getTargetsPlayer1() const
 {
-    if(player1->getHeroGroup().find(target) != HeroPosition::NONE)
+    if(player1->has(target))
         return targets;
 
     return Targets(false);
@@ -43,7 +43,7 @@ Targets AttackRandom::getTargetsPlayer1() const
 
 Targets AttackRandom::getTargetsPlayer2() const
 {
-    if(player2->getHeroGroup().find(target) != HeroPosition::NONE)
+    if(player1->has(target))
         return targets;
 
     return Targets(false);
@@ -63,10 +63,8 @@ const std::string &AttackRandom::getDescription() const
 
 void AttackRandom::doAction()
 {
-    targets = getRandomAliveTargets(numTargets);
-
     Player *player;
-    if(player1->getHeroGroup().find(target) != HeroPosition::NONE)
+    if(player1->has(target))
     {
         player = player1;
     }
@@ -75,18 +73,20 @@ void AttackRandom::doAction()
         player = player2;
     }
 
+    targets = getRandomAliveTargets(player, numTargets);
+
     int realDamage = getRandom(damage.min, damage.max);
 
     if(targets.front1)
-        player->getHeroGroup().at(HeroPosition::front1)->getStats().hp.curr -= realDamage;
+        player->at(HeroPosition::front1)->getStats().hp.curr -= realDamage;
     if(targets.front2)
-        player->getHeroGroup().at(HeroPosition::front2)->getStats().hp.curr -= realDamage;
+        player->at(HeroPosition::front2)->getStats().hp.curr -= realDamage;
     if(targets.front3)
-        player->getHeroGroup().at(HeroPosition::front3)->getStats().hp.curr -= realDamage;
+        player->at(HeroPosition::front3)->getStats().hp.curr -= realDamage;
     if(targets.back1)
-        player->getHeroGroup().at(HeroPosition::back1)->getStats().hp.curr -= realDamage;
+        player->at(HeroPosition::back1)->getStats().hp.curr -= realDamage;
     if(targets.back2)
-        player->getHeroGroup().at(HeroPosition::back2)->getStats().hp.curr -= realDamage;
+        player->at(HeroPosition::back2)->getStats().hp.curr -= realDamage;
     if(targets.back3)
-        player->getHeroGroup().at(HeroPosition::back3)->getStats().hp.curr -= realDamage;
+        player->at(HeroPosition::back3)->getStats().hp.curr -= realDamage;
 }

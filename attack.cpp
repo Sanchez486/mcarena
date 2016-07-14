@@ -7,7 +7,7 @@ Action *Attack::clone() const
 
 Targets Attack::getAvaliableTargetsPlayer1() const
 {
-    if(player1->getHeroGroup().find(sender) == HeroPosition::NONE)
+    if(!player1->has(sender))
     {
         if(sender->getStats().kind == Kind::melee)
         {
@@ -24,7 +24,7 @@ Targets Attack::getAvaliableTargetsPlayer1() const
 
 Targets Attack::getAvaliableTargetsPlayer2() const
 {
-    if(player2->getHeroGroup().find(sender) == HeroPosition::NONE)
+    if(!player2->has(sender))
     {
         if(sender->getStats().kind == Kind::melee)
         {
@@ -41,7 +41,7 @@ Targets Attack::getAvaliableTargetsPlayer2() const
 
 Targets Attack::getTargetsPlayer1() const
 {
-    HeroPosition pos = player1->getHeroGroup().find(target);
+    HeroPosition pos = player1->find(target);
     Targets targets;
     targets.set(pos);
 
@@ -50,7 +50,7 @@ Targets Attack::getTargetsPlayer1() const
 
 Targets Attack::getTargetsPlayer2() const
 {
-    HeroPosition pos = player2->getHeroGroup().find(target);
+    HeroPosition pos = player2->find(target);
     Targets targets;
     targets.set(pos);
 
