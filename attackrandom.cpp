@@ -75,18 +75,5 @@ void AttackRandom::doAction()
 
     targets = getRandomAliveTargets(player, numTargets);
 
-    int realDamage = getRandom(damage.min, damage.max);
-
-    if(targets.front1)
-        player->at(HeroPosition::front1)->getStats().hp.curr -= realDamage;
-    if(targets.front2)
-        player->at(HeroPosition::front2)->getStats().hp.curr -= realDamage;
-    if(targets.front3)
-        player->at(HeroPosition::front3)->getStats().hp.curr -= realDamage;
-    if(targets.back1)
-        player->at(HeroPosition::back1)->getStats().hp.curr -= realDamage;
-    if(targets.back2)
-        player->at(HeroPosition::back2)->getStats().hp.curr -= realDamage;
-    if(targets.back3)
-        player->at(HeroPosition::back3)->getStats().hp.curr -= realDamage;
+    attackAllTargets(player, targets, damage);
 }

@@ -103,3 +103,24 @@ int Action::getRandom(const Damage &damage) const
 {
     return getRandom(damage.min, damage.max);
 }
+
+void Action::attack(Hero *hero, const Damage &damage)
+{
+    hero->getStats().hp.curr -= getRandom(damage);
+}
+
+void Action::attackAllTargets(Player *player, const Targets &targets, const Damage &damage)
+{
+    if(targets.front1)
+        attack(player->at(HeroPosition::front1), damage);
+    if(targets.front2)
+        attack(player->at(HeroPosition::front2), damage);
+    if(targets.front3)
+        attack(player->at(HeroPosition::front3), damage);
+    if(targets.back1)
+        attack(player->at(HeroPosition::back1), damage);
+    if(targets.back2)
+        attack(player->at(HeroPosition::back2), damage);
+    if(targets.back3)
+        attack(player->at(HeroPosition::back3), damage);
+}
