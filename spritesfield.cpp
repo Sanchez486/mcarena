@@ -1,8 +1,8 @@
 #include "inc/spritesfield.h"
 
-#define SCALE 0.6
-#define XSPRITE 142
-#define YSPRITE 140
+#define SCALE 0.7
+#define XSPRITE 105
+#define YSPRITE 120
 #define XSPR (XSPRITE * SCALE)
 #define YSPR (YSPRITE * SCALE)
 #define NCOL 9
@@ -33,7 +33,7 @@ SpritesField::SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _se
         firstPlayerSprite[i].setScale(SCALE, SCALE);
 
         //secondPlayerTexture[i] = secondPlayer->getHeroGroup().at(iToPos(i))->getResources().getTexture();
-        secondPlayerSprite[i] = sf::Sprite(firstPlayer->getHeroGroup().at(iToPos(i))->getResources().getTexture());
+        secondPlayerSprite[i] = sf::Sprite(secondPlayer->getHeroGroup().at(iToPos(i))->getResources().getTexture());
         secondPlayerSprite[i].setTextureRect(sf::IntRect((NCOL - 1)*XSPRITE, 0, XSPRITE, YSPRITE));
         secondPlayerSprite[i].setScale(-SCALE, SCALE);
         secondPlayerSprite[i].setOrigin(XSPRITE, 0);
