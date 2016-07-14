@@ -107,6 +107,19 @@ Targets Action::getAliveTargets(Player *player) const
     return targets;
 }
 
+int Action::countAlive(Player *player)
+{
+    Target alive = getAliveTargets(player);
+    int count = alive.front1 + alive.front2 + alive.front3 + alive.back1 + alive.back2 + alive.back3;
+    return count;
+}
+
+Targets Action::getRandomAliveTargets(int num) const
+{
+            
+}
+
+
 Targets Action::getAliveTargetsFrontLine(Player *player) const
 {
     Targets targets;
