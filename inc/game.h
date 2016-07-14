@@ -52,6 +52,7 @@ public:
     void loadHeroes();
 
 private:
-    Kind strToKind(const std::string &str);
-    Element strToElement(const std::string &str);
+    Kind strToKind(const std::string &str) const;
+    Element strToElement(const std::string &str) const;
+    void strToActions(const std::string &str, Actions *actions) const;
 };

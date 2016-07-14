@@ -64,7 +64,8 @@ HEADERS += \
     inc/cost.h \
     inc/targets.h \
     inc/spritesfield.h \
-    inc/attack.h
+    inc/attack.h \
+    inc/actions_list.h
 
 LIBS += \
     -lsfml-graphics \
