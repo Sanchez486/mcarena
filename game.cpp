@@ -1,6 +1,7 @@
 #include "inc/game.h"
 #include <tinyxml.h>
 #include <iostream>
+#include "inc/actions_list.h"
 
 using namespace std;
 
@@ -188,6 +189,7 @@ void Game::loadHeroes()
         int hp, dmg_min, dmg_max, init, cost;
         Kind kind;
         Element element;
+        Actions actions;
 
         xml_hero->QueryIntAttribute("hp", &hp);
         xml_hero->QueryIntAttribute("dmg_min", &dmg_min);
@@ -195,10 +197,11 @@ void Game::loadHeroes()
         kind = strToKind(xml_hero->Attribute("kind"));
         element = strToElement(xml_hero->Attribute("elem"));
         xml_hero->QueryIntAttribute("init", &init);
+        strToActions(xml_hero->Attribute("skill"), &actions);
         xml_hero->QueryIntAttribute("cost", &cost);
 
         hero->setStats(Stats(HP(hp), Damage(dmg_min, dmg_max), Kind(kind), Element(element),
-                             Initiative(init), Actions(), cost));
+                             Initiative(init), actions, cost));
 
         heroes.push_back(hero);
 
@@ -206,7 +209,7 @@ void Game::loadHeroes()
     }
 }
 
-Kind Game::strToKind(const string &str)
+Kind Game::strToKind(const string &str) const
 {
     if(!str.compare("range"))
         return Kind::range;
@@ -217,7 +220,7 @@ Kind Game::strToKind(const string &str)
     return Kind(-1);
 }
 
-Element Game::strToElement(const string &str)
+Element Game::strToElement(const string &str) const
 {
     if(!str.compare("neutral"))
         return Element::neutral;
@@ -232,4 +235,9 @@ Element Game::strToElement(const string &str)
         return Element::earth;
 
     return Element(-1);
+}
+
+void Game::strToActions(const string &str, Actions *actions) const
+{
+    actions->setAttack(new Attack());
 }

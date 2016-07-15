@@ -18,4 +18,7 @@ public:
     void setMaxCost(int max);
 
     bool isValidGroup();
+    bool has(Hero *hero);
+    Hero* at(HeroPosition pos);
+    HeroPosition find(Hero *hero);
 };

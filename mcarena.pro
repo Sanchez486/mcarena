@@ -33,7 +33,16 @@ SOURCES += main.cpp \
     action.cpp \
     targets.cpp \
     actions.cpp \
-    spritesfield.cpp
+    spritesfield.cpp \
+    attack.cpp \
+    attackrandom.cpp \
+    heal.cpp \
+    lifesteal.cpp \
+    attackall.cpp \
+    attackfrontline.cpp \
+    attacksingle.cpp \
+    attacktargetandself.cpp \
+    attackwithchance.cpp
 
 HEADERS += \
     inc/menugui.h \
@@ -62,7 +71,17 @@ HEADERS += \
     inc/herovector.h \
     inc/cost.h \
     inc/targets.h \
-    inc/spritesfield.h
+    inc/spritesfield.h \
+    inc/attack.h \
+    inc/actions_list.h \
+    inc/attackrandom.h \
+    inc/heal.h \
+    inc/lifesteal.h \
+    inc/attackall.h \
+    inc/attackfrontline.h \
+    inc/attacksingle.h \
+    inc/attacktargetandself.h \
+    inc/attackwithchance.h
 
 LIBS += \
     -lsfml-graphics \
