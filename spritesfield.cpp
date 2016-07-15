@@ -102,11 +102,7 @@ sf::Vector2f SpritesField::iToVector1(int i)
 
 sf::Vector2f SpritesField::iToVector2(int i)
 {
-    sf::Vector2f vector;
-    if(i%2)
-        vector = iToVector(i - 1);
-    else
-        vector = iToVector(i + 1);
+    sf::Vector2f vector = iToVector(i);
     return sf::Vector2f(X - XSPR - vector.x, vector.y);
 }
 
