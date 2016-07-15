@@ -9,6 +9,10 @@
 #define YSCROLLBAR 30
 #define YINDENT 10
 #define YQTOTAL (YICON+FRAME*2+YSCROLLBAR+YINDENT - 10)
+#define XWINDOW 160
+#define YWINDOW 250
+#define X 800
+#define Y 600
 
 BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     :
@@ -38,7 +42,14 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
       frame(sfg::Frame::Create(sf::String(""))),
 
       //Sprite Field
-      spritesField(nullptr)
+      spritesField(nullptr),
+
+      //Pop window
+      popWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
+      popSkillsBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),
+      popBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
+      popPicBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
+      popLabelBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL))
 
 {
     app_window.resetGLStates();
@@ -87,6 +98,8 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     for(int i = 1; i < 6; i++)
         labelBox->Pack(stats[i]);
 
+    stats[5]->SetId("element1");
+
     //for debug start
     sf::Image sfImage;
     sfImage.loadFromFile("res/img/icons/icon.png");
@@ -101,6 +114,36 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
 
     desktop.Add(infoWindow);
     infoWindow->SetAllocation(sf::FloatRect( 0 , 0, XINFO,app_window.getY() - YQTOTAL));
+
+    //Pop window
+    popWindow->Add(popBox);
+    popBox->Pack(popSkillsBox);
+    popSkillsBox->Pack(popPicBox);
+    popSkillsBox->Pack(popLabelBox);
+
+    for(int i = 0; i < 5; i++)
+    {
+        image = sfg::Image::Create(sfImage);
+        popPicBox->Pack(image);
+    }
+
+    for(int i = 0; i < 6; i++)
+    {
+        popStats[i] = sfg::Label::Create(sf::String(""));
+        if(i != 0)
+            popLabelBox->Pack(popStats[i]);
+        else
+            popBox->PackStart(popStats[i]);
+    }
+    popWindow->Show(false);
+    desktop.Add(popWindow);
+
+    popStats[0]->SetId("title");
+    popStats[5]->SetId("element2");
+
+    popWindow->SetId("window");
+    sfg::Context::Get().GetEngine().SetProperty("Window#" + popWindow->GetId(),
+                                                "BackgroundColor", sf::Color(0, 0, 0, 200));
 
     //Signals
     skillButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
@@ -164,9 +207,9 @@ void BattleGUI::update()
 
         app_window.clear();
         app_window.draw(background);
-        sfgui.Display(app_window);
         if(spritesField != nullptr)
             spritesField->draw(app_window);
+        sfgui.Display(app_window);
         app_window.display();
     }
 
@@ -199,20 +242,41 @@ void BattleGUI::setQueue(HeroQueue *queue)
     if(queue == nullptr)
         std::cerr << "queue is nullptr" << std::endl;
 
-    auto it = queue->begin(), end = queue->end();
-    queueImages[0]->SetImage((*it++)->getResources().getImage2());
-    int i = 1;
-    for(; it != end; it++)
+    int i = 0;
+    for(auto it = queue->begin(), end = queue->end(); it != end; it++)
     {
-        queueImages[i]->SetImage((*it)->getResources().getImage());
-        queueImages[i]->GetSignal( sfg::Widget::OnRightClick ).Connect(  std::bind( &BattleGUI::showInfoSignal, this, (*it) ) );
+        if (it == queue->begin())
+            queueImages[i]->SetImage((*it)->getResources().getImage2());
+        else
+            queueImages[i]->SetImage((*it)->getResources().getImage());
+
+        queueImages[i]->GetSignal( sfg::Widget::OnMouseRightPress ).Connect(
+                    std::bind( &BattleGUI::showInfo, this, (*it), Button::PRESSED ) );
+        queueImages[i]->GetSignal( sfg::Widget::OnMouseRightRelease ).Connect(
+                    std::bind( &BattleGUI::showInfo, this, (*it), Button::RELEASED ) );
         i++;
     }
 }
 
-void BattleGUI::showInfo(Hero *)
+void BattleGUI::showInfo(Hero *hero, Button button)
 {
-
+    switch(button)
+    {
+        case Button::PRESSED:
+        {
+            completeStats(popStats, hero);
+            sfg::Context::Get().GetEngine().SetProperty("Label#" + popStats[0]->GetId(), "FontSize", 16);
+            popWindow->SetAllocation(setPopWindowPosition(sf::Mouse::getPosition(app_window)));
+            desktop.BringToFront(popWindow);
+            popWindow->Show(true);
+            break;
+        }
+        case Button::RELEASED:
+        {
+            popWindow->Show(false);
+            break;
+        }
+    }
 }
 
 void BattleGUI::showTargets(Action *)
@@ -241,24 +305,41 @@ void BattleGUI::completeStats(sfg::Label::Ptr* array, Hero* hero)
             break;
     }
     array[4]->SetText(std::to_string( hero->getStats().initiative.val ) + " INIT");
-    array[5]->SetId("element");
     switch(hero->getStats().element)
     {
         case Element::neutral:
             array[5]->SetText("NEUTRAL");
-            sfg::Context::Get().GetEngine().SetProperty("Label#element", "Color", sf::Color::Magenta);
+            sfg::Context::Get().GetEngine().SetProperty("Label#" + array[5]->GetId(), "Color", sf::Color::Magenta);
             break;
         case Element::fire:
             array[5]->SetText("FIRE");
-            sfg::Context::Get().GetEngine().SetProperty("Label#element", "Color", sf::Color::Red);
+            sfg::Context::Get().GetEngine().SetProperty("Label#" + array[5]->GetId(), "Color", sf::Color::Red);
             break;
         case Element::water:
             array[5]->SetText("WATER");
-            sfg::Context::Get().GetEngine().SetProperty("Label#element", "Color", sf::Color::Blue);
+            sfg::Context::Get().GetEngine().SetProperty("Label#" + array[5]->GetId(), "Color", sf::Color::Blue);
             break;
         case Element::earth:
             array[5]->SetText("EARTH");
-            sfg::Context::Get().GetEngine().SetProperty("Label#element", "Color", sf::Color::Green);
+            sfg::Context::Get().GetEngine().SetProperty("Label#" + array[5]->GetId(), "Color", sf::Color::Green);
             break;
     }
+}
+
+sf::FloatRect BattleGUI::setPopWindowPosition(sf::Vector2i mousePos)
+{
+    int Xmouse = mousePos.x, Ymouse = mousePos.y;
+
+    if(YWINDOW > Y - Ymouse)
+    {
+        if(XWINDOW > X - Xmouse)
+            return sf::FloatRect(Xmouse - XWINDOW, Ymouse - YWINDOW, XWINDOW, YWINDOW);
+        else
+            return sf::FloatRect(Xmouse, Ymouse - YWINDOW, XWINDOW, YWINDOW);
+    }
+    else if(XWINDOW > X - Xmouse)
+        return sf::FloatRect(Xmouse - XWINDOW, Ymouse, XWINDOW, YWINDOW);
+    else
+        return sf::FloatRect(Xmouse, Ymouse, XWINDOW, YWINDOW);
+
 }

@@ -11,7 +11,7 @@
 #include <SFGUI/Image.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System/String.hpp>
-#include <SFGUI/Separator.hpp>
+#include <SFML/Window/Mouse.hpp>
 #include <SFGUI/Label.hpp>
 
 #include "mainwindow.h"
@@ -82,8 +82,26 @@ private:
 
     void clickedButton(ButtonPressed Button);
 
+    //Pop window
+    sfg::Window::Ptr popWindow;
+    sfg::Box::Ptr popBox;
+    sfg::Box::Ptr popSkillsBox;
+    sfg::Box::Ptr popPicBox;
+    sfg::Box::Ptr popLabelBox;
+    sfg::Label::Ptr popStats[6];
+
     //Additional functions
     void completeStats(sfg::Label::Ptr* array, Hero *hero);
+    sf::FloatRect setPopWindowPosition(sf::Vector2i mousePos);
+
+    //For SFGUI signals
+    enum Button
+    {
+        PRESSED,
+        RELEASED
+    };
+
+    void showInfo(Hero *hero, Button button);
 
 signals:
     void selectedAction(Action*);  // After attack or skill clicked
@@ -97,7 +115,6 @@ public slots:
     void setPlayers(Player *player1, Player *player2);
     void setActiveHero(Hero *hero);  // Change current hero
     void setQueue(HeroQueue* queue);  // Change queue
-    void showInfo(Hero*);  // Show info about Hero  [this -> this]
     void showTargets(Action*);  // Highlight avaliable targets
     void playAction(Action*);  // Play animation/sounds, show numbers
 
