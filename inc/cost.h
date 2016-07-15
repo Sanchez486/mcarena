@@ -11,9 +11,9 @@ private:
 public:
     Cost(int _max = 0);
 
-    int getMax();
-    int getUsed();
-    int getLeft();
+    int getMax() const;
+    int getUsed() const;
+    int getLeft() const;
     void setMax(int _max);
     void countUsed(const HeroGroup &heroGroup);
 };

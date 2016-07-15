@@ -55,3 +55,13 @@ bool Hero::isAlive() const
 {
     return stats->hp.curr > 0;
 }
+
+bool Hero::updateDead()
+{
+    if(showedDead == true)
+    {
+        return false;
+    }
+
+    return showedDead = !isAlive();
+}

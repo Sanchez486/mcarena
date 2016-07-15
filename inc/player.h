@@ -17,8 +17,10 @@ public:
     void updateCost();
     void setMaxCost(int max);
 
-    bool isValidGroup();
-    bool has(Hero *hero);
-    Hero* at(HeroPosition pos);
-    HeroPosition find(Hero *hero);
+    bool isValidGroup() const;
+    bool has(Hero *hero) const;
+    Hero* at(HeroPosition pos) const;
+    HeroPosition find(Hero *hero) const;
+
+    int countAlive() const;  // return number of alive heroes
 };
