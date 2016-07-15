@@ -5,17 +5,17 @@ Cost::Cost(int _max) : max(_max), used(0)
 
 }
 
-int Cost::getMax()
+int Cost::getMax() const
 {
     return max;
 }
 
-int Cost::getUsed()
+int Cost::getUsed() const
 {
     return used;
 }
 
-int Cost::getLeft()
+int Cost::getLeft() const
 {
     return max - used;
 }

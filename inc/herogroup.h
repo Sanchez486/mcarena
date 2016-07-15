@@ -17,6 +17,6 @@ struct HeroGroup
     Hero* at(HeroPosition pos) const;
     HeroPosition find(Hero *hero) const;
     void set(HeroPosition pos, Hero *hero);
-    int count();  // return number of non-empty heroes
-    bool isFull();  // return true, if all heroes are non-empty
+    int count() const;  // return number of non-empty heroes
+    bool isFull() const;  // return true, if all heroes are non-empty
 };

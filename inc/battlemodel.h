@@ -24,6 +24,9 @@ signals:
     void setQueue(HeroQueue*);  // Change queue
     void showTargets(Action*);  // Highlight avaliable targets
     void playAction(Action*);  // Play animation/sounds, show numbers
+    void showDead(Hero*);  // Show death animation
+    void winPlayer1();  // Show final window
+    void winPlayer2();  // Show final window
 
     // BattleModel -> Game
     void finishedSignal();
@@ -32,6 +35,7 @@ signals:
 public slots:
     void selectedAction(Action *_action);  // After attack or skill clicked
     void selectedTarget(Hero *target);  // After Hero clicked
+    void finished();
     void closed();
 
 public:
@@ -39,4 +43,9 @@ public:
 
     void beginBattle(Player *_player1, Player *_player2);
     void hideGUI();
+
+private:
+    void updateDead();  // check if any hero died and send showDead();
+    void updateDead(Player *player, HeroPosition pos);
+    void beginTurn();  // on each new turn
 };

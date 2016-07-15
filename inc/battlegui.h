@@ -102,6 +102,7 @@ signals:
     void selectedAction(Action*);  // After attack or skill clicked
     void selectedTarget(Hero*);  // After Hero clicked
     void showInfoSignal(Hero*);  // After right-click on Hero  [this -> this]
+    void finished();
     void closed();
 
 public slots:
@@ -112,6 +113,9 @@ public slots:
     void setQueue(HeroQueue* queue);  // Change queue
     void showTargets(Action*);  // Highlight avaliable targets
     void playAction(Action*);  // Play animation/sounds, show numbers
+    void showDead(Hero*);  // Show death animation
+    void winPlayer1();  // Show final window
+    void winPlayer2();  // Show final window
 
 private slots:
     void update();

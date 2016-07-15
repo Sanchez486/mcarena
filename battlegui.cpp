@@ -275,6 +275,21 @@ void BattleGUI::playAction(Action *)
 
 }
 
+void BattleGUI::showDead(Hero *)
+{
+
+}
+
+void BattleGUI::winPlayer1()
+{
+
+}
+
+void BattleGUI::winPlayer2()
+{
+
+}
+
 void BattleGUI::completeStats(sfg::Label::Ptr* array, Hero* hero)
 {
 
