@@ -72,6 +72,7 @@ HeroPosition SpritesField::iToPos(int i)
         case 3: return HeroPosition::front2;
         case 4: return HeroPosition::back3;
         case 5: return HeroPosition::front3;
+        default: retuen HeroPosition::NONE;
     }
 }
 
@@ -101,6 +102,7 @@ sf::Vector2f SpritesField::iToVector(int i)
         case 3: return sf::Vector2f(XBOUND + XSPR + XINDENT, YBOUND + YSPR + YINDENT);
         case 4: return sf::Vector2f(XBOUND, YBOUND + 2*YSPR + 2*YINDENT);
         case 5: return sf::Vector2f(XBOUND + XSPR + XINDENT, YBOUND + 2*YSPR + 2*YINDENT);
+        default: return sf::Vector2f(0, 0);
     }
 }
 
