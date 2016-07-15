@@ -72,7 +72,7 @@ HeroPosition SpritesField::iToPos(int i)
         case 3: return HeroPosition::front2;
         case 4: return HeroPosition::back3;
         case 5: return HeroPosition::front3;
-        default: retuen HeroPosition::NONE;
+        default: return HeroPosition::NONE;
     }
 }
 
