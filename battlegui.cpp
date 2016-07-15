@@ -28,6 +28,8 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
       qScroll(sfg::ScrolledWindow::Create()),
       queueBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, 10)),
 
+      activeHero(nullptr),
+
       //Buttonwindow
       buttonBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, 75)),
       attackButton(sfg::Button::Create( "ATACK" )),
@@ -162,8 +164,12 @@ void BattleGUI::clickedButton(ButtonPressed Button)
 {
     switch (Button)
     {
-        case ATTACK: selectedAction(nullptr); break;
-        case SKILL: selectedAction(nullptr); break;
+        case ATTACK:
+            selectedAction(activeHero->getAttack());
+            break;
+        case SKILL:
+            selectedAction(activeHero->getSkill());
+            break;
     }
 }
 
@@ -232,9 +238,11 @@ void BattleGUI::setPlayers(Player *player1, Player *player2)
 
 void BattleGUI::setActiveHero(Hero *hero)
 {
+    activeHero = hero;
     infoImage->SetImage(hero->getResources().getImage2());
     completeStats(stats, hero);
     frame->SetLabel(stats[0]->GetText());
+    spritesField->setActiveHero(hero);
 }
 
 void BattleGUI::setQueue(HeroQueue *queue)
@@ -265,9 +273,9 @@ void BattleGUI::showInfo(Hero *hero)
     popWindow->Show(true);
 }
 
-void BattleGUI::showTargets(Action *)
+void BattleGUI::showTargets(Action *action)
 {
-
+    spritesField->showTargets(action);
 }
 
 void BattleGUI::playAction(Action *)

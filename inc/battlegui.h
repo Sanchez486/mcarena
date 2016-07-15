@@ -19,6 +19,7 @@
 #include "heroqueue.h"
 #include "action.h"
 #include "spritesfield.h"
+#include "targets.h"
 
 class SpritesField;
 
@@ -52,6 +53,8 @@ private:
     sfg::Box::Ptr queueBox;
 
     sfg::Image::Ptr queueImages[12];
+
+    Hero *activeHero;
 
     //ButtonWindow
     sfg::Box::Ptr buttonBox;

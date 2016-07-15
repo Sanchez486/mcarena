@@ -20,7 +20,9 @@ SpritesField::SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _se
     :
       firstPlayer(_firstPlayer),
       secondPlayer(_secondPlayer),
-      parent(_parent)
+      parent(_parent),
+      activePlayer(ActivePlayer::NONE)
+      //activeHero(nullptr)
 {
     if(_firstPlayer == nullptr || _secondPlayer == nullptr)
         std::cerr << "Player is nullptr";
@@ -45,6 +47,8 @@ SpritesField::SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _se
         secondPlayerWindow[i] = sfg::Window::Create(sfg::Window::Style::NO_STYLE);
         firstPlayerWindow[i]->SetAllocation(sf::FloatRect(iToVector1(i), sf::Vector2f(XSPR, YSPR)));
         secondPlayerWindow[i]->SetAllocation(sf::FloatRect(iToVector2(i), sf::Vector2f(XSPR, YSPR)));
+        firstPlayerWindow[i]->SetId("first" + std::to_string(i));
+        secondPlayerWindow[i]->SetId("second" + std::to_string(i));
 
         firstPlayerWindow[i]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
                     std::bind( &SpritesField::firstPlayerClicked , this, i) );
@@ -57,7 +61,7 @@ SpritesField::SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _se
         secondPlayerWindow[i]->GetSignal( sfg::Widget::OnMouseRightPress ).Connect(
                     std::bind( &BattleGUI::showInfo , parent, secondPlayer->getHeroGroup().at(iToPos(i))));
     }
-
+    activeWindow = sfg::Window::Create();
     //for debug
     std::cerr << "/*\n* 0 == back1\n* 1 == front1\n* 2 == back2\n* 3 == front2\n* 4 == back3\n* 5 == front3\n*/\n";
 }
@@ -73,6 +77,20 @@ HeroPosition SpritesField::iToPos(int i)
         case 4: return HeroPosition::back3;
         case 5: return HeroPosition::front3;
         default: return HeroPosition::NONE;
+    }
+}
+
+int SpritesField::posToI(HeroPosition pos)
+{
+    switch(pos)
+    {
+        case HeroPosition::back1: return 0;
+        case HeroPosition::front1: return 1;
+        case HeroPosition::back2: return 2;
+        case HeroPosition::front2: return 3;
+        case HeroPosition::back3: return 4;
+        case HeroPosition::front3: return 5;
+        default: return -1;
     }
 }
 
@@ -135,4 +153,80 @@ void SpritesField::secondPlayerClicked(int i)
 {
     std::cerr << "SecondPlayer:" << std::endl;
     std::cerr << i << " clicked" << std::endl;
+}
+
+void SpritesField::setActiveHero(Hero *hero)
+{
+    //activeHero = hero;
+    if(firstPlayer->has(hero))
+        activePlayer = FIRST;
+    else
+        activePlayer = SECOND;
+
+    if(activePlayer == ActivePlayer::FIRST)
+    {
+        int i = posToI(firstPlayer->find(hero));
+        colorActive(firstPlayerWindow[i]);
+        activeWindow = firstPlayerWindow[i];
+    }
+    else
+    {
+        int i = posToI(secondPlayer->find(hero));
+        colorActive(secondPlayerWindow[i]);
+        activeWindow = secondPlayerWindow[i];
+    }
+}
+
+void SpritesField::colorActive(sfg::Window::Ptr& window)
+{
+    window->SetStyle(sfg::Window::Style::BACKGROUND);
+    sfg::Context::Get().GetEngine().SetProperty("Window#" + window->GetId() ,
+                                                "BackgroundColor", sf::Color(100, 180, 230, 50));
+    sfg::Context::Get().GetEngine().SetProperty("Window#" + window->GetId(),
+                                                "BorderColor", sf::Color(100, 180, 230, 50));
+}
+
+void SpritesField::colorTarget(sfg::Window::Ptr& window)
+{
+    window->SetStyle(sfg::Window::Style::BACKGROUND);
+    sfg::Context::Get().GetEngine().SetProperty("Window#" + window->GetId() ,
+                                                "BackgroundColor", sf::Color(230, 50, 50, 50));
+    sfg::Context::Get().GetEngine().SetProperty("Window#" + window->GetId(),
+                                                "BorderColor", sf::Color(230, 50, 50, 50));
+
+}
+
+void SpritesField::clearActive(sfg::Window::Ptr& window)
+{
+    window->SetStyle(sfg::Window::Style::NO_STYLE);
+}
+
+void SpritesField::clearTargets()
+{
+    for(int i = 0; i < 6; i++)
+    {
+        if(firstPlayerWindow[i] != activeWindow)
+            firstPlayerWindow[i]->SetStyle(sfg::Window::Style::NO_STYLE);
+        if(secondPlayerWindow[i] != activeWindow)
+            secondPlayerWindow[i]->SetStyle(sfg::Window::Style::NO_STYLE);
+        //just active window insted - it is a ref!!
+    }
+}
+
+void SpritesField::showTargets(Action* action)
+{
+    clearTargets();
+    colorActive(activeWindow);
+    Targets targets = action->getAvaliableTargetsPlayer1();
+    for(int i = 0; i < 6; i++)
+    {
+        if(targets.is(iToPos(i)))
+            colorTarget(firstPlayerWindow[i]);
+    }
+    targets = action->getAvaliableTargetsPlayer2();
+    for(int i = 0; i < 6; i++)
+    {
+        if(targets.is(iToPos(i)))
+            colorTarget(secondPlayerWindow[i]);
+    }
 }

@@ -6,7 +6,9 @@
 
 #include "player.h"
 #include "heroposition.h"
+#include "hero.h"
 #include "battlegui.h"
+#include "action.h"
 
 class BattleGUI;
 
@@ -23,9 +25,19 @@ private:
     //sf::Texture secondPlayerTexture[6];
     sfg::Window::Ptr firstPlayerWindow[6];
     sfg::Window::Ptr secondPlayerWindow[6];
+    sfg::Window::Ptr activeWindow;
+    //Hero* activeHero;
+    enum ActivePlayer
+    {
+        FIRST,
+        SECOND,
+        NONE
+    };
+    ActivePlayer activePlayer;
 
     //Additional functions
     HeroPosition iToPos(int i);
+    int posToI(HeroPosition Pos);
     sf::Vector2f iToVector(int i);
     sf::Vector2f iToVector1(int i); //Returns position on the field to i unit of 1st player
     sf::Vector2f iToVector2(int i); //-||-||- of 2nd player
@@ -41,9 +53,15 @@ private:
     //Functions connected to sFGUI widget signals
     void firstPlayerClicked(int i);
     void secondPlayerClicked(int i);
+    void colorActive(sfg::Window::Ptr& window);
+    void colorTarget(sfg::Window::Ptr& window);
+    void clearActive(sfg::Window::Ptr& window);
+    void clearTargets();
 
 public:
     SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _secondPlayer);
     void draw(sf::RenderWindow& app_window);
     void updateDesktop(sfg::Desktop& desktop);
+    void setActiveHero(Hero *hero);
+    void showTargets(Action* action);
 };
