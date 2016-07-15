@@ -215,18 +215,21 @@ void SpritesField::clearTargets()
 
 void SpritesField::showTargets(Action* action)
 {
-    clearTargets();
-    colorActive(activeWindow);
-    Targets targets = action->getAvaliableTargetsPlayer1();
-    for(int i = 0; i < 6; i++)
+    if(action != nullptr)
     {
-        if(targets.is(iToPos(i)))
-            colorTarget(firstPlayerWindow[i]);
-    }
-    targets = action->getAvaliableTargetsPlayer2();
-    for(int i = 0; i < 6; i++)
-    {
-        if(targets.is(iToPos(i)))
-            colorTarget(secondPlayerWindow[i]);
+        clearTargets();
+        colorActive(activeWindow);
+        Targets targets = action->getAvaliableTargetsPlayer1();
+        for(int i = 0; i < 6; i++)
+        {
+            if(targets.is(iToPos(i)))
+                colorTarget(firstPlayerWindow[i]);
+        }
+        targets = action->getAvaliableTargetsPlayer2();
+        for(int i = 0; i < 6; i++)
+        {
+            if(targets.is(iToPos(i)))
+                colorTarget(secondPlayerWindow[i]);
+        }
     }
 }
