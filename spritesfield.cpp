@@ -46,8 +46,16 @@ SpritesField::SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _se
         firstPlayerWindow[i]->SetAllocation(sf::FloatRect(iToVector1(i), sf::Vector2f(XSPR, YSPR)));
         secondPlayerWindow[i]->SetAllocation(sf::FloatRect(iToVector2(i), sf::Vector2f(XSPR, YSPR)));
 
-        firstPlayerWindow[i]->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SpritesField::firstPlayerClicked , this, i) );
-        secondPlayerWindow[i]->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SpritesField::secondPlayerClicked , this, i) );
+        firstPlayerWindow[i]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                    std::bind( &SpritesField::firstPlayerClicked , this, i) );
+        secondPlayerWindow[i]->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                    std::bind( &SpritesField::secondPlayerClicked , this, i) );
+
+        firstPlayerWindow[i]->GetSignal( sfg::Widget::OnMouseRightPress ).Connect(
+                    std::bind( &BattleGUI::showInfo , parent, firstPlayer->getHeroGroup().at(iToPos(i))));
+
+        secondPlayerWindow[i]->GetSignal( sfg::Widget::OnMouseRightPress ).Connect(
+                    std::bind( &BattleGUI::showInfo , parent, secondPlayer->getHeroGroup().at(iToPos(i))));
     }
 
     //for debug
@@ -103,6 +111,7 @@ void SpritesField::draw(sf::RenderWindow& app_window)
         app_window.draw(firstPlayerSprite[i]);
         app_window.draw(secondPlayerSprite[i]);
     }
+
 }
 
 void SpritesField::updateDesktop(sfg::Desktop& desktop)

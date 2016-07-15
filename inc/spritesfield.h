@@ -13,6 +13,7 @@ class BattleGUI;
 class SpritesField
 {
 private:
+
     BattleGUI* parent;
     Player* firstPlayer;
     Player* secondPlayer;

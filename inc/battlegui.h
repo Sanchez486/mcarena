@@ -95,13 +95,8 @@ private:
     sf::FloatRect setPopWindowPosition(sf::Vector2i mousePos);
 
     //For SFGUI signals
-    enum Button
-    {
-        PRESSED,
-        RELEASED
-    };
-
-    void showInfo(Hero *hero, Button button);
+public:
+    void showInfo(Hero *hero);
 
 signals:
     void selectedAction(Action*);  // After attack or skill clicked

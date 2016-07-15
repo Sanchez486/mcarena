@@ -181,6 +181,7 @@ void BattleGUI::hide()
     queueWindow->Show(false);
     buttonWindow->Show(false);
     infoWindow->Show(false);
+    popWindow->Show(false);
     disconnect(app_window.getTimer(), SIGNAL(timeout()), this, SLOT(update()));
     app_window.clear(sf::Color::Black);
     app_window.display();
@@ -188,19 +189,25 @@ void BattleGUI::hide()
 
 void BattleGUI::update()
 {
-    static bool flag = true;
-
     if(app_window.isOpen())
     {
         sf::Event event;
         while(app_window.pollEvent(event))
         {
-              desktop.HandleEvent(event);
+            desktop.HandleEvent(event);
 
             if (event.type == sf::Event::Closed)
             {
                app_window.close();
                closed();
+            }
+            else if (event.type == sf::Event::MouseButtonReleased)
+            {
+                if(event.mouseButton.button == sf::Mouse::Button::Right)
+                {
+                    popWindow->Show(false);
+                    popWindow->SetState(sfg::Widget::State::INSENSITIVE);
+                }
             }
         }
         desktop.Update( 0.5 );
@@ -211,12 +218,6 @@ void BattleGUI::update()
             spritesField->draw(app_window);
         sfgui.Display(app_window);
         app_window.display();
-    }
-
-    else if(flag)
-    {
-        flag = false;
-        closed();
     }
 }
 
@@ -238,7 +239,6 @@ void BattleGUI::setActiveHero(Hero *hero)
 
 void BattleGUI::setQueue(HeroQueue *queue)
 {
-    //Setting the queue
     if(queue == nullptr)
         std::cerr << "queue is nullptr" << std::endl;
 
@@ -251,32 +251,18 @@ void BattleGUI::setQueue(HeroQueue *queue)
             queueImages[i]->SetImage((*it)->getResources().getImage());
 
         queueImages[i]->GetSignal( sfg::Widget::OnMouseRightPress ).Connect(
-                    std::bind( &BattleGUI::showInfo, this, (*it), Button::PRESSED ) );
-        queueImages[i]->GetSignal( sfg::Widget::OnMouseRightRelease ).Connect(
-                    std::bind( &BattleGUI::showInfo, this, (*it), Button::RELEASED ) );
+                    std::bind( &BattleGUI::showInfo, this, (*it)) );
         i++;
     }
 }
 
-void BattleGUI::showInfo(Hero *hero, Button button)
+void BattleGUI::showInfo(Hero *hero)
 {
-    switch(button)
-    {
-        case Button::PRESSED:
-        {
-            completeStats(popStats, hero);
-            sfg::Context::Get().GetEngine().SetProperty("Label#" + popStats[0]->GetId(), "FontSize", 16);
-            popWindow->SetAllocation(setPopWindowPosition(sf::Mouse::getPosition(app_window)));
-            desktop.BringToFront(popWindow);
-            popWindow->Show(true);
-            break;
-        }
-        case Button::RELEASED:
-        {
-            popWindow->Show(false);
-            break;
-        }
-    }
+    completeStats(popStats, hero);
+    sfg::Context::Get().GetEngine().SetProperty("Label#" + popStats[0]->GetId(), "FontSize", 16);
+    popWindow->SetAllocation(setPopWindowPosition(sf::Mouse::getPosition(app_window)));
+    desktop.BringToFront(popWindow);
+    popWindow->Show(true);
 }
 
 void BattleGUI::showTargets(Action *)
@@ -340,6 +326,6 @@ sf::FloatRect BattleGUI::setPopWindowPosition(sf::Vector2i mousePos)
     else if(XWINDOW > X - Xmouse)
         return sf::FloatRect(Xmouse - XWINDOW, Ymouse, XWINDOW, YWINDOW);
     else
-        return sf::FloatRect(Xmouse, Ymouse, XWINDOW, YWINDOW);
+        return sf::FloatRect(Xmouse+1, Ymouse+1, XWINDOW, YWINDOW);
 
 }
