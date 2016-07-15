@@ -48,6 +48,17 @@ void BattleModel::beginTurn()
     heroQueue.rotate();
     emit setQueue(&heroQueue);
     emit setActiveHero(heroQueue.first());
+
+    if( heroQueue.first()->onTurnEffects() ) // if skip turn
+    {
+        beginTurn();
+        return;
+    }
+
+    if( heroQueue.first()->updateDead() )
+    {
+        emit showDead(heroQueue.first());
+    }
 }
 
 void BattleModel::updateDead()
