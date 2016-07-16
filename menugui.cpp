@@ -14,24 +14,15 @@ MenuGUI::MenuGUI(MainWindow& _app_window, QObject *parent)
       box(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 20)),
       playButton(sfg::Button::Create("Play")),
       playWithCpuButton(sfg::Button::Create( "Play with CPU" )),
-      settingsButton(sfg::Button::Create( "Settings" )),
       exitButton(sfg::Button::Create( "Exit" )),
-
-      //Settings window
-      settingsWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
-      sharedBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 15)),
-      settingsBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, 15)),
-      okBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, 15)),
-      soundButton(sfg::Button::Create( "Music enabled" )),
-      musicButton(sfg::Button::Create( "Sound enabled" )),
-      okButton(sfg::Button::Create( "OK" ))
-
+      soundBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),
+      soundToggle(sfg::Image::Create()),
+      musicToggle(sfg::Image::Create())
 {
     app_window.resetGLStates();
     backgroundT.loadFromFile("res/img/background/menuBACK.jpg");
     background.setTexture(backgroundT);
     desktop.Add(window);
-    desktop.Add(settingsWindow);
 
 
     //Main window
@@ -40,55 +31,54 @@ MenuGUI::MenuGUI(MainWindow& _app_window, QObject *parent)
 
     box->Pack(playButton);
     box->Pack(playWithCpuButton);
-    box->Pack(settingsButton);
     box->Pack(exitButton);
 
-
-    //Settings window
-    settingsWindow->Add(sharedBox);
-    settingsWindow->Show(false);
-    settingsWindow->SetAllocation(sf::FloatRect( (app_window.getX()-XYSETTINGS)/2 - 15, (app_window.getY()-XYSETTINGS)/2, XYSETTINGS, XYSETTINGS));
-    sharedBox->Pack(settingsBox);
-    sharedBox->Pack(okBox);
-
-    settingsBox->Pack(soundButton);
-    settingsBox->Pack(musicButton);
-    okBox->Pack(okButton);
+    //Sound Box
+    noSoundImage.loadFromFile("res/img/icons/no_sound.png");
+    soundImage.loadFromFile("res/img/icons/sound.png");
+    musicImage.loadFromFile("res/img/icons/music.png");
+    noMusicImage.loadFromFile("res/img/icons/no_music.png");
+    soundBox->Pack(soundToggle);
+    soundBox->Pack(musicToggle);
+    soundToggle->SetImage(soundImage);
+    musicToggle->SetImage(musicImage);
+    box->Pack(soundBox);
 
     //Signals
-    settingsButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &MenuGUI::clickedSettings, this ) );
-    okButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &MenuGUI::clickedOk, this  ) );
     playButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &MenuGUI::clickedButton, this, ButtonPressed::PLAY ) );
     playWithCpuButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
                 std::bind( &MenuGUI::clickedButton, this, ButtonPressed::PLAY_WITH_CPU ) );
     exitButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &MenuGUI::clickedButton, this, ButtonPressed::EXIT ) );
-    soundButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &MenuGUI::clickedButton, this, ButtonPressed::SOUND ) );
-    musicButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &MenuGUI::clickedButton, this, ButtonPressed::MUSIC ) );
+    soundToggle->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &MenuGUI::clickedButton, this, ButtonPressed::SOUND ) );
+    musicToggle->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &MenuGUI::clickedButton, this, ButtonPressed::MUSIC ) );
 
-}
-
-void MenuGUI::clickedSettings()
-{
-    settingsWindow->Show(true);
-    desktop.BringToFront(settingsWindow);
-    window->SetState(sfg::Widget::State::INSENSITIVE);
-}
-void MenuGUI::clickedOk()
-{
-    settingsWindow->Show(false);
-    window->SetState(sfg::Widget::State::NORMAL);
 }
 
 //Connecting Buttons and Qt signals
 void MenuGUI::clickedButton(ButtonPressed Button)
 {
+    app_window.playButtonSound();
     switch (Button)
     {
         case PLAY: clickedPlay(); break;
         case PLAY_WITH_CPU: clickedPlayCPU(); break;
         case EXIT: clickedExit(); break;
-        case MUSIC:clickedMusic(); break;
-        case SOUND:clickedSound(); break;
+        case MUSIC:
+        if (app_window.ToggleMusic()) musicToggle->SetImage(musicImage);
+        else musicToggle->SetImage(noMusicImage);
+        break;
+        case SOUND:
+        if (app_window.isSound())
+        {
+            app_window.setSound(false);
+            soundToggle->SetImage(noSoundImage);
+        }
+        else
+        {
+            app_window.setSound(true);
+            soundToggle->SetImage(soundImage);
+        }
+        break;
     }
 }
 
@@ -133,7 +123,6 @@ void MenuGUI::update()
 void MenuGUI::hide()
 {
     window->Show(false);
-    settingsWindow->Show(false);
     disconnect(app_window.getTimer(), SIGNAL(timeout()), this, SLOT(update()));
     app_window.clear(sf::Color::Black);
     app_window.display();

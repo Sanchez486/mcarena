@@ -300,3 +300,10 @@ sf::Sprite& SpritesField::findSprite(Hero *hero)
     int i = posToI(secondPlayer->find(hero));
     return secondPlayerSprite[i];
 }
+
+void SpritesField::setInsensitive()
+{
+    for (int i=0;i<6;i++) firstPlayerWindow[i]->SetState(sfg::Window::State::INSENSITIVE);
+    for (int i=0;i<6;i++) secondPlayerWindow[i]->SetState(sfg::Window::State::INSENSITIVE);
+
+}

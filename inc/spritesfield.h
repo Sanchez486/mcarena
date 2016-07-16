@@ -96,4 +96,5 @@ public:
     //Monitoring actions
     void setSkill();
     void setAttack();
+    void setInsensitive();
 };
