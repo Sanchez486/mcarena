@@ -183,6 +183,7 @@ BattleGUI::~BattleGUI()
 
 void BattleGUI::clickedButton(ButtonPressed Button)
 {
+    app_window.playButtonSound();
     switch (Button)
     {
         case ATTACK:

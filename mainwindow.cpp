@@ -4,6 +4,11 @@ MainWindow::MainWindow() : RenderWindow()
 {
     create(sf::VideoMode(XSIZE,YSIZE), "McArena", sf::Style::Titlebar | sf::Style::Close);
     timer = new QTimer();
+    theme.openFromFile("res/sfx/theme.wav");
+    theme.setLoop(true);
+    ToggleMusic();
+    setSound(true);
+    if (buttonBuffer.loadFromFile("res/sfx/button.wav")) buttonSound.setBuffer(buttonBuffer);
 }
 
 MainWindow::~MainWindow()
@@ -24,4 +29,28 @@ int MainWindow::getY()
 QTimer* MainWindow::getTimer()
 {
     return timer;
+}
+
+bool MainWindow::ToggleMusic()
+{
+    if (theme.getStatus()==sf::Sound::Playing) theme.pause();
+    else theme.play();
+    if (theme.getStatus()==sf::Music::Status::Playing) return true;
+    else return false;
+}
+
+
+bool MainWindow::isSound()
+{
+    return soundToggle;
+}
+
+void MainWindow::setSound(bool state)
+{
+    soundToggle = state;
+}
+
+void MainWindow::playButtonSound()
+{
+    if (isSound()) buttonSound.play();
 }

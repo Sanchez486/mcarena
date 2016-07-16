@@ -198,6 +198,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
 
 void SelectionGUI::clickedButton(ButtonPressed Button)
 {
+    app_window.playButtonSound();
     switch (Button)
     {
         case START: clickedStart(); break;
