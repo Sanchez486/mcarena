@@ -69,7 +69,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     background.setTexture(backgroundT);
     enemyImgT.loadFromFile("res/img/background/EnemySidePic.png");
     enemyImg.setTexture(enemyImgT);
-    enemyImg.setPosition(XSCROLL+FRAME*2+XSCROLLBAR+FRAME*3 + XFIELD+FRAME*3, (app_window.getY()-FRAME*2-YBUTTONS+YINFO-YFIELD)/2);
+    enemyImg.setPosition(XSCROLL+FRAME*2+XSCROLLBAR+FRAME*3 + XFIELD+FRAME*2, (app_window.getY()-FRAME*2-YBUTTONS+YINFO-YFIELD)/2 + FRAME);
 
     //Info
     desktop.Add(infoWindow);
@@ -134,7 +134,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     desktop.Add(fieldWindow);
     fieldWindow->Add(fieldBox);
     fieldBox->Pack(fieldTable);
-    fieldWindow->SetAllocation(sf::FloatRect(XSCROLL+FRAME*2+XSCROLLBAR+FRAME*3,
+    fieldWindow->SetAllocation(sf::FloatRect(XSCROLL+FRAME*2+XSCROLLBAR+FRAME*2,
                                              (app_window.getY()-FRAME*2-YBUTTONS+YINFO-YFIELD)/2, XFIELD, YFIELD));
 
     plusImg.loadFromFile("res/img/icons/plus.png");
