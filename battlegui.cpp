@@ -2,7 +2,7 @@
 
 #define XICON 83
 #define YICON 100
-#define XINFO 235
+#define XINFO 240
 #define YBUTTON 50
 #define TIMEUPDATE 25
 #define FRAME 15
@@ -297,6 +297,7 @@ void BattleGUI::playAction(Action *action)
 void BattleGUI::showDead(Hero *hero)
 {
     spritesField->showDead(hero);
+    std::cerr << "dead" << std::endl;
 }
 
 void BattleGUI::winPlayer1()

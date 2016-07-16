@@ -2,7 +2,7 @@
 
 #define XSPRITE 120
 #define YSPRITE 105
-#define NCOL 9
+#define NCOL 8
 #define NROW 4
 
 #define X 800
@@ -128,12 +128,18 @@ void SpritesField::draw(sf::RenderWindow& app_window)
     if((clock.getElapsedTime().asMilliseconds() > 70) && play)
     {
         sf::Sprite& activeSprite = findSprite(activeHero);
-        if(col < 8)
+
+        if(col < 8 && row == 0)
         {
-            activeSprite.setTextureRect(sf::IntRect(col*XSPRITE, 0, XSPRITE, YSPRITE));
+            if(actionType == ATTACK)
+                row = 0;
+            if(actionType == SKILL)
+                row = 1;
+            activeSprite.setTextureRect(sf::IntRect(col*XSPRITE, row, XSPRITE, YSPRITE));
             col++;
             clock.restart();
         }
+
         else
         {
             activeSprite.setTextureRect(sf::IntRect(0, 0, XSPRITE, YSPRITE));
@@ -259,17 +265,18 @@ void SpritesField::playAction(Action* _action)
     clearActive(activeWindow);
     clearTargets();
 
+    //remove Action
     action = _action;
+    targetsPlayer1 = _action->getTargetsPlayer1();
+    targetsPlayer2 = _action->getTargetsPlayer2();
     play = true;
 }
 
 void SpritesField::showDead(Hero *hero)
 {
-    std::cerr << "dead" << std::endl;
     sf::Sprite& deadSprite = findSprite(hero);
-
     deadSprite.setTextureRect(sf::IntRect(XSPRITE*(NCOL - 1), YSPRITE*(NROW - 1),
-                                 XSPRITE, YSPRITE));
+                                 XSPRITE, YSPRITE));                               
 }
 
 void SpritesField::setSkill()

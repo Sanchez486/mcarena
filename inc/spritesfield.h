@@ -10,6 +10,7 @@
 #include "hero.h"
 #include "battlegui.h"
 #include "action.h"
+#include "targets.h"
 
 class BattleGUI;
 
@@ -30,6 +31,7 @@ private:
 
     Hero *activeHero;
     Action *action;
+    Targets targetsPlayer1, targetsPlayer2;
 
     sf::Clock clock;
 
