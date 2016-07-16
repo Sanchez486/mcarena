@@ -1,7 +1,10 @@
 #include "inc/hero.h"
 #include "inc/effect.h"
 
-Hero::Hero(HeroTemplate *_templ) : heroTemplate(_templ)
+Hero::Hero(HeroTemplate *_templ)
+    : heroTemplate(_templ),
+      effectList(),
+      showedDead(false)
 {
     if(heroTemplate != nullptr)
     {
