@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <resources>
 	<hero name="Sagittarius" 
-		atk_snd="res/sfx/saggitarius_attack.wav" 
-		skl_snd="res/sfx/saggitarius_skill.wav" 
+		atk_snd="res/sfx/sagittarius_attack.wav" 
+		skl_snd="res/sfx/sagittarius_skill.wav" 
 		texture="res/img/sprites/sagittarius_sprite.png" 
 		image="res/img/images/sagittarius_img.png" 
 		image2="res/img/images/sagittarius_img2.png"
