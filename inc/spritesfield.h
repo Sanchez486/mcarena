@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/System/Clock.hpp>
 #include <SFGUI/Window.hpp>
 #include <SFGUI/Desktop.hpp>
 
@@ -26,14 +27,32 @@ private:
     sfg::Window::Ptr firstPlayerWindow[6];
     sfg::Window::Ptr secondPlayerWindow[6];
     sfg::Window::Ptr activeWindow;
-    //Hero* activeHero;
+
+    Hero *activeHero;
+    Action *action;
+
+    sf::Clock clock;
+
     enum ActivePlayer
     {
         FIRST,
         SECOND,
-        NONE
+        NOPLAYER
     };
     ActivePlayer activePlayer;
+
+    enum ActionType
+    {
+        ATTACK,
+        SKILL,
+        NOACTION
+    };
+    ActionType actionType;
+
+    //For moving sprites
+    int col;
+    int row;
+    bool play;
 
     //Additional functions
     HeroPosition iToPos(int i);
@@ -57,6 +76,7 @@ private:
     void colorTarget(sfg::Window::Ptr& window);
     void clearActive(sfg::Window::Ptr& window);
     void clearTargets();
+    sf::Sprite& findSprite(Hero *hero);
 
 public:
     SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _secondPlayer);
@@ -70,4 +90,8 @@ public:
     void showTargets(Action* action);
     void playAction(Action* action);
     void showDead(Hero *hero);
+
+    //Monitoring actions
+    void setSkill();
+    void setAttack();
 };

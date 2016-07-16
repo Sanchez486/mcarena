@@ -1,20 +1,16 @@
 #include "inc/spritesfield.h"
 
-#define SCALE 0.8
-#define XSPRITE 106
+#define XSPRITE 120
 #define YSPRITE 105
-#define XSPR (XSPRITE * SCALE)
-#define YSPR (YSPRITE * SCALE)
 #define NCOL 9
 #define NROW 4
 
 #define X 800
 #define XINFO 235
 #define XBOUND 20
-#define YBOUND 40
-#define XINDENT 30
-#define YINDENT 20
-#define XBREAK 100
+#define YBOUND 20
+#define XINDENT 10
+#define YINDENT 10
 #define ACTIVECOLOR sf::Color(100, 180, 230, 50)
 #define TARGETCOLOR sf::Color(230, 50, 50, 50)
 
@@ -23,8 +19,13 @@ SpritesField::SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _se
       firstPlayer(_firstPlayer),
       secondPlayer(_secondPlayer),
       parent(_parent),
-      activePlayer(ActivePlayer::NONE)
-      //activeHero(nullptr)
+      activePlayer(ActivePlayer::NOPLAYER),
+      actionType(ActionType::NOACTION),
+      col(0),
+      row(0),
+      play(false),
+      action(nullptr),
+      activeHero(nullptr)
 {
     if(_firstPlayer == nullptr || _secondPlayer == nullptr)
         std::cerr << "Player is nullptr";
@@ -35,20 +36,19 @@ SpritesField::SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _se
         //firstPlayerTexture[i] = firstPlayer->getHeroGroup().at(iToPos(i))->getResources().getTexture();
         firstPlayerSprite[i] = sf::Sprite(firstPlayer->getHeroGroup().at(iToPos(i))->getResources().getTexture());
         firstPlayerSprite[i].setTextureRect(sf::IntRect(0, 0, XSPRITE, YSPRITE));
-        firstPlayerSprite[i].setScale(SCALE, SCALE);
         firstPlayerSprite[i].setPosition(iToVector1(i));
 
         //secondPlayerTexture[i] = secondPlayer->getHeroGroup().at(iToPos(i))->getResources().getTexture();
         secondPlayerSprite[i] = sf::Sprite(secondPlayer->getHeroGroup().at(iToPos(i))->getResources().getTexture());
         secondPlayerSprite[i].setTextureRect(sf::IntRect(0, 0, XSPRITE, YSPRITE));
-        secondPlayerSprite[i].setScale(-SCALE, SCALE);
+        secondPlayerSprite[i].setScale(-1, 1);
         secondPlayerSprite[i].setOrigin(XSPRITE, 0);
         secondPlayerSprite[i].setPosition(iToVector2(i));
 
         firstPlayerWindow[i] = sfg::Window::Create(sfg::Window::Style::NO_STYLE);
         secondPlayerWindow[i] = sfg::Window::Create(sfg::Window::Style::NO_STYLE);
-        firstPlayerWindow[i]->SetAllocation(sf::FloatRect(iToVector1(i), sf::Vector2f(XSPR, YSPR)));
-        secondPlayerWindow[i]->SetAllocation(sf::FloatRect(iToVector2(i), sf::Vector2f(XSPR, YSPR)));
+        firstPlayerWindow[i]->SetAllocation(sf::FloatRect(iToVector1(i), sf::Vector2f(XSPRITE, YSPRITE)));
+        secondPlayerWindow[i]->SetAllocation(sf::FloatRect(iToVector2(i), sf::Vector2f(XSPRITE, YSPRITE)));
         firstPlayerWindow[i]->SetId("first" + std::to_string(i));
         secondPlayerWindow[i]->SetId("second" + std::to_string(i));
 
@@ -64,6 +64,7 @@ SpritesField::SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _se
                     std::bind( &BattleGUI::showInfo , parent, secondPlayer->getHeroGroup().at(iToPos(i))));
     }
     activeWindow = sfg::Window::Create();
+    clock.restart();
     //for debug
     //std::cerr << "/*\n* 0 == back1\n* 1 == front1\n* 2 == back2\n* 3 == front2\n* 4 == back3\n* 5 == front3\n*/\n";
 }
@@ -105,7 +106,7 @@ sf::Vector2f SpritesField::iToVector1(int i)
 sf::Vector2f SpritesField::iToVector2(int i)
 {
     sf::Vector2f vector = iToVector(i);
-    return sf::Vector2f(X - XSPR - vector.x, vector.y);
+    return sf::Vector2f(X - XSPRITE - vector.x, vector.y);
 }
 
 sf::Vector2f SpritesField::iToVector(int i)
@@ -113,23 +114,39 @@ sf::Vector2f SpritesField::iToVector(int i)
     switch(i)
     {
         case 0: return sf::Vector2f(XBOUND, YBOUND);
-        case 1: return sf::Vector2f(XBOUND + XSPR + XINDENT, YBOUND);
-        case 2: return sf::Vector2f(XBOUND, YBOUND + YSPR + YINDENT);
-        case 3: return sf::Vector2f(XBOUND + XSPR + XINDENT, YBOUND + YSPR + YINDENT);
-        case 4: return sf::Vector2f(XBOUND, YBOUND + 2*YSPR + 2*YINDENT);
-        case 5: return sf::Vector2f(XBOUND + XSPR + XINDENT, YBOUND + 2*YSPR + 2*YINDENT);
+        case 1: return sf::Vector2f(XBOUND + XSPRITE + XINDENT, YBOUND);
+        case 2: return sf::Vector2f(XBOUND, YBOUND + YSPRITE + YINDENT);
+        case 3: return sf::Vector2f(XBOUND + XSPRITE + XINDENT, YBOUND + YSPRITE + YINDENT);
+        case 4: return sf::Vector2f(XBOUND, YBOUND + 2*YSPRITE + 2*YINDENT);
+        case 5: return sf::Vector2f(XBOUND + XSPRITE + XINDENT, YBOUND + 2*YSPRITE + 2*YINDENT);
         default: return sf::Vector2f(0, 0);
     }
 }
 
 void SpritesField::draw(sf::RenderWindow& app_window)
-{
+{       
+    if((clock.getElapsedTime().asMilliseconds() > 70) && play)
+    {
+        sf::Sprite& activeSprite = findSprite(activeHero);
+        if(col < 8)
+        {
+            activeSprite.setTextureRect(sf::IntRect(col*XSPRITE, 0, XSPRITE, YSPRITE));
+            col++;
+            clock.restart();
+        }
+        else
+        {
+            activeSprite.setTextureRect(sf::IntRect(0, 0, XSPRITE, YSPRITE));
+            play = false;
+            col = 0;
+            parent->beginTurn();
+        }
+    }
     for(int i = 0; i < 6; i++)
     {
         app_window.draw(firstPlayerSprite[i]);
         app_window.draw(secondPlayerSprite[i]);
     }
-
 }
 
 void SpritesField::updateDesktop(sfg::Desktop& desktop)
@@ -147,8 +164,6 @@ void SpritesField::firstPlayerClicked(int i)
        (sfg::Context::Get().GetEngine().GetProperty<sf::Color>("BackgroundColor", firstPlayerWindow[i]) == TARGETCOLOR))
     {
         parent->selectedTarget(firstPlayer->at(iToPos(i)));
-        std::cerr << "FirstPlayer:" << std::endl;
-        std::cerr << i << " clicked" << std::endl;
     }
 
 }
@@ -159,15 +174,13 @@ void SpritesField::secondPlayerClicked(int i)
        (sfg::Context::Get().GetEngine().GetProperty<sf::Color>("BackgroundColor", secondPlayerWindow[i]) == TARGETCOLOR))
     {
         parent->selectedTarget(secondPlayer->at(iToPos(i)));
-        std::cerr << "SecondPlayer:" << std::endl;
-        std::cerr << i << " clicked" << std::endl;
     }
 
 }
 
 void SpritesField::setActiveHero(Hero *hero)
 {
-    //activeHero = hero;
+    activeHero = hero;
     if(firstPlayer->has(hero))
         activePlayer = FIRST;
     else
@@ -218,14 +231,12 @@ void SpritesField::clearTargets()
         firstPlayerWindow[i]->SetStyle(sfg::Window::Style::NO_STYLE);
         secondPlayerWindow[i]->SetStyle(sfg::Window::Style::NO_STYLE);
     }
-    std::cerr << "clearTargets()" << std::endl;
 }
 
 void SpritesField::showTargets(Action* action)
 {
     if(action != nullptr)
     {
-        std::cerr << "showTargets()" << std::endl;
         clearTargets();
         colorActive(activeWindow);
         Targets targets = action->getAvaliableTargetsPlayer1();
@@ -243,11 +254,13 @@ void SpritesField::showTargets(Action* action)
     }
 }
 
-void SpritesField::playAction(Action* action)
+void SpritesField::playAction(Action* _action)
 {
-
     clearActive(activeWindow);
     clearTargets();
+
+    action = _action;
+    play = true;
 }
 
 void SpritesField::showDead(Hero *hero)
@@ -264,5 +277,29 @@ void SpritesField::showDead(Hero *hero)
         int i = posToI(firstPlayer->find(hero));
         secondPlayerSprite[i].setTextureRect(sf::IntRect(XSPRITE*(NCOL - 1), YSPRITE*(NROW - 1),
                                             XSPRITE, YSPRITE));
+    }
+}
+
+void SpritesField::setSkill()
+{
+    actionType = SKILL;
+}
+
+void SpritesField::setAttack()
+{
+    actionType = ATTACK;
+}
+
+sf::Sprite& SpritesField::findSprite(Hero *hero)
+{
+    if (activePlayer == FIRST)
+    {
+        int i = posToI(firstPlayer->find(hero));
+        return firstPlayerSprite[i];
+    }
+    else if(activePlayer == SECOND)
+    {
+        int i = posToI(secondPlayer->find(hero));
+        return secondPlayerSprite[i];
     }
 }
