@@ -38,6 +38,11 @@ void HeroQueue::setHeroes(const HeroGroup &group1, const HeroGroup &group2)
     {
         heroList.push_back(arr[i]);
     }
+
+    while(heroList.front()->getStats().initiative.accum < 100)
+    {
+        incAccum();
+    }
 }
 
 std::list<Hero*>::iterator HeroQueue::begin()
@@ -58,10 +63,59 @@ Hero* HeroQueue::first() const
         return heroList.front();
 }
 
-// TODO: use accumulated initiative
 void HeroQueue::rotate()
 {
     Hero *front = heroList.front();
     heroList.pop_front();
-    heroList.push_back(front);
+    front->getStats().initiative.accum -= Initiative::limit;
+    insertHero(front);
+    removeDead();
+
+    while(heroList.front()->getStats().initiative.accum < Initiative::limit)
+    {
+        incAccum();
+    }
+}
+
+void HeroQueue::incAccum()
+{
+    for(Hero *hero : heroList)
+    {
+        hero->getStats().initiative.accum += hero->getStats().initiative.val;
+    }
+}
+
+void HeroQueue::insertHero(Hero *hero)
+{
+    Initiative init = hero->getStats().initiative;
+    double value = (init.limit - init.accum) / (double)init.val;
+
+    for(auto it = heroList.begin(); it != heroList.end(); ++it)
+    {
+        Initiative initIt = (*it)->getStats().initiative;
+        double valueIt = (initIt.limit - initIt.accum) / (double)initIt.val;
+
+        if(value < valueIt)  // stand last of all less-or-equal heroes
+        {
+            heroList.insert(it, hero);
+            return;
+        }
+    }
+
+    heroList.insert(heroList.end(), hero);
+}
+
+void HeroQueue::removeDead()
+{
+    for(auto it = heroList.begin(); it != heroList.end();)
+    {
+        if( !(*it)->isAlive() )
+        {
+            it = heroList.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
 }
