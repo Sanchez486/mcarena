@@ -42,7 +42,12 @@ SOURCES += main.cpp \
     attackfrontline.cpp \
     attacksingle.cpp \
     attacktargetandself.cpp \
-    attackwithchance.cpp
+    attackwithchance.cpp \
+    effect.cpp \
+    increasedamage.cpp \
+    decreasedamage.cpp \
+    periodicdamage.cpp \
+    stun.cpp
 
 HEADERS += \
     inc/menugui.h \
@@ -81,7 +86,12 @@ HEADERS += \
     inc/attackfrontline.h \
     inc/attacksingle.h \
     inc/attacktargetandself.h \
-    inc/attackwithchance.h
+    inc/attackwithchance.h \
+    inc/effect.h \
+    inc/increasedamage.h \
+    inc/decreasedamage.h \
+    inc/periodicdamage.h \
+    inc/stun.h
 
 LIBS += \
     -lsfml-graphics \

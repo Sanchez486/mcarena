@@ -1,6 +1,10 @@
 #include "inc/hero.h"
+#include "inc/effect.h"
 
-Hero::Hero(HeroTemplate *_templ) : heroTemplate(_templ)
+Hero::Hero(HeroTemplate *_templ)
+    : heroTemplate(_templ),
+      effectList(),
+      showedDead(false)
 {
     if(heroTemplate != nullptr)
     {
@@ -49,6 +53,42 @@ Action* Hero::getAttack() const
 Action* Hero::getSkill() const
 {
     return stats->actions.getSkill();
+}
+
+void Hero::add(Effect *effect)
+{
+    effectList.push_back(effect);
+    effect->onAdd(this);
+}
+
+bool Hero::onTurnEffects()
+{
+    bool res = false;
+    for(auto it = effectList.begin(); it != effectList.end(); ++it)
+    {
+        res |= (*it)->onTurn(this);
+        if( (*it)->updateDuration() == 0)
+        {
+            remove(*it);
+        }
+    }
+
+    return res;
+}
+
+void Hero::removeAllEffects()
+{
+    while(effectList.size() != 0)
+    {
+        remove(effectList.front());
+    }
+}
+
+void Hero::remove(Effect *effect)
+{
+    effectList.remove(effect);
+    effect->onRemove(this);
+    delete effect;
 }
 
 bool Hero::isAlive() const

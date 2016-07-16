@@ -266,18 +266,10 @@ void SpritesField::playAction(Action* _action)
 void SpritesField::showDead(Hero *hero)
 {
     std::cerr << "dead" << std::endl;
-    if(activePlayer == ActivePlayer::FIRST)
-    {
-        int i = posToI(firstPlayer->find(hero));
-        firstPlayerSprite[i].setTextureRect(sf::IntRect(XSPRITE*(NCOL - 1), YSPRITE*(NROW - 1),
-                                            XSPRITE, YSPRITE));
-    }
-    else
-    {
-        int i = posToI(firstPlayer->find(hero));
-        secondPlayerSprite[i].setTextureRect(sf::IntRect(XSPRITE*(NCOL - 1), YSPRITE*(NROW - 1),
-                                            XSPRITE, YSPRITE));
-    }
+    sf::Sprite& deadSprite = findSprite(hero);
+
+    deadSprite.setTextureRect(sf::IntRect(XSPRITE*(NCOL - 1), YSPRITE*(NROW - 1),
+                                 XSPRITE, YSPRITE));
 }
 
 void SpritesField::setSkill()
@@ -292,16 +284,14 @@ void SpritesField::setAttack()
 
 sf::Sprite& SpritesField::findSprite(Hero *hero)
 {
-    if (activePlayer == FIRST)
+    if (firstPlayer->has(hero))
     {
         int i = posToI(firstPlayer->find(hero));
         return firstPlayerSprite[i];
     }
-    else if(activePlayer == SECOND)
-    {
-        int i = posToI(secondPlayer->find(hero));
-        return secondPlayerSprite[i];
-    }
+
+    int i = posToI(secondPlayer->find(hero));
+    return secondPlayerSprite[i];
 }
 
 void SpritesField::setInsensitive()
