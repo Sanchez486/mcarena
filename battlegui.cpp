@@ -2,7 +2,7 @@
 
 #define XICON 83
 #define YICON 100
-#define XINFO 220
+#define XINFO 235
 #define YBUTTON 50
 #define TIMEUPDATE 25
 #define FRAME 15
@@ -287,9 +287,9 @@ void BattleGUI::showTargets(Action *action)
     spritesField->showTargets(action);
 }
 
-void BattleGUI::playAction(Action *)
+void BattleGUI::playAction(Action *action)
 {
-
+    spritesField->playAction(action);
 }
 
 void BattleGUI::showDead(Hero *)
@@ -311,7 +311,7 @@ void BattleGUI::completeStats(sfg::Label::Ptr* array, Hero* hero)
 {
 
     array[0]->SetText(hero->getTemplate()->getName());
-    array[1]->SetText(std::to_string( hero->getStats().hp.max ) + " HP");
+    array[1]->SetText(std::to_string( hero->getStats().hp.curr ) + " HP");
     array[2]->SetText(std::to_string(hero->getStats().damage.min) + " - " + std::to_string(hero->getStats().damage.max) + " DMG");
     switch(hero->getStats().kind)
     {
