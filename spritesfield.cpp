@@ -284,14 +284,12 @@ void SpritesField::setAttack()
 
 sf::Sprite& SpritesField::findSprite(Hero *hero)
 {
-    if (activePlayer == FIRST)
+    if (firstPlayer->has(hero))
     {
         int i = posToI(firstPlayer->find(hero));
         return firstPlayerSprite[i];
     }
-    else if(activePlayer == SECOND)
-    {
-        int i = posToI(secondPlayer->find(hero));
-        return secondPlayerSprite[i];
-    }
+
+    int i = posToI(secondPlayer->find(hero));
+    return secondPlayerSprite[i];
 }
