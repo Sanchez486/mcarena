@@ -21,8 +21,6 @@ void BattleModel::selectedTarget(Hero *target)
     action->setTarget(target);
     action->doAction();
     emit playAction(action);
-
-    beginTurn();
 }
 
 void BattleModel::finished()

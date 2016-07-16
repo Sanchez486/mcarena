@@ -35,6 +35,7 @@ signals:
 public slots:
     void selectedAction(Action *_action);  // After attack or skill clicked
     void selectedTarget(Hero *target);  // After Hero clicked
+    void beginTurn(); // on each new turn
     void finished();
     void closed();
 
@@ -47,5 +48,4 @@ public:
 private:
     void updateDead();  // check if any hero died and send showDead();
     void updateDead(Player *player, HeroPosition pos);
-    void beginTurn();  // on each new turn
 };

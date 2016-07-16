@@ -188,9 +188,11 @@ void BattleGUI::clickedButton(ButtonPressed Button)
     {
         case ATTACK:
             selectedAction(activeHero->getAttack());
+            spritesField->setAttack();
             break;
         case SKILL:
             selectedAction(activeHero->getSkill());
+            spritesField->setSkill();
             break;
     }
 }
@@ -314,9 +316,9 @@ void BattleGUI::playAction(Action *action)
     spritesField->playAction(action);
 }
 
-void BattleGUI::showDead(Hero *)
+void BattleGUI::showDead(Hero *hero)
 {
-
+    spritesField->showDead(hero);
 }
 
 void BattleGUI::winPlayer1()

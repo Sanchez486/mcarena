@@ -50,6 +50,7 @@ Game::Game(int argc, char *argv[]) : app(argc, argv), heroes()
     // Signals Battle GUI -> Model
     connect(battleGUI, SIGNAL(selectedAction(Action*)), battleModel, SLOT(selectedAction(Action*)));
     connect(battleGUI, SIGNAL(selectedTarget(Hero*)), battleModel, SLOT(selectedTarget(Hero*)));
+    connect(battleGUI, SIGNAL(beginTurn()), battleModel, SLOT(beginTurn()));
     connect(battleGUI, SIGNAL(finished()), battleModel, SLOT(finished()));
     connect(battleGUI, SIGNAL(closed()), battleModel, SLOT(closed()));
     // Signals Battel Model -> GUI
