@@ -81,7 +81,7 @@ void HeroGroup::set(HeroPosition pos, Hero *hero)
     }
 }
 
-int HeroGroup::count()
+int HeroGroup::count() const
 {
     int num = 0;
 
@@ -106,7 +106,7 @@ int HeroGroup::count()
     return num;
 }
 
-bool HeroGroup::isFull()
+bool HeroGroup::isFull() const
 {
     return count() == 6;
 }

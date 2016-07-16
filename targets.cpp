@@ -30,16 +30,22 @@ void Targets::set(HeroPosition pos, bool val)
     {
     case HeroPosition::front1:
         front1 = val;
+        break;
     case HeroPosition::front2:
         front2 = val;
+        break;
     case HeroPosition::front3:
         front3 = val;
+        break;
     case HeroPosition::back1:
         back1 = val;
+        break;
     case HeroPosition::back2:
         back2 = val;
+        break;
     case HeroPosition::back3:
         back3 = val;
+        break;
     }
 }
 

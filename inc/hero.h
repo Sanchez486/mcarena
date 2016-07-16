@@ -7,6 +7,7 @@ class Hero
 private:
     HeroTemplate *heroTemplate;
     Stats *stats;
+    bool showedDead;  // true, if showed as dead
 
 public:
     Hero(HeroTemplate *_templ = nullptr);
@@ -17,8 +18,11 @@ public:
     Resources& getResources();
     HeroTemplate* getTemplate() const;
 
-    Action* getAttack();
-    Action* getSkill();
+    Action* getAttack() const;
+    Action* getSkill() const;
+
+    bool isAlive() const;
+    bool updateDead();  // return true, if just dieds
 };
 
 #include "stats.h"

@@ -65,13 +65,14 @@ private:
 
     HeroGroup heroesGroup;
 
-
     sf::Image plusImg;
     sfg::Image::Ptr imageArray[6];
     sf::Image crossImg;
     sfg::Image::Ptr crossImageArray[6];
     sf::Texture enemyImgT;
     sf::Sprite enemyImg;
+
+    bool isCrossActive;
 
     //Buttons
     sfg::Window::Ptr buttonsWindow;
@@ -118,6 +119,7 @@ private:
     void _clickedCross(HeroPosition pos, int i);
     void clickedButton(ButtonPressed Button);
     void mouseEvent(Mouse mouse, int i);
+    void crossActivated(Mouse mouse);
 
 signals:
     void clickedHero(HeroTemplate *hero);  // After hero clicked (on the left)

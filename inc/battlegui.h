@@ -11,7 +11,7 @@
 #include <SFGUI/Image.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System/String.hpp>
-#include <SFGUI/Separator.hpp>
+#include <SFML/Window/Mouse.hpp>
 #include <SFGUI/Label.hpp>
 
 #include "mainwindow.h"
@@ -19,6 +19,7 @@
 #include "heroqueue.h"
 #include "action.h"
 #include "spritesfield.h"
+#include "targets.h"
 
 class SpritesField;
 
@@ -35,7 +36,6 @@ private:
     sfg::SFGUI sfgui;
     sfg::Desktop desktop;
 
-    sfg::Image::Ptr image;
 
     MainWindow& app_window;
     
@@ -51,9 +51,10 @@ private:
     sfg::Box::Ptr queueSBox;
     sfg::ScrolledWindow::Ptr qScroll;
     sfg::Box::Ptr queueBox;
-    sfg::Separator::Ptr separator;
 
     sfg::Image::Ptr queueImages[12];
+
+    Hero *activeHero;
 
     //ButtonWindow
     sfg::Box::Ptr buttonBox;
@@ -66,12 +67,10 @@ private:
     sfg::Box::Ptr picBox;
     sfg::Box::Ptr labelBox;
 
-    sfg::Label::Ptr hp;
-    sfg::Label::Ptr dmg;
-    sfg::Label::Ptr init;
-    sfg::Label::Ptr element;
+    sfg::Label::Ptr stats[6];
 
     sfg::Frame::Ptr frame;
+    sfg::Image::Ptr infoImage;
 
     //Sprite window
 
@@ -86,21 +85,40 @@ private:
 
     void clickedButton(ButtonPressed Button);
 
+    //Pop window
+    sfg::Window::Ptr popWindow;
+    sfg::Box::Ptr popBox;
+    sfg::Box::Ptr popSkillsBox;
+    sfg::Box::Ptr popPicBox;
+    sfg::Box::Ptr popLabelBox;
+    sfg::Label::Ptr popStats[6];
+
+    //Additional functions
+    void completeStats(sfg::Label::Ptr* array, Hero *hero);
+    sf::FloatRect setPopWindowPosition(sf::Vector2i mousePos);
+
+    //For SFGUI signals
+public:
+    void showInfo(Hero *hero);
+
 signals:
     void selectedAction(Action*);  // After attack or skill clicked
     void selectedTarget(Hero*);  // After Hero clicked
     void showInfoSignal(Hero*);  // After right-click on Hero  [this -> this]
+    void finished();
     void closed();
 
 public slots:
     void show();  // Show this window
     void hide();  // Hide this window
     void setPlayers(Player *player1, Player *player2);
-    void setActiveHero(Hero*);  // Change current hero
+    void setActiveHero(Hero *hero);  // Change current hero
     void setQueue(HeroQueue* queue);  // Change queue
-    void showInfo(Hero*);  // Show info about Hero  [this -> this]
     void showTargets(Action*);  // Highlight avaliable targets
     void playAction(Action*);  // Play animation/sounds, show numbers
+    void showDead(Hero*);  // Show death animation
+    void winPlayer1();  // Show final window
+    void winPlayer2();  // Show final window
 
 private slots:
     void update();
