@@ -13,6 +13,8 @@
 #define YWINDOW 250
 #define X 800
 #define Y 600
+#define XFINISH 200
+#define YFINISH 200
 
 BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     :
@@ -31,9 +33,11 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
       activeHero(nullptr),
 
       //Buttonwindow
-      buttonBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, 75)),
+      buttonBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, 20)),
       attackButton(sfg::Button::Create( "ATTACK" )),
       skillButton(sfg::Button::Create( "SKILL" )),
+      skipButton(sfg::Button::Create("SKIP")),
+      menuButton(sfg::Button::Create("MAIN MENU")),
 
       //InfoWindow
       infoBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
@@ -45,6 +49,13 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
 
       //Sprite Field
       spritesField(nullptr),
+
+      //Finish Window
+
+      finishWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
+      finishBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL,FRAME)),
+      menuButton2(sfg::Button::Create("MAIN MENU")),
+      winnerLabel(sfg::Label::Create("PLAYER 1 WON")),
 
       //Pop window
       popWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
@@ -77,8 +88,10 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     //Buttonwindow
 
     buttonWindow->Add(buttonBox);
-    buttonBox->Pack(skillButton);
     buttonBox->Pack(attackButton);
+    buttonBox->Pack(skillButton);
+    buttonBox->Pack(skipButton);
+    buttonBox->Pack(menuButton);
 
     desktop.Add(buttonWindow);
     buttonWindow->SetAllocation(sf::FloatRect( XINFO , app_window.getY() - YQTOTAL - YBUTTON, app_window.getX() - XINFO, YBUTTON));
@@ -116,6 +129,15 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
 
     desktop.Add(infoWindow);
     infoWindow->SetAllocation(sf::FloatRect( 0 , 0, XINFO,app_window.getY() - YQTOTAL));
+
+    //FinishWindow
+    desktop.Add(finishWindow);
+    finishWindow->Add(finishBox);
+    finishWindow->Show(false);
+    finishWindow->SetAllocation(sf::FloatRect((app_window.getX()-XFINISH)/2,(app_window.getY()-YFINISH)/2-FRAME,XFINISH,YFINISH));
+    finishBox->Pack(winnerLabel);
+    finishBox->Pack(menuButton2);
+    desktop.BringToFront(finishWindow);
 
     //Pop window
     popWindow->Add(popBox);

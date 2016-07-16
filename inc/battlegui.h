@@ -60,6 +60,8 @@ private:
     sfg::Box::Ptr buttonBox;
     sfg::Button::Ptr attackButton;
     sfg::Button::Ptr skillButton;
+    sfg::Button::Ptr skipButton;
+    sfg::Button::Ptr menuButton;
 
     //InfoWindow
     sfg::Box::Ptr infoBox;
@@ -75,6 +77,12 @@ private:
     //Sprite window
 
     SpritesField* spritesField;
+
+    //Finish window
+    sfg::Window::Ptr finishWindow;
+    sfg::Box::Ptr finishBox;
+    sfg::Button::Ptr menuButton2;
+    sfg::Label::Ptr winnerLabel;
 
     //for signals
     enum ButtonPressed
