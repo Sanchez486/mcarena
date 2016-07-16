@@ -60,8 +60,14 @@ private:
 
 public:
     SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _secondPlayer);
+
+    //For displaying
     void draw(sf::RenderWindow& app_window);
     void updateDesktop(sfg::Desktop& desktop);
+
+    //Slots
     void setActiveHero(Hero *hero);
     void showTargets(Action* action);
+    void playAction(Action* action);
+    void showDead(Hero *hero);
 };

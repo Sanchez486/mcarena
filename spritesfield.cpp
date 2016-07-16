@@ -249,3 +249,20 @@ void SpritesField::playAction(Action* action)
     clearActive(activeWindow);
     clearTargets();
 }
+
+void SpritesField::showDead(Hero *hero)
+{
+    std::cerr << "dead" << std::endl;
+    if(activePlayer == ActivePlayer::FIRST)
+    {
+        int i = posToI(firstPlayer->find(hero));
+        firstPlayerSprite[i].setTextureRect(sf::IntRect(XSPRITE*(NCOL - 1), YSPRITE*(NROW - 1),
+                                            XSPRITE, YSPRITE));
+    }
+    else
+    {
+        int i = posToI(firstPlayer->find(hero));
+        secondPlayerSprite[i].setTextureRect(sf::IntRect(XSPRITE*(NCOL - 1), YSPRITE*(NROW - 1),
+                                            XSPRITE, YSPRITE));
+    }
+}
