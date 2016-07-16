@@ -64,4 +64,5 @@ public:
     void updateDesktop(sfg::Desktop& desktop);
     void setActiveHero(Hero *hero);
     void showTargets(Action* action);
+    void playAction(Action *);
 };
