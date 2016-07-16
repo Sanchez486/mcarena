@@ -49,12 +49,12 @@ Targets AttackRandom::getTargetsPlayer2() const
     return Targets(false);
 }
 
-const std::string &AttackRandom::getName() const
+std::string AttackRandom::getName() const
 {
     return "Random shot";
 }
 
-const std::string &AttackRandom::getDescription() const
+std::string AttackRandom::getDescription() const
 {
     return "Attack " + std::to_string(numTargets) + " random targets for " +
             std::to_string(damage.min) + "-" + std::to_string(damage.max) +

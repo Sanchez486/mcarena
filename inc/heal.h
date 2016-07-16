@@ -17,8 +17,8 @@ public:
     virtual Targets getTargetsPlayer1() const;  // After setTarget()
     virtual Targets getTargetsPlayer2() const;  // After setTarget()
 
-    virtual const std::string& getName() const;
-    virtual const std::string& getDescription() const;
+    virtual std::string getName() const;
+    virtual std::string getDescription() const;
 
     virtual void doAction();
 };

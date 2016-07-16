@@ -64,12 +64,12 @@ Targets Lifesteal::getTargetsPlayer2() const
     return targets;
 }
 
-const std::string &Lifesteal::getName() const
+std::string Lifesteal::getName() const
 {
     return "Lifesteal";
 }
 
-const std::string &Lifesteal::getDescription() const
+std::string Lifesteal::getDescription() const
 {
     return "deal " + std::to_string(damage.min) + "-" + std::to_string(damage.max) +
             " damage and heal back for the same amount";

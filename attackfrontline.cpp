@@ -48,12 +48,12 @@ Targets AttackFrontLine::getTargetsPlayer2() const
     return Targets(false);
 }
 
-const std::string &AttackFrontLine::getName() const
+std::string AttackFrontLine::getName() const
 {
     return "Attack front";
 }
 
-const std::string &AttackFrontLine::getDescription() const
+std::string AttackFrontLine::getDescription() const
 {
     return "Attack all enemies in front line for " + std::to_string(damage.min) + "-" +
             std::to_string(damage.max) + " damage";

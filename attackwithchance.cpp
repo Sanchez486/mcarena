@@ -65,12 +65,12 @@ Targets AttackWithChance::getTargetsPlayer2() const
     return targets;
 }
 
-const std::string &AttackWithChance::getName() const
+std::string AttackWithChance::getName() const
 {
     return "Lucky strike";
 }
 
-const std::string &AttackWithChance::getDescription() const
+std::string AttackWithChance::getDescription() const
 {
     return "has a " + std::to_string(chance * 100) + "% chance of dealing " +
             std::to_string(damage.min) + "-" + std::to_string(damage.max) + " damage";

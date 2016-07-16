@@ -57,12 +57,12 @@ Targets Attack::getTargetsPlayer2() const
     return targets;
 }
 
-const std::string &Attack::getName() const
+std::string Attack::getName() const
 {
     return "Attack";
 }
 
-const std::string &Attack::getDescription() const
+std::string Attack::getDescription() const
 {
     return "deal damage equal to this hero`s attack";
 }

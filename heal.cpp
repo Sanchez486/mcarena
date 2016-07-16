@@ -46,12 +46,12 @@ Targets Heal::getTargetsPlayer2() const
     return targets;
 }
 
-const std::string &Heal::getName() const
+std::string Heal::getName() const
 {
     return "Heal";
 }
 
-const std::string &Heal::getDescription() const
+std::string Heal::getDescription() const
 {
     return "heal ally hero for " +
             std::to_string(healRange.min) + "-" + std::to_string(healRange.max) + " hp";

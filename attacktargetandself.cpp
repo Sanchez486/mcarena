@@ -65,12 +65,12 @@ Targets AttackTargetAndSelf::getTargetsPlayer2() const
     return targets;
 }
 
-const std::string &AttackTargetAndSelf::getName() const
+std::string AttackTargetAndSelf::getName() const
 {
     return "Self damaged attack";
 }
 
-const std::string &AttackTargetAndSelf::getDescription() const
+std::string AttackTargetAndSelf::getDescription() const
 {
     return "attack for " + std::to_string(damageTarget.min) + "-" + std::to_string(damageTarget.max) + " damage with self damage of " 
         + std::to_string(damageSelf.min) + "-" +std::to_string(damageSelf.max);

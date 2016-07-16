@@ -64,12 +64,12 @@ Targets AttackSingle::getTargetsPlayer2() const
     return targets;
 }
 
-const std::string &AttackSingle::getName() const
+std::string AttackSingle::getName() const
 {
     return "Wide attack";
 }
 
-const std::string &AttackSingle::getDescription() const
+std::string AttackSingle::getDescription() const
 {
     return "attack for " + std::to_string(damage.min) + "-" + std::to_string(damage.max) + " damage";
 }

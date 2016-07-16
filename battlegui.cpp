@@ -32,7 +32,7 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
 
       //Buttonwindow
       buttonBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, 75)),
-      attackButton(sfg::Button::Create( "ATACK" )),
+      attackButton(sfg::Button::Create( "ATTACK" )),
       skillButton(sfg::Button::Create( "SKILL" )),
 
       //InfoWindow
@@ -238,10 +238,19 @@ void BattleGUI::setPlayers(Player *player1, Player *player2)
 
 void BattleGUI::setActiveHero(Hero *hero)
 {
+    //info
     activeHero = hero;
     infoImage->SetImage(hero->getResources().getImage2());
     completeStats(stats, hero);
     frame->SetLabel(stats[0]->GetText());
+
+    //button
+    if(hero->getSkill() != nullptr)
+        skillButton->SetLabel(sf::String(hero->getSkill()->getName()));
+    if(hero->getAttack() != nullptr)
+        attackButton->SetLabel(sf::String(hero->getAttack()->getName()));
+
+    //highlighting
     spritesField->setActiveHero(hero);
 }
 

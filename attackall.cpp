@@ -48,12 +48,12 @@ Targets AttackAll::getTargetsPlayer2() const
     return Targets(false);
 }
 
-const std::string &AttackAll::getName() const
+std::string AttackAll::getName() const
 {
     return "Attack all";
 }
 
-const std::string &AttackAll::getDescription() const
+std::string AttackAll::getDescription() const
 {
     return "Attack all enemies for " + std::to_string(damage.min) + "-" +
             std::to_string(damage.max) + " damage";
