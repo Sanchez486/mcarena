@@ -28,8 +28,10 @@ void HeroQueue::setHeroes(const HeroGroup &group1, const HeroGroup &group2)
     arr[10] = group2.back2;
     arr[11] = group2.back3;
 
+
+    std::random_shuffle(arr, arr + 12);
     std::sort(arr, arr + 12, [](Hero *left, Hero *right){
-        return left->getStats().initiative.val < right->getStats().initiative.val;
+        return left->getStats().initiative.val > right->getStats().initiative.val;
     });
 
     for(int i=0; i < 12; ++i)
