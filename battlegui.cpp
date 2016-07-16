@@ -323,12 +323,22 @@ void BattleGUI::showDead(Hero *hero)
 
 void BattleGUI::winPlayer1()
 {
-
+    finishWindow->Show(true);
+    winnerLabel->SetText("PLAYER 1 WON");
+    queueWindow->SetState(sfg::Window::State::INSENSITIVE);
+    infoWindow->SetState(sfg::Window::State::INSENSITIVE);
+    buttonWindow->SetState(sfg::Window::State::INSENSITIVE);
+    spritesField->setInsensitive();
 }
 
 void BattleGUI::winPlayer2()
 {
-
+    finishWindow->Show(true);
+    winnerLabel->SetText("PLAYER 2 WON");
+    queueWindow->SetState(sfg::Window::State::INSENSITIVE);
+    infoWindow->SetState(sfg::Window::State::INSENSITIVE);
+    buttonWindow->SetState(sfg::Window::State::INSENSITIVE);
+    spritesField->setInsensitive();
 }
 
 void BattleGUI::completeStats(sfg::Label::Ptr* array, Hero* hero)
