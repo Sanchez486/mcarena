@@ -14,3 +14,4 @@
 #include "transferhealth.h"
 #include "attackwithdamagedecrease.h"
 #include "attackwithstun.h"
+#include "damageincreaseall.h"
