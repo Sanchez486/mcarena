@@ -6,6 +6,7 @@ MainWindow::MainWindow() : RenderWindow()
     timer = new QTimer();
     theme.openFromFile("res/sfx/theme.wav");
     theme.setLoop(true);
+    theme.setVolume(40);
     ToggleMusic();
     setSound(true);
     if (buttonBuffer.loadFromFile("res/sfx/button.wav")) buttonSound.setBuffer(buttonBuffer);

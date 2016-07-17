@@ -70,6 +70,11 @@ private:
     sfg::Box::Ptr picBox;
     sfg::Box::Ptr labelBox;
 
+    //InfoWindow2
+
+    sfg::Window::Ptr skillWindow;
+    sfg::Label::Ptr skillInfo;
+
     sfg::Label::Ptr stats[6];
 
     sfg::Frame::Ptr frame;
@@ -95,7 +100,14 @@ private:
         MENU2
     };
 
+    enum Mouse
+    {
+        ENTER,
+        LEAVE
+    };
+
     void clickedButton(ButtonPressed Button);
+    void mouseEvent(Mouse mouse);
 
     //Pop window
     sfg::Window::Ptr popWindow;
