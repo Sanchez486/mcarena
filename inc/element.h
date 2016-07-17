@@ -7,3 +7,7 @@ enum class Element
     water,
     earth
 };
+
+bool operator==(Element left, Element right);
+bool operator<(Element left, Element right);
+bool operator>(Element left, Element right);

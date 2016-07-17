@@ -77,6 +77,50 @@ Targets Action::getAliveTargetsBackLine(Player *player) const
     return targets;
 }
 
+Targets Action::getAliveAttackTargets(Player *owner, Player *enemy) const
+{
+    if(sender->getStats().kind == Kind::range)
+    {
+        return getAliveTargets(enemy);
+    }
+
+    if(isBlocked(sender, owner))
+    {
+        return Targets(false);
+    }
+
+    Targets targets;
+
+    if(enemy->at(HeroPosition::front1)->isAlive())
+    {
+        targets.front1 = true;
+    }
+    else
+    {
+        targets.back1 = enemy->at(HeroPosition::back1)->isAlive();
+    }
+
+    if(enemy->at(HeroPosition::front2)->isAlive())
+    {
+        targets.front2 = true;
+    }
+    else
+    {
+        targets.back2 = enemy->at(HeroPosition::back2)->isAlive();
+    }
+
+    if(enemy->at(HeroPosition::front3)->isAlive())
+    {
+        targets.front3 = true;
+    }
+    else
+    {
+        targets.back3 = enemy->at(HeroPosition::back3)->isAlive();
+    }
+
+    return targets;
+}
+
 // TODO: return [num] random alive targets
 Targets Action::getRandomAliveTargets(Player *player, int num) const
 {
@@ -92,6 +136,24 @@ int Action::countAlive(Player *player) const
 {
     Targets targets = getAliveTargets(player);
     return targets.front1 + targets.front2 + targets.front3 + targets.back1 + targets.back2 + targets.back3;
+}
+
+bool Action::isBlocked(Hero *hero, Player *player) const
+{
+    return player->at(HeroPosition::back1) == hero && player->at(HeroPosition::front1)->isAlive() ||
+            player->at(HeroPosition::back2) == hero && player->at(HeroPosition::front2)->isAlive() ||
+            player->at(HeroPosition::back3) == hero && player->at(HeroPosition::front3)->isAlive();
+}
+
+int Action::countDamageWithElement(int realDamage, Hero *_sender, Hero *_target) const
+{
+    if(_sender->getStats().element > _target->getStats().element)
+        realDamage = round(realDamage * 1.25);
+
+    if(_sender->getStats().element < _target->getStats().element)
+        realDamage = round(realDamage * 0.8);
+
+    return realDamage;
 }
 
 int Action::getRandom(int from, int to) const

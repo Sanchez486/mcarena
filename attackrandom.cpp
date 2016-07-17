@@ -43,7 +43,7 @@ Targets AttackRandom::getTargetsPlayer1() const
 
 Targets AttackRandom::getTargetsPlayer2() const
 {
-    if(player1->has(target))
+    if(player2->has(target))
         return targets;
 
     return Targets(false);

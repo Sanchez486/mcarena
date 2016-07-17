@@ -64,12 +64,18 @@ void Hero::add(Effect *effect)
 bool Hero::onTurnEffects()
 {
     bool res = false;
-    for(auto it = effectList.begin(); it != effectList.end(); ++it)
+    for(auto it = effectList.begin(); it != effectList.end();)
     {
         res |= (*it)->onTurn(this);
         if( (*it)->updateDuration() == 0)
         {
-            remove(*it);
+            auto itOld = it;
+            ++it;
+            remove(*itOld);
+        }
+        else
+        {
+            ++it;
         }
     }
 
