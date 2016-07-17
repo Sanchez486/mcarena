@@ -20,4 +20,8 @@ public:
     Hero* first() const;
     void rotate();  // pop_front and put on place
 
+private:
+    void incAccum();  // initiative.accum += initiative.val for all heroes
+    void insertHero(Hero *hero);
+    void removeDead();
 };
