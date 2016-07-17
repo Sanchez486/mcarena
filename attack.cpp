@@ -27,18 +27,16 @@ Targets Attack::getAvaliableTargetsPlayer2() const
 
 Targets Attack::getTargetsPlayer1() const
 {
-    HeroPosition pos = player1->find(target);
     Targets targets;
-    targets.set(pos);
+    targets.set(player1->find(target));
 
     return targets;
 }
 
 Targets Attack::getTargetsPlayer2() const
 {
-    HeroPosition pos = player2->find(target);
     Targets targets;
-    targets.set(pos);
+    targets.set(player2->find(target));
 
     return targets;
 }

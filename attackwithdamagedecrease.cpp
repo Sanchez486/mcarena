@@ -37,18 +37,16 @@ Targets AttackWithDamageDecrease::getAvaliableTargetsPlayer2() const
 
 Targets AttackWithDamageDecrease::getTargetsPlayer1() const
 {
-    HeroPosition pos = player1->find(target);
     Targets targets;
-    targets.set(pos);
+    targets.set(player1->find(target));
 
     return targets;
 }
 
 Targets AttackWithDamageDecrease::getTargetsPlayer2() const
 {
-    HeroPosition pos = player2->find(target);
     Targets targets;
-    targets.set(pos);
+    targets.set(player2->find(target));
 
     return targets;
 }
