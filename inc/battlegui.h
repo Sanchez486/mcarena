@@ -52,7 +52,8 @@ private:
     sfg::ScrolledWindow::Ptr qScroll;
     sfg::Box::Ptr queueBox;
 
-    sfg::Image::Ptr queueImages[12];
+    //sfg::Image::Ptr queueImages[12];
+    std::vector<sfg::Image::Ptr> queueImages;
 
     Hero *activeHero;
 
@@ -60,6 +61,8 @@ private:
     sfg::Box::Ptr buttonBox;
     sfg::Button::Ptr attackButton;
     sfg::Button::Ptr skillButton;
+    sfg::Button::Ptr skipButton;
+    sfg::Button::Ptr menuButton;
 
     //InfoWindow
     sfg::Box::Ptr infoBox;
@@ -76,11 +79,20 @@ private:
 
     SpritesField* spritesField;
 
+    //Finish window
+    sfg::Window::Ptr finishWindow;
+    sfg::Box::Ptr finishBox;
+    sfg::Button::Ptr menuButton2;
+    sfg::Label::Ptr winnerLabel;
+
     //for signals
     enum ButtonPressed
     {
         ATTACK,
-        SKILL
+        SKILL,
+        SKIP,
+        MENU,
+        MENU2
     };
 
     void clickedButton(ButtonPressed Button);

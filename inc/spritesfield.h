@@ -10,6 +10,7 @@
 #include "hero.h"
 #include "battlegui.h"
 #include "action.h"
+#include "targets.h"
 
 class BattleGUI;
 
@@ -29,7 +30,9 @@ private:
     sfg::Window::Ptr activeWindow;
 
     Hero *activeHero;
+    Hero *deadHero;
     Action *action;
+    Targets targetsPlayer1, targetsPlayer2;
 
     sf::Clock clock;
 
@@ -51,8 +54,10 @@ private:
 
     //For moving sprites
     int col;
-    int row;
+    bool row;
     bool play;
+    bool dead;
+    bool dmg;
 
     //Additional functions
     HeroPosition iToPos(int i);
@@ -94,4 +99,7 @@ public:
     //Monitoring actions
     void setSkill();
     void setAttack();
+    void setInsensitive();
+    void setSensitive();
+    void clear();
 };

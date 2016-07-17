@@ -68,6 +68,9 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     app_window.resetGLStates();
     backgroundT.loadFromFile("res/img/background/selectionBACK.jpg");
     background.setTexture(backgroundT);
+    enemyImgT.loadFromFile("res/img/background/EnemySidePic.png");
+    enemyImg.setTexture(enemyImgT);
+    enemyImg.setPosition(XSCROLL+FRAME*2+XSCROLLBAR+FRAME*3 + XFIELD+FRAME*2, (app_window.getY()-FRAME*2-YBUTTONS+YINFO-YFIELD)/2 + FRAME);
 
     //Info
     desktop.Add(infoWindow);
@@ -132,11 +135,12 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     desktop.Add(fieldWindow);
     fieldWindow->Add(fieldBox);
     fieldBox->Pack(fieldTable);
-    fieldWindow->SetAllocation(sf::FloatRect((app_window.getX()+XSCROLL+FRAME*2+XSCROLLBAR-XPOINTS-XFIELD)/2,
+    fieldWindow->SetAllocation(sf::FloatRect(XSCROLL+FRAME*2+XSCROLLBAR+FRAME*2,
                                              (app_window.getY()-FRAME*2-YBUTTONS+YINFO-YFIELD)/2, XFIELD, YFIELD));
 
     plusImg.loadFromFile("res/img/icons/plus.png");
     crossImg.loadFromFile("res/img/icons/cross.png");
+
     for (int i=0;i<6;i++)
     {
         imageArray[i] = sfg::Image::Create(plusImg);
@@ -194,6 +198,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
 
 void SelectionGUI::clickedButton(ButtonPressed Button)
 {
+    app_window.playButtonSound();
     switch (Button)
     {
         case START: clickedStart(); break;
@@ -301,6 +306,7 @@ void SelectionGUI::update()
         desktop.Update( 10 );
         app_window.clear();
         app_window.draw(background);
+        app_window.draw(enemyImg);
         sfgui.Display(app_window);
         app_window.display();
     }
@@ -320,7 +326,6 @@ void SelectionGUI::setHeroVector(HeroVector *heroVector)
     }
     for(auto it = heroesList->begin(), end = heroesList->end(); it != end; it++, i++)
     {
-
         heroImages.push_back(sfg::Image::Create((*it)->getResources().getImage()));
         table->Attach(heroImages[i],sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
         heroImages[i]->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::_clickedHero, this, i));

@@ -32,17 +32,12 @@ private:
     sfg::Box::Ptr box;
     sfg::Button::Ptr playButton;
     sfg::Button::Ptr playWithCpuButton;
-    sfg::Button::Ptr settingsButton;
     sfg::Button::Ptr exitButton;
+    sfg::Box::Ptr soundBox;
+    sf::Image noSoundImage, soundImage,noMusicImage, musicImage;
+    sfg::Image::Ptr soundToggle;
+    sfg::Image::Ptr musicToggle;
 
-    //For settings window
-    sfg::Window::Ptr settingsWindow;
-    sfg::Box::Ptr sharedBox;
-    sfg::Box::Ptr settingsBox;
-    sfg::Box::Ptr okBox;
-    sfg::Button::Ptr soundButton;
-    sfg::Button::Ptr musicButton;
-    sfg::Button::Ptr okButton;
 
     //for signals
     enum ButtonPressed
@@ -55,8 +50,6 @@ private:
     };
 
     //sfgui button signals
-    void clickedSettings();
-    void clickedOk();
     void clickedButton(ButtonPressed Button);
 
 private slots:
