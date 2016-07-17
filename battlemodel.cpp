@@ -30,6 +30,8 @@ void BattleModel::finished()
 
 void BattleModel::beginTurn()
 {
+    updateDead();
+
     if(player1->countAlive() == 0)
     {
         emit winPlayer2();
@@ -40,8 +42,6 @@ void BattleModel::beginTurn()
         emit winPlayer1();
         return;
     }
-
-    updateDead();
 
     heroQueue.rotate();
     emit setQueue(&heroQueue);
