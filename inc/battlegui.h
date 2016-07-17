@@ -52,7 +52,8 @@ private:
     sfg::ScrolledWindow::Ptr qScroll;
     sfg::Box::Ptr queueBox;
 
-    sfg::Image::Ptr queueImages[12];
+    //sfg::Image::Ptr queueImages[12];
+    std::vector<sfg::Image::Ptr> queueImages;
 
     Hero *activeHero;
 

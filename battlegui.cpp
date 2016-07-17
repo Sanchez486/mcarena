@@ -31,6 +31,7 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
       queueBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, 10)),
 
       activeHero(nullptr),
+      queueImages(),
 
       //Buttonwindow
       buttonBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, 20)),
@@ -75,12 +76,6 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     qScroll->AddWithViewport(queueBox);
     qScroll->SetScrollbarPolicy( sfg::ScrolledWindow::VERTICAL_NEVER| sfg::ScrolledWindow::HORIZONTAL_ALWAYS);
     qScroll->SetRequisition( sf::Vector2f(app_window.getX() - FRAME*2, YICON ) );
-
-    for(int i = 0; i < 12; i++)
-    {
-        queueImages[i] = sfg::Image::Create();
-        queueBox->Pack(queueImages[i]);
-    }
 
     desktop.Add(queueWindow);
     queueWindow->SetAllocation(sf::FloatRect(0,app_window.getY() - YQTOTAL, app_window.getX(), YICON+FRAME*2+YSCROLLBAR));
@@ -280,21 +275,28 @@ void BattleGUI::setActiveHero(Hero *hero)
 
 void BattleGUI::setQueue(HeroQueue *queue)
 {
-    if(queue == nullptr)
-        std::cerr << "queue is nullptr" << std::endl;
+
+    if(!queueImages.empty())
+    {
+        for(auto it = queueImages.begin(), end = queueImages.end(); it != end; it++)
+            queueBox->Remove(*it);
+        queueImages.clear();
+    }
 
     int i = 0;
-    for(auto it = queue->begin(), end = queue->end(); it != end; it++)
+    for(auto it = queue->begin() , end = queue->end(); it != end; it++)
     {
         if (it == queue->begin())
-            queueImages[i]->SetImage((*it)->getResources().getImage2());
+            queueImages.push_back(sfg::Image::Create((*it)->getResources().getImage2()));
         else
-            queueImages[i]->SetImage((*it)->getResources().getImage());
+            queueImages.push_back(sfg::Image::Create((*it)->getResources().getImage()));
 
-        queueImages[i]->GetSignal( sfg::Widget::OnMouseRightPress ).Connect(
-                    std::bind( &BattleGUI::showInfo, this, (*it)) );
+        queueBox->Pack(queueImages.at(i));
+        queueImages.at(i)->GetSignal( sfg::Widget::OnMouseRightPress ).Connect(
+                  std::bind( &BattleGUI::showInfo, this, (*it)) );
         i++;
     }
+
 }
 
 void BattleGUI::showInfo(Hero *hero)

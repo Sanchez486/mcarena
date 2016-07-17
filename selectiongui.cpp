@@ -326,7 +326,6 @@ void SelectionGUI::setHeroVector(HeroVector *heroVector)
     }
     for(auto it = heroesList->begin(), end = heroesList->end(); it != end; it++, i++)
     {
-
         heroImages.push_back(sfg::Image::Create((*it)->getResources().getImage()));
         table->Attach(heroImages[i],sf::Rect<sf::Uint32>( i%2, floor(i/2+0.5), 1, 1),sfg::Table::FILL, sfg::Table::FILL);
         heroImages[i]->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::_clickedHero, this, i));
