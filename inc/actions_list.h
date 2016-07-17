@@ -11,3 +11,4 @@
 #include "attacksingle.h"
 #include "attacktargetandself.h"
 #include "attackwithchance.h"
+#include "transferhealth.h"
