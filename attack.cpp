@@ -9,14 +9,7 @@ Targets Attack::getAvaliableTargetsPlayer1() const
 {
     if(!player1->has(sender))
     {
-        if(sender->getStats().kind == Kind::melee)
-        {
-            return getAliveTargetsFrontLine(player1);
-        }
-        if(sender->getStats().kind == Kind::range)
-        {
-            return getAliveTargets(player1);
-        }
+        return getAliveAttackTargets(player2, player1);
     }
 
     return Targets();
@@ -26,14 +19,7 @@ Targets Attack::getAvaliableTargetsPlayer2() const
 {
     if(!player2->has(sender))
     {
-        if(sender->getStats().kind == Kind::melee)
-        {
-            return getAliveTargetsFrontLine(player2);
-        }
-        if(sender->getStats().kind == Kind::range)
-        {
-            return getAliveTargets(player2);
-        }
+        return getAliveAttackTargets(player1, player2);
     }
 
     return Targets();
