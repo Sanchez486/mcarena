@@ -29,6 +29,10 @@ private:
     sfg::Window::Ptr secondPlayerWindow[6];
     sfg::Window::Ptr activeWindow;
     sf::Sound playingSound;
+    sf::Texture hpBarT;
+    sf::Sprite firstHpBars[6], secondHpBars[6];
+    sf::Font font;
+    sf::Text firstHpLabels[6], secondHpLabels[6];
 
     Hero *activeHero;
     Hero *deadHero;
@@ -88,7 +92,7 @@ public:
     SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _secondPlayer);
 
     //For displaying
-    void draw(sf::RenderWindow& app_window);
+    void draw(MainWindow& app_window);
     void updateDesktop(sfg::Desktop& desktop);
 
     //Slots
