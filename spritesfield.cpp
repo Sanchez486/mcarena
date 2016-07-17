@@ -361,3 +361,15 @@ void SpritesField::setInsensitive()
     for (int i=0;i<6;i++) firstPlayerWindow[i]->SetState(sfg::Window::State::INSENSITIVE);
     for (int i=0;i<6;i++) secondPlayerWindow[i]->SetState(sfg::Window::State::INSENSITIVE);
 }
+
+void SpritesField::setSensitive()
+{
+    for (int i=0;i<6;i++) firstPlayerWindow[i]->SetState(sfg::Window::State::NORMAL);
+    for (int i=0;i<6;i++) secondPlayerWindow[i]->SetState(sfg::Window::State::NORMAL);
+}
+
+void SpritesField::clear()
+{
+    clearTargets();
+    clearActive(activeWindow);
+}

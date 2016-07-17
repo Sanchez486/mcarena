@@ -35,10 +35,10 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
 
       //Buttonwindow
       buttonBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, 20)),
-      attackButton(sfg::Button::Create( "ATTACK" )),
-      skillButton(sfg::Button::Create( "SKILL" )),
-      skipButton(sfg::Button::Create("SKIP")),
-      menuButton(sfg::Button::Create("MAIN MENU")),
+      attackButton(sfg::Button::Create( "Attack" )),
+      skillButton(sfg::Button::Create( "Skill" )),
+      skipButton(sfg::Button::Create("Skip")),
+      menuButton(sfg::Button::Create("Main menu")),
 
       //InfoWindow
       infoBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
@@ -55,8 +55,8 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
 
       finishWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
       finishBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL,FRAME)),
-      menuButton2(sfg::Button::Create("MAIN MENU")),
-      winnerLabel(sfg::Label::Create("PLAYER 1 WON")),
+      menuButton2(sfg::Button::Create("Main menu")),
+      winnerLabel(sfg::Label::Create("")),
 
       //Pop window
       popWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
@@ -168,6 +168,12 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
                 std::bind( &BattleGUI::clickedButton, this, ButtonPressed::SKILL ) );
     attackButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
                 std::bind( &BattleGUI::clickedButton, this, ButtonPressed::ATTACK ) );
+    skipButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                std::bind( &BattleGUI::clickedButton, this, ButtonPressed::SKIP ) );
+    menuButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                std::bind( &BattleGUI::clickedButton, this, ButtonPressed::MENU ) );
+    menuButton2->GetSignal( sfg::Widget::OnLeftClick ).Connect(
+                std::bind( &BattleGUI::clickedButton, this, ButtonPressed::MENU2 ) );
 }
 
 BattleGUI::~BattleGUI()
@@ -189,6 +195,20 @@ void BattleGUI::clickedButton(ButtonPressed Button)
             selectedAction(activeHero->getSkill());
             spritesField->setSkill();
             break;
+        case SKIP:
+            spritesField->clear();
+            beginTurn();
+            break;
+        case MENU:
+            spritesField->clear();
+            finished();
+            break;
+        case MENU2:
+            spritesField->clear();
+            spritesField->setSensitive();
+            finishWindow->Show(false);
+            finished();
+            break;
     }
 }
 
@@ -197,6 +217,9 @@ void BattleGUI::show()
    queueWindow->Show(true);
    buttonWindow->Show(true);
    infoWindow->Show(true);
+   queueWindow->SetState(sfg::Window::State::NORMAL);
+   infoWindow->SetState(sfg::Window::State::NORMAL);
+   buttonWindow->SetState(sfg::Window::State::NORMAL);
    connect(app_window.getTimer(), SIGNAL(timeout()), this, SLOT(update()));
    app_window.getTimer()->start(TIMEUPDATE);
 }
@@ -327,7 +350,7 @@ void BattleGUI::winPlayer1()
 {
     finishWindow->Show(true);
     desktop.BringToFront(finishWindow);
-    winnerLabel->SetText("PLAYER 1 WON");
+    winnerLabel->SetText("PLAYER 1 WON!!!");
     queueWindow->SetState(sfg::Window::State::INSENSITIVE);
     infoWindow->SetState(sfg::Window::State::INSENSITIVE);
     buttonWindow->SetState(sfg::Window::State::INSENSITIVE);
@@ -338,7 +361,7 @@ void BattleGUI::winPlayer2()
 {
     finishWindow->Show(true);
     desktop.BringToFront(finishWindow);
-    winnerLabel->SetText("PLAYER 2 WON");
+    winnerLabel->SetText("PLAYER 2 WON!!!");
     queueWindow->SetState(sfg::Window::State::INSENSITIVE);
     infoWindow->SetState(sfg::Window::State::INSENSITIVE);
     buttonWindow->SetState(sfg::Window::State::INSENSITIVE);

@@ -89,7 +89,10 @@ private:
     enum ButtonPressed
     {
         ATTACK,
-        SKILL
+        SKILL,
+        SKIP,
+        MENU,
+        MENU2
     };
 
     void clickedButton(ButtonPressed Button);

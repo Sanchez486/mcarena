@@ -100,4 +100,6 @@ public:
     void setSkill();
     void setAttack();
     void setInsensitive();
+    void setSensitive();
+    void clear();
 };
