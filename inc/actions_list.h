@@ -13,3 +13,4 @@
 #include "attackwithchance.h"
 #include "transferhealth.h"
 #include "attackwithdamagedecrease.h"
+#include "attackwithstun.h"

@@ -49,7 +49,8 @@ SOURCES += main.cpp \
     periodicdamage.cpp \
     stun.cpp \
     transferhealth.cpp \
-    attackwithdamagedecrease.cpp
+    attackwithdamagedecrease.cpp \
+    attackwithstun.cpp
 
 HEADERS += \
     inc/menugui.h \
@@ -95,7 +96,8 @@ HEADERS += \
     inc/periodicdamage.h \
     inc/stun.h \
     inc/transferhealth.h \
-    inc/attackwithdamagedecrease.h
+    inc/attackwithdamagedecrease.h \
+    inc/attackwithstun.h
 
 LIBS += \
     -lsfml-graphics \
