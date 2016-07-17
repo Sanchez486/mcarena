@@ -30,6 +30,7 @@ private:
     sfg::Window::Ptr activeWindow;
 
     Hero *activeHero;
+    Hero *deadHero;
     Action *action;
     Targets targetsPlayer1, targetsPlayer2;
 
@@ -53,8 +54,9 @@ private:
 
     //For moving sprites
     int col;
-    int row;
+    bool row;
     bool play;
+    bool dead;
 
     //Additional functions
     HeroPosition iToPos(int i);

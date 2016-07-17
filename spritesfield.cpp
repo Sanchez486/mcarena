@@ -24,6 +24,7 @@ SpritesField::SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _se
       col(0),
       row(0),
       play(false),
+      dead(false),
       action(nullptr),
       activeHero(nullptr)
 {
@@ -125,29 +126,50 @@ sf::Vector2f SpritesField::iToVector(int i)
 
 void SpritesField::draw(sf::RenderWindow& app_window)
 {       
-    if((clock.getElapsedTime().asMilliseconds() > 70) && play)
+    if((clock.getElapsedTime().asMilliseconds() > 70))
     {
-        sf::Sprite& activeSprite = findSprite(activeHero);
 
-        if(col < 8 && row == 0)
+        if(play)
         {
+            sf::Sprite& activeSprite = findSprite(activeHero);
             if(actionType == ATTACK)
                 row = 0;
-            if(actionType == SKILL)
+            else if(actionType == SKILL)
                 row = 1;
-            activeSprite.setTextureRect(sf::IntRect(col*XSPRITE, row, XSPRITE, YSPRITE));
-            col++;
-            clock.restart();
+            if(col < 8)
+            {
+                activeSprite.setTextureRect(sf::IntRect(col*XSPRITE, row*YSPRITE, XSPRITE, YSPRITE));
+                col++;
+                clock.restart();
+            }
+            else
+            {
+                activeSprite.setTextureRect(sf::IntRect(0, 0, XSPRITE, YSPRITE));
+                play = false;
+                col = 0;
+                parent->beginTurn();
+            }
         }
 
-        else
+        else if(dead)
         {
-            activeSprite.setTextureRect(sf::IntRect(0, 0, XSPRITE, YSPRITE));
-            play = false;
-            col = 0;
-            parent->beginTurn();
+            sf::Sprite& deadSprite = findSprite(deadHero);
+            if(col < 8)
+            {
+                deadSprite.setTextureRect(sf::IntRect(col*XSPRITE, (NROW-1)*YSPRITE, XSPRITE, YSPRITE));
+                col++;
+                clock.restart();
+            }
+            else
+            {
+                deadSprite.setTextureRect(sf::IntRect(XSPRITE*(NCOL - 1), YSPRITE*(NROW-1),
+                                             XSPRITE, YSPRITE));
+                dead = false;
+                col = 0;
+            }
         }
     }
+
     for(int i = 0; i < 6; i++)
     {
         app_window.draw(firstPlayerSprite[i]);
@@ -274,6 +296,8 @@ void SpritesField::playAction(Action* _action)
 
 void SpritesField::showDead(Hero *hero)
 {
+    deadHero = hero;
+    dead = true;
     sf::Sprite& deadSprite = findSprite(hero);
     deadSprite.setTextureRect(sf::IntRect(XSPRITE*(NCOL - 1), YSPRITE*(NROW - 1),
                                  XSPRITE, YSPRITE));                               
@@ -291,6 +315,7 @@ void SpritesField::setAttack()
 
 sf::Sprite& SpritesField::findSprite(Hero *hero)
 {
+
     if (firstPlayer->has(hero))
     {
         int i = posToI(firstPlayer->find(hero));

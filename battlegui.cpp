@@ -319,7 +319,6 @@ void BattleGUI::playAction(Action *action)
 void BattleGUI::showDead(Hero *hero)
 {
     spritesField->showDead(hero);
-    std::cerr << "dead" << std::endl;
 }
 
 void BattleGUI::winPlayer1()
