@@ -57,6 +57,7 @@ private:
     bool row;
     bool play;
     bool dead;
+    bool dmg;
 
     //Additional functions
     HeroPosition iToPos(int i);

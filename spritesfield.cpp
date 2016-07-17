@@ -25,6 +25,7 @@ SpritesField::SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _se
       row(0),
       play(false),
       dead(false),
+      dmg(false),
       action(nullptr),
       activeHero(nullptr)
 {
@@ -132,20 +133,48 @@ void SpritesField::draw(sf::RenderWindow& app_window)
         if(play)
         {
             sf::Sprite& activeSprite = findSprite(activeHero);
-            if(actionType == ATTACK)
-                row = 0;
-            else if(actionType == SKILL)
-                row = 1;
             if(col < 8)
             {
+                if(actionType == ATTACK)
+                    row = 0;
+                else if(actionType == SKILL)
+                    row = 1;
+
                 activeSprite.setTextureRect(sf::IntRect(col*XSPRITE, row*YSPRITE, XSPRITE, YSPRITE));
                 col++;
-                clock.restart();
             }
             else
             {
-                activeSprite.setTextureRect(sf::IntRect(0, 0, XSPRITE, YSPRITE));
                 play = false;
+                dmg = true;
+                col = 0;
+                activeSprite.setTextureRect(sf::IntRect(0, 0, XSPRITE, YSPRITE));
+            }
+        }
+
+        else if(dmg)
+        {
+            if(col < 8)
+            {
+                for(int i = 0; i < 6; i++)
+                {
+                    if(targetsPlayer1.is(iToPos(i)))
+                       firstPlayerSprite[i].setTextureRect(sf::IntRect(col*XSPRITE, (NROW-2)*YSPRITE, XSPRITE, YSPRITE));
+                    if(targetsPlayer2.is(iToPos(i)))
+                       secondPlayerSprite[i].setTextureRect(sf::IntRect(col*XSPRITE, (NROW-2)*YSPRITE, XSPRITE, YSPRITE));
+                }
+                col++;
+            }
+            else
+            {
+                for(int i = 0; i < 6; i++)
+                {
+                    if(targetsPlayer1.is(iToPos(i)))
+                       firstPlayerSprite[i].setTextureRect(sf::IntRect(0, 0, XSPRITE, YSPRITE));
+                    if(targetsPlayer2.is(iToPos(i)))
+                       secondPlayerSprite[i].setTextureRect(sf::IntRect(0, 0, XSPRITE, YSPRITE));
+                }
+                dmg = false;
                 col = 0;
                 parent->beginTurn();
             }
@@ -158,7 +187,7 @@ void SpritesField::draw(sf::RenderWindow& app_window)
             {
                 deadSprite.setTextureRect(sf::IntRect(col*XSPRITE, (NROW-1)*YSPRITE, XSPRITE, YSPRITE));
                 col++;
-                clock.restart();
+
             }
             else
             {
@@ -168,6 +197,7 @@ void SpritesField::draw(sf::RenderWindow& app_window)
                 col = 0;
             }
         }
+        clock.restart();
     }
 
     for(int i = 0; i < 6; i++)
@@ -330,5 +360,4 @@ void SpritesField::setInsensitive()
 {
     for (int i=0;i<6;i++) firstPlayerWindow[i]->SetState(sfg::Window::State::INSENSITIVE);
     for (int i=0;i<6;i++) secondPlayerWindow[i]->SetState(sfg::Window::State::INSENSITIVE);
-
 }
