@@ -52,7 +52,8 @@ SOURCES += main.cpp \
     attackwithdamagedecrease.cpp \
     attackwithstun.cpp \
     damageincreaseall.cpp \
-    applyperiodicdamage.cpp
+    applyperiodicdamage.cpp \
+    dissipateeffects.cpp
 
 HEADERS += \
     inc/menugui.h \
@@ -101,7 +102,8 @@ HEADERS += \
     inc/attackwithdamagedecrease.h \
     inc/attackwithstun.h \
     inc/damageincreaseall.h \
-    inc/applyperiodicdamage.h
+    inc/applyperiodicdamage.h \
+    inc/dissipateeffects.h
 
 LIBS += \
     -lsfml-graphics \

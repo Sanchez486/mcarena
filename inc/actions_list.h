@@ -16,3 +16,4 @@
 #include "attackwithstun.h"
 #include "damageincreaseall.h"
 #include "applyperiodicdamage.h"
+#include "dissipateeffects.h"
