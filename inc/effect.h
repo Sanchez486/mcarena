@@ -10,7 +10,7 @@ protected:
 public:
     Effect(int _duration = 1);
 
-    int updateDuration();  // return --duration;
+    int updateDuration();  // return duration--;
 
     virtual void onAdd(Hero *hero);
     virtual void onRemove(Hero *hero);

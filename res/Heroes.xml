@@ -12,7 +12,7 @@
 		kind="range" 
 		elem="earth" 
 		init="35" 
-		skill="NULL" 
+                skill="attackrandom"
 		cost="5"/>
 	<hero name="Witch" 
 		atk_snd="res/sfx/witch_attack.wav" 
@@ -26,7 +26,7 @@
 		kind="range" 
 		elem="earth" 
 		init="40" 
-		skill="NULL" 
+                skill="damagedecrease"
 		cost="5"/>
 	<hero name="Doctor" 
 		atk_snd="res/sfx/doctor_attack.wav" 
@@ -40,7 +40,7 @@
 		kind="range" 
 		elem="earth" 
 		init="35" 
-		skill="NULL" 
+                skill="heal"
 		cost="5"/>
 	<hero name="Hero" 
 		atk_snd="res/sfx/hero_attack.wav" 
@@ -54,7 +54,7 @@
 		kind="melee" 
 		elem="earth" 
 		init="20" 
-		skill="NULL" 
+                skill="transferhealth"
 		cost="5"/>
 	<hero name="Sirena" 
 		atk_snd="res/sfx/sirena_attack.wav" 
@@ -68,7 +68,7 @@
 		kind="melee" 
 		elem="water" 
 		init="80" 
-		skill="NULL" 
+                skill="attackwithdamagedecrease"
 		cost="5"/>
 	<hero name="Crab" 
 		atk_snd="res/sfx/crab_attack.wav" 
@@ -82,7 +82,7 @@
 		kind="melee" 
 		elem="water" 
 		init="50" 
-		skill="NULL" 
+                skill="lifesteal"
 		cost="5"/>
 	<hero name="Plankton" 
 		atk_snd="res/sfx/plankton_attack.wav" 
@@ -96,7 +96,7 @@
 		kind="melee" 
 		elem="water" 
 		init="35" 
-		skill="NULL" 
+                skill="dissipateeffects"
 		cost="5"/>
 	<hero name="Well" 
 		atk_snd="res/sfx/well_attack.wav" 
@@ -110,7 +110,7 @@
 		kind="range" 
 		elem="water" 
 		init="30" 
-		skill="NULL" 
+                skill="attackall"
 		cost="5"/>
 	<hero name="Dragon" 
 		atk_snd="res/sfx/dragon_attack.wav" 
@@ -124,7 +124,7 @@
 		kind="melee" 
 		elem="fire" 
 		init="20" 
-		skill="NULL" 
+                skill="attackfrontline"
 		cost="5"/>
 	<hero name="Lion" 
 		atk_snd="res/sfx/lion_attack.wav" 
@@ -138,7 +138,7 @@
 		kind="melee" 
 		elem="fire" 
 		init="40" 
-		skill="NULL" 
+                skill="attacktargetandself"
 		cost="5"/>
 	<hero name="Fenix" 
 		atk_snd="res/sfx/fenix_attack.wav" 
@@ -152,7 +152,7 @@
 		kind="range" 
 		elem="fire" 
 		init="40" 
-		skill="NULL" 
+                skill="applyperiodicdamage"
 		cost="5"/>
 	<hero name="Fire" 
 		atk_snd="res/sfx/fire_attack.wav" 
@@ -166,7 +166,7 @@
 		kind="range" 
 		elem="fire" 
 		init="25" 
-		skill="NULL" 
+                skill="damageincreaseall"
 		cost="5"/>
 	<hero name="Ilya" 
 		atk_snd="res/sfx/ilya_attack.wav" 
@@ -180,7 +180,7 @@
 		kind="melee" 
 		elem="neutral" 
 		init="30" 
-		skill="NULL" 
+                skill="attackwithstun"
 		cost="5"/>
 	<hero name="Pacman" 
 		atk_snd="res/sfx/pacman_attack.wav" 
@@ -194,7 +194,7 @@
 		kind="range" 
 		elem="neutral" 
 		init="25" 
-		skill="NULL" 
+                skill="stun"
 		cost="5"/>
 	<hero name="Sonic" 
 		atk_snd="res/sfx/sonic_attack.wav" 
@@ -208,7 +208,7 @@
 		kind="melee" 
 		elem="neutral" 
 		init="100" 
-		skill="NULL" 
+                skill="attackwithchance"
 		cost="5"/>
 	<hero name="Mario" 
 		atk_snd="res/sfx/mario_attack.wav" 
@@ -222,6 +222,6 @@
 		kind="range" 
 		elem="neutral" 
 		init="35" 
-		skill="NULL" 
+                skill="attacksingle"
 		cost="5"/>
 </resources>

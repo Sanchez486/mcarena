@@ -245,4 +245,100 @@ Element Game::strToElement(const string &str) const
 void Game::strToActions(const string &str, Actions *actions) const
 {
     actions->setAttack(new Attack());
+
+    if(!str.compare("attackrandom"))
+    {
+        actions->setSkill(new AttackRandom(3, Damage(3, 3)));
+        return;
+    }
+
+    if(!str.compare("damagedecrease"))
+    {
+        actions->setSkill(new AttackWithDamageDecrease(Damage(0, 0), 0.5, 2));
+        return;
+    }
+
+    if(!str.compare("heal"))
+    {
+        actions->setSkill(new Heal(Damage(5, 7)));
+        return;
+    }
+
+    if(!str.compare("transferhealth"))
+    {
+        actions->setSkill(new TransferHealth(Damage(5, 5)));
+        return;
+    }
+
+    if(!str.compare("attackwithdamagedecrease"))
+    {
+        actions->setSkill(new AttackWithDamageDecrease(Damage(1, 2), 0.33, 2));
+        return;
+    }
+
+    if(!str.compare("lifesteal"))
+    {
+        actions->setSkill(new Lifesteal(Damage(1, 3)));
+        return;
+    }
+
+    if(!str.compare("dissipateeffects"))
+    {
+        actions->setSkill(new DissipateEffects());
+        return;
+    }
+
+    if(!str.compare("attackall"))
+    {
+        actions->setSkill(new AttackAll(Damage(2, 2)));
+        return;
+    }
+
+    if(!str.compare("attackfrontline"))
+    {
+        actions->setSkill(new AttackFrontLine(Damage(4, 6)));
+        return;
+    }
+
+    if(!str.compare("attacktargetandself"))
+    {
+        actions->setSkill(new AttackTargetAndSelf(Damage(10, 10), Damage(5, 5)));
+        return;
+    }
+
+    if(!str.compare("applyperiodicdamage"))
+    {
+        actions->setSkill(new ApplyPeriodicDamage(Damage(4, 4), 2));
+        return;
+    }
+
+    if(!str.compare("damageincreaseall"))
+    {
+        actions->setSkill(new DamageIncreaseAll(0.33, 3)); // 2 turns
+        return;
+    }
+
+    if(!str.compare("attackwithstun"))
+    {
+        actions->setSkill(new AttackWithStun(Damage(2, 3), 0.5, 1));
+        return;
+    }
+
+    if(!str.compare("stun"))
+    {
+        actions->setSkill(new AttackWithStun(Damage(0, 0), 1.0, 1));
+        return;
+    }
+
+    if(!str.compare("attackwithchance"))
+    {
+        actions->setSkill(new AttackWithChance(Damage(6, 6), 0.5));
+        return;
+    }
+
+    if(!str.compare("attacksingle"))
+    {
+        actions->setSkill(new AttackSingle(Damage(2, 12)));
+        return;
+    }
 }
