@@ -89,37 +89,28 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     pointsBox->Pack(pointsLabel);
     pointsWindow->SetAllocation(sf::FloatRect(app_window.getX()-XPOINTS, YINFO, XPOINTS, YPOINTS));
 
-    for (int i=0;i<8;i++) infoLabels[i]= sfg::Label::Create("");
+    for(int i = 0; i < 7 ; i++)
+        infoLabels[i]= sfg::Label::Create("");
 
-    //loading pics in info window
-    sf::Image icoImg;
-    icoImg.loadFromFile("res/img/icons/near.png");
-    infoPics[0]= sfg::Image::Create(icoImg);
-    icoImg.loadFromFile("res/img/icons/element.png");
-    infoPics[1]= sfg::Image::Create(icoImg);
-    icoImg.loadFromFile("res/img/icons/attack.png");
-    infoPics[2]= sfg::Image::Create(icoImg);
-    icoImg.loadFromFile("res/img/icons/init.png");
-    infoPics[3]= sfg::Image::Create(icoImg);
-    icoImg.loadFromFile("res/img/icons/hp.png");
-    infoPics[4]= sfg::Image::Create(icoImg);
-    icoImg.loadFromFile("res/img/icons/further.png");
-    infoPics[5]= sfg::Image::Create(icoImg);
+    for(int i = 0; i < 6; i++)
+    {
+        infoPics[i] = sfg::Image::Create(app_window.getImage(i));
+    }
 
 
     infoTable->Attach(infoPics[0],sf::Rect<sf::Uint32>(1, 1, 1, 1));
-    infoTable->Attach(infoPics[1],sf::Rect<sf::Uint32>(1, 2, 1, 1));
-    infoTable->Attach(infoPics[2],sf::Rect<sf::Uint32>(3, 1, 1, 1));
-    infoTable->Attach(infoPics[3],sf::Rect<sf::Uint32>(3, 2, 1, 1));
-    infoTable->Attach(infoPics[4],sf::Rect<sf::Uint32>(3, 0, 1, 1));
-    infoTable->Attach(infoPics[5],sf::Rect<sf::Uint32>(1, 1, 1, 1));
+    infoTable->Attach(infoPics[1],sf::Rect<sf::Uint32>(1, 1, 1, 1));
+    infoTable->Attach(infoPics[2],sf::Rect<sf::Uint32>(1, 2, 1, 1));
+    infoTable->Attach(infoPics[3],sf::Rect<sf::Uint32>(3, 0, 1, 1));
+    infoTable->Attach(infoPics[4],sf::Rect<sf::Uint32>(3, 1, 1, 1));
+    infoTable->Attach(infoPics[5],sf::Rect<sf::Uint32>(3, 2, 1, 1));
     infoTable->Attach(infoLabels[0],sf::Rect<sf::Uint32>(1, 0, 2, 1),sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
     infoTable->Attach(infoLabels[1],sf::Rect<sf::Uint32>(2, 1, 1, 1),sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
     infoTable->Attach(infoLabels[2],sf::Rect<sf::Uint32>(2, 2, 1, 1),sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
-    infoTable->Attach(infoLabels[3],sf::Rect<sf::Uint32>(4, 1, 1, 1),sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
-    infoTable->Attach(infoLabels[4],sf::Rect<sf::Uint32>(4, 2, 1, 1),sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
-    infoTable->Attach(infoLabels[5],sf::Rect<sf::Uint32>(4, 0, 1, 1),sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
-    infoTable->Attach(infoLabels[6],sf::Rect<sf::Uint32>(0, 3, 7, 1),sfg::Table::EXPAND | sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoLabels[3],sf::Rect<sf::Uint32>(4, 0, 1, 1),sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoLabels[4],sf::Rect<sf::Uint32>(4, 1, 1, 1),sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoLabels[5],sf::Rect<sf::Uint32>(4, 2, 1, 1),sfg::Table::FILL , sfg::Table::EXPAND | sfg::Table::FILL);
+    infoTable->Attach(infoLabels[6],sf::Rect<sf::Uint32>(0, 3, 7, 1));
     infoTable->Attach(infoPic,sf::Rect<sf::Uint32>(0, 0, 1, 3));
 
     //Left heroes list
@@ -369,11 +360,11 @@ void SelectionGUI::setActiveHero(HeroTemplate *hero)
             case Kind::melee:
                 infoLabels[1]->SetText("MELEE ATTACK");
                 infoPics[0]->Show(true);
-                infoPics[5]->Show(false);
+                infoPics[1]->Show(false);
                 break;
             case Kind::range:
                 infoLabels[1]->SetText("RANGE ATTACK");
-                infoPics[5]->Show(true);
+                infoPics[1]->Show(true);
                 infoPics[0]->Show(false);
                 break;
         }
@@ -400,11 +391,13 @@ void SelectionGUI::setActiveHero(HeroTemplate *hero)
                 infoLabels[2]->SetText("Cannot access Element");
                 break;
         }
-        infoLabels[3]->SetText(std::to_string( hero->getStats().damage.min ) + " - " +
+        infoLabels[3]->SetText(std::to_string( hero->getStats().hp.max ) + " HP");
+        infoLabels[4]->SetText(std::to_string( hero->getStats().damage.min ) + " - " +
                                std::to_string( hero->getStats().damage.max ) + " DMG");
-        infoLabels[4]->SetText(std::to_string( hero->getStats().initiative.val ) + " INIT");
-        infoLabels[5]->SetText(std::to_string( hero->getStats().hp.max ) + " HP");
-        infoLabels[6]->SetText("Special skill:");
+        infoLabels[5]->SetText(std::to_string( hero->getStats().initiative.val ) + " INIT");
+        infoLabels[6]->SetText("Special skill: ");
+        if(hero->getStats().actions.getSkill() != nullptr)
+            infoLabels[6]->SetText(infoLabels[6]->GetText() + hero->getStats().actions.getSkill()->getName());
 
         infoPic->SetImage(hero->getResources().getImage2());
     }

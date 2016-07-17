@@ -45,6 +45,7 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
       skillsBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),
       picBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
       labelBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
+      skillBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
 
       frame(sfg::Frame::Create(sf::String(""))),
 
@@ -63,7 +64,8 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
       popSkillsBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),
       popBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
       popPicBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
-      popLabelBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL))
+      popLabelBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
+      popSkillBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL))
 
 {
     app_window.resetGLStates();
@@ -94,33 +96,32 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     //Ifowindow
 
     infoImage = sfg::Image::Create(sf::Image());
-    infoBox->Pack(infoImage);
 
     infoWindow->Add(frame);
     frame->Add(infoBox);
+    infoBox->Pack(infoImage);
     infoBox->Pack(skillsBox);
+    infoBox->Pack(skillBox);
     skillsBox->Pack(picBox);
     skillsBox->Pack(labelBox);
 
     for(int i = 0; i < 6; i++)
+    {
         stats[i] = sfg::Label::Create(sf::String(""));
-
-    for(int i = 1; i < 6; i++)
-        labelBox->Pack(stats[i]);
+        if(i != 0)
+            labelBox->Pack(stats[i]);
+        if(i != 5)
+        {
+            infoIconImages[i] = sfg::Image::Create(app_window.getImageForBattle(i));
+            picBox->Pack(infoIconImages[i]);
+        }
+        if(i == 0 || i == 1)
+            typeImages[i] = sfg::Image::Create(app_window.getImage(i));
+    }
+    stats[6] = sfg::Label::Create(sf::String(""));
+    skillBox->Pack(stats[6]);
 
     stats[5]->SetId("element1");
-
-    //for debug start
-    sf::Image sfImage;
-    sfImage.loadFromFile("res/img/icons/icon.png");
-
-    sfg::Image::Ptr image;
-    for(int i = 0; i < 5 ; i++)
-    {
-        image = sfg::Image::Create(sfImage);
-        picBox->Pack(image);
-    }
-    //for debug end
 
     desktop.Add(infoWindow);
     infoWindow->SetAllocation(sf::FloatRect( 0 , 0, XINFO,app_window.getY() - YQTOTAL));
@@ -136,23 +137,27 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     //Pop window
     popWindow->Add(popBox);
     popBox->Pack(popSkillsBox);
+    popBox->Pack(popSkillBox);
     popSkillsBox->Pack(popPicBox);
     popSkillsBox->Pack(popLabelBox);
 
-    for(int i = 0; i < 5; i++)
-    {
-        image = sfg::Image::Create(sfImage);
-        popPicBox->Pack(image);
-    }
-
     for(int i = 0; i < 6; i++)
     {
+
         popStats[i] = sfg::Label::Create(sf::String(""));
         if(i != 0)
             popLabelBox->Pack(popStats[i]);
         else
             popBox->PackStart(popStats[i]);
+        if(i != 5)
+        {
+            popIconImages[i] = sfg::Image::Create(app_window.getImageForBattle(i));
+            popPicBox->Pack(popIconImages[i]);
+        }
     }
+    popStats[6] = sfg::Label::Create(sf::String(""));
+    popSkillBox->Pack(stats[6]);
+
     popWindow->Show(false);
     desktop.Add(popWindow);
 
@@ -283,7 +288,7 @@ void BattleGUI::setActiveHero(Hero *hero)
     //info
     activeHero = hero;
     infoImage->SetImage(hero->getResources().getImage2());
-    completeStats(stats, hero);
+    completeStats(stats, infoIconImages, hero);
     frame->SetLabel(stats[0]->GetText());
 
     //button
@@ -324,7 +329,7 @@ void BattleGUI::setQueue(HeroQueue *queue)
 
 void BattleGUI::showInfo(Hero *hero)
 {
-    completeStats(popStats, hero);
+    completeStats(popStats, popIconImages, hero);
     sfg::Context::Get().GetEngine().SetProperty("Label#" + popStats[0]->GetId(), "FontSize", 16);
     popWindow->SetAllocation(setPopWindowPosition(sf::Mouse::getPosition(app_window)));
     desktop.BringToFront(popWindow);
@@ -368,9 +373,8 @@ void BattleGUI::winPlayer2()
     spritesField->setInsensitive();
 }
 
-void BattleGUI::completeStats(sfg::Label::Ptr* array, Hero* hero)
+void BattleGUI::completeStats(sfg::Label::Ptr* array, sfg::Image::Ptr* imageArray, Hero* hero)
 {
-
     array[0]->SetText(hero->getTemplate()->getName());
     array[1]->SetText(std::to_string( hero->getStats().hp.curr ) + " HP");
     array[2]->SetText(std::to_string(hero->getStats().damage.min) + " - " + std::to_string(hero->getStats().damage.max) + " DMG");
@@ -378,9 +382,11 @@ void BattleGUI::completeStats(sfg::Label::Ptr* array, Hero* hero)
     {
         case Kind::melee:
             array[3]->SetText("MELEE ATTACK");
+            imageArray[2]->SetImage(typeImages[0]->GetImage());
             break;
         case Kind::range:
             array[3]->SetText("RANGE ATTACK");
+            imageArray[2]->SetImage(typeImages[1]->GetImage());
             break;
     }
     array[4]->SetText(std::to_string( hero->getStats().initiative.val ) + " INIT");
@@ -403,6 +409,9 @@ void BattleGUI::completeStats(sfg::Label::Ptr* array, Hero* hero)
             sfg::Context::Get().GetEngine().SetProperty("Label#" + array[5]->GetId(), "Color", sf::Color::Green);
             break;
     }
+    array[6]->SetText("Special skill: ");
+    if(hero->getStats().actions.getSkill() != nullptr)
+        array[6]->SetText(array[6]->GetText() + "\n" + hero->getStats().actions.getSkill()->getName());
 }
 
 sf::FloatRect BattleGUI::setPopWindowPosition(sf::Vector2i mousePos)

@@ -47,12 +47,12 @@ private:
     sfg::Window::Ptr buttonWindow;
     sfg::Window::Ptr infoWindow;
 
+
     //Queue window
     sfg::Box::Ptr queueSBox;
     sfg::ScrolledWindow::Ptr qScroll;
     sfg::Box::Ptr queueBox;
 
-    //sfg::Image::Ptr queueImages[12];
     std::vector<sfg::Image::Ptr> queueImages;
 
     Hero *activeHero;
@@ -69,8 +69,11 @@ private:
     sfg::Box::Ptr skillsBox;
     sfg::Box::Ptr picBox;
     sfg::Box::Ptr labelBox;
+    sfg::Box::Ptr skillBox;
 
-    sfg::Label::Ptr stats[6];
+    sfg::Label::Ptr stats[7];
+    sfg::Image::Ptr infoIconImages[5];
+    sfg::Image::Ptr typeImages[2];
 
     sfg::Frame::Ptr frame;
     sfg::Image::Ptr infoImage;
@@ -103,10 +106,12 @@ private:
     sfg::Box::Ptr popSkillsBox;
     sfg::Box::Ptr popPicBox;
     sfg::Box::Ptr popLabelBox;
-    sfg::Label::Ptr popStats[6];
+    sfg::Box::Ptr popSkillBox;
+    sfg::Label::Ptr popStats[7];
+    sfg::Image::Ptr popIconImages[5];
 
     //Additional functions
-    void completeStats(sfg::Label::Ptr* array, Hero *hero);
+    void completeStats(sfg::Label::Ptr* array, sfg::Image::Ptr* imageArray, Hero *hero);
     sf::FloatRect setPopWindowPosition(sf::Vector2i mousePos);
 
     //For SFGUI signals
