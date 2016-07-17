@@ -180,10 +180,8 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
 
     //Signals
 
-    skillButton->GetSignal( sfg::Widget::OnMouseEnter ).Connect(
-                std::bind( &BattleGUI::mouseEvent, this, Mouse::ENTER ) );
-    skillButton->GetSignal( sfg::Widget::OnMouseLeave ).Connect(
-                std::bind( &BattleGUI::mouseEvent, this, Mouse::LEAVE ) );
+    skillButton->GetSignal( sfg::Widget::OnMouseRightPress ).Connect(
+                std::bind( &BattleGUI::showSkill, this) );
     skillButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
                 std::bind( &BattleGUI::clickedButton, this, ButtonPressed::SKILL ) );
     attackButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
@@ -275,6 +273,7 @@ void BattleGUI::update()
                 {
                     popWindow->Show(false);
                     popWindow->SetState(sfg::Widget::State::INSENSITIVE);
+                    skillWindow->Show(false);
                 }
             }
         }
@@ -305,7 +304,7 @@ void BattleGUI::setActiveHero(Hero *hero)
     infoImage->SetImage(hero->getResources().getImage2());
     completeStats(stats, hero);
     frame->SetLabel(stats[0]->GetText());
-    skillInfo->SetText(hero->getSkill()->getName()+": " + hero->getSkill()->getDescription());
+    updateHPBars();
 
     //button
     if(hero->getSkill() != nullptr)
@@ -316,6 +315,8 @@ void BattleGUI::setActiveHero(Hero *hero)
     //highlighting
     spritesField->setActiveHero(hero);
 
+    //+info
+    skillInfo->SetText(hero->getSkill()->getName()+": " + hero->getSkill()->getDescription());
 }
 
 void BattleGUI::setQueue(HeroQueue *queue)
@@ -361,11 +362,12 @@ void BattleGUI::showTargets(Action *action)
 void BattleGUI::playAction(Action *action)
 {
     spritesField->playAction(action);
+    updateHPBars();
 }
 
 void BattleGUI::updateHPBars()
 {
-
+    spritesField->updateHPBars();
 }
 
 void BattleGUI::showDead(Hero *hero)
@@ -450,16 +452,10 @@ sf::FloatRect BattleGUI::setPopWindowPosition(sf::Vector2i mousePos)
 
 }
 
-void BattleGUI::mouseEvent(Mouse mouse)
+void BattleGUI::showSkill()
 {
-    skillWindow->SetAllocation(sf::FloatRect((sf::Mouse::getPosition(app_window).x-skillInfo->GetAlignment().x)/2,sf::Mouse::getPosition(app_window).y-YSKILL,0,YSKILL));
-    switch(mouse)
-    {
-        case ENTER:
-            skillWindow->Show(true);
-            break;
-        case LEAVE:
-            skillWindow->Show(false);
-            break;
-    }
+    skillWindow->SetAllocation(sf::FloatRect((sf::Mouse::getPosition(app_window).x-skillInfo->GetAlignment().x)/2,
+                                             sf::Mouse::getPosition(app_window).y-YSKILL-1,0,YSKILL));
+    skillWindow->Show(true);
+    desktop.BringToFront(skillWindow);
 }

@@ -100,6 +100,7 @@ public:
     void showTargets(Action* action);
     void playAction(Action* action);
     void showDead(Hero *hero);
+    void updateHPBars();
 
     //Monitoring actions
     void setSkill();

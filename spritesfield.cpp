@@ -191,20 +191,8 @@ void SpritesField::draw(MainWindow& app_window)
             {
                 for(int i = 0; i < 6; i++)
                 {
-                    if(targetsPlayer1.is(iToPos(i)))
-                    {
-                       firstPlayerSprite[i].setTextureRect(sf::IntRect(col*XSPRITE, (NROW-2)*YSPRITE, XSPRITE, YSPRITE));
-                       firstHpBars[i].setTextureRect(sf::IntRect(100-floor((double)(firstPlayer->getHeroGroup().at(iToPos(i))->getStats().hp.curr)/
-                                                                           (double)(firstPlayer->getHeroGroup().at(iToPos(i))->getStats().hp.max)*100+0.5),0,XBAR,YBAR));
-                       firstHpLabels[i].setString(std::to_string(firstPlayer->getHeroGroup().at(iToPos(i))->getStats().hp.curr) + "/" + std::to_string(firstPlayer->getHeroGroup().at(iToPos(i))->getStats().hp.max));
-                    }
-                    if(targetsPlayer2.is(iToPos(i)))
-                    {
-                       secondPlayerSprite[i].setTextureRect(sf::IntRect(col*XSPRITE, (NROW-2)*YSPRITE, XSPRITE, YSPRITE));
-                       secondHpBars[i].setTextureRect(sf::IntRect(100-floor((double)(secondPlayer->getHeroGroup().at(iToPos(i))->getStats().hp.curr)/
-                                                                            (double)(secondPlayer->getHeroGroup().at(iToPos(i))->getStats().hp.max)*100+0.5),0,XBAR,YBAR));
-                       secondHpLabels[i].setString(std::to_string(secondPlayer->getHeroGroup().at(iToPos(i))->getStats().hp.curr) + "/" + std::to_string(secondPlayer->getHeroGroup().at(iToPos(i))->getStats().hp.max));
-                    }
+                    if(targetsPlayer1.is(iToPos(i))) firstPlayerSprite[i].setTextureRect(sf::IntRect(col*XSPRITE, (NROW-2)*YSPRITE, XSPRITE, YSPRITE));
+                    if(targetsPlayer2.is(iToPos(i))) secondPlayerSprite[i].setTextureRect(sf::IntRect(col*XSPRITE, (NROW-2)*YSPRITE, XSPRITE, YSPRITE));
                 }
                 col++;
             }
@@ -378,6 +366,19 @@ void SpritesField::showDead(Hero *hero)
     sf::Sprite& deadSprite = findSprite(hero);
     deadSprite.setTextureRect(sf::IntRect(XSPRITE*(NCOL - 1), YSPRITE*(NROW - 1),
                                  XSPRITE, YSPRITE));
+}
+
+void SpritesField::updateHPBars()
+{
+    for(int i=0;i<6;i++)
+    {
+        firstHpBars[i].setTextureRect(sf::IntRect(100-floor((double)(firstPlayer->getHeroGroup().at(iToPos(i))->getStats().hp.curr)/
+                                                            (double)(firstPlayer->getHeroGroup().at(iToPos(i))->getStats().hp.max)*100+0.5),0,XBAR,YBAR));
+        firstHpLabels[i].setString(std::to_string(firstPlayer->getHeroGroup().at(iToPos(i))->getStats().hp.curr) + "/" + std::to_string(firstPlayer->getHeroGroup().at(iToPos(i))->getStats().hp.max));
+        secondHpBars[i].setTextureRect(sf::IntRect(100-floor((double)(secondPlayer->getHeroGroup().at(iToPos(i))->getStats().hp.curr)/
+                                                            (double)(secondPlayer->getHeroGroup().at(iToPos(i))->getStats().hp.max)*100+0.5),0,XBAR,YBAR));
+        secondHpLabels[i].setString(std::to_string(secondPlayer->getHeroGroup().at(iToPos(i))->getStats().hp.curr) + "/" + std::to_string(secondPlayer->getHeroGroup().at(iToPos(i))->getStats().hp.max));
+    }
 }
 
 void SpritesField::setSkill()

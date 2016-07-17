@@ -100,14 +100,8 @@ private:
         MENU2
     };
 
-    enum Mouse
-    {
-        ENTER,
-        LEAVE
-    };
-
     void clickedButton(ButtonPressed Button);
-    void mouseEvent(Mouse mouse);
+    void showSkill();
 
     //Pop window
     sfg::Window::Ptr popWindow;
