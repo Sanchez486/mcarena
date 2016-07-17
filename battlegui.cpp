@@ -341,6 +341,11 @@ void BattleGUI::playAction(Action *action)
     spritesField->playAction(action);
 }
 
+void BattleGUI::updateHPBars()
+{
+
+}
+
 void BattleGUI::showDead(Hero *hero)
 {
     spritesField->showDead(hero);

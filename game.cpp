@@ -61,6 +61,7 @@ Game::Game(int argc, char *argv[]) : app(argc, argv), heroes()
     connect(battleModel, SIGNAL(setQueue(HeroQueue*)), battleGUI, SLOT(setQueue(HeroQueue*)));
     connect(battleModel, SIGNAL(showTargets(Action*)), battleGUI, SLOT(showTargets(Action*)));
     connect(battleModel, SIGNAL(playAction(Action*)), battleGUI, SLOT(playAction(Action*)));
+    connect(battleModel, SIGNAL(updateHPBars()), battleGUI, SLOT(updateHPBars()));
     connect(battleModel, SIGNAL(showDead(Hero*)), battleGUI, SLOT(showDead(Hero*)));
     connect(battleModel, SIGNAL(winPlayer1()), battleGUI, SLOT(winPlayer1()));
     connect(battleModel, SIGNAL(winPlayer2()), battleGUI, SLOT(winPlayer2()));

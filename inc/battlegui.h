@@ -128,6 +128,7 @@ public slots:
     void setQueue(HeroQueue* queue);  // Change queue
     void showTargets(Action*);  // Highlight avaliable targets
     void playAction(Action*);  // Play animation/sounds, show numbers
+    void updateHPBars();  // Update all HP bars
     void showDead(Hero*);  // Show death animation
     void winPlayer1();  // Show final window
     void winPlayer2();  // Show final window

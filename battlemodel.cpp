@@ -57,6 +57,8 @@ void BattleModel::beginTurn()
     {
         emit showDead(heroQueue.first());
     }
+
+    emit updateHPBars();
 }
 
 void BattleModel::updateDead()
