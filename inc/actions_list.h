@@ -15,3 +15,4 @@
 #include "attackwithdamagedecrease.h"
 #include "attackwithstun.h"
 #include "damageincreaseall.h"
+#include "applyperiodicdamage.h"
