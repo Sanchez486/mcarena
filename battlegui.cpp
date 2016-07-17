@@ -15,6 +15,7 @@
 #define Y 600
 #define XFINISH 200
 #define YFINISH 200
+#define YSKILL 30
 
 BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     :
@@ -45,6 +46,10 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
       skillsBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),
       picBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
       labelBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
+
+      //InfoWindow2
+      skillWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
+      skillInfo(sfg::Label::Create("")),
 
       frame(sfg::Frame::Create(sf::String(""))),
 
@@ -101,6 +106,7 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     infoBox->Pack(skillsBox);
     skillsBox->Pack(picBox);
     skillsBox->Pack(labelBox);
+
 
     for(int i = 0; i < 6; i++)
         stats[i] = sfg::Label::Create(sf::String(""));
@@ -163,7 +169,21 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     sfg::Context::Get().GetEngine().SetProperty("Window#" + popWindow->GetId(),
                                                 "BackgroundColor", sf::Color(0, 0, 0, 200));
 
+    //InfoWindow2
+    desktop.Add(skillWindow);
+    skillWindow->Add(skillInfo);
+    skillWindow->Show(false);
+    skillWindow->SetId("Skill");
+    sfg::Context::Get().GetEngine().SetProperty("Window#" + skillWindow->GetId(),
+                                                "BackgroundColor", sf::Color(0, 0, 0, 200));
+
+
     //Signals
+
+    skillButton->GetSignal( sfg::Widget::OnMouseEnter ).Connect(
+                std::bind( &BattleGUI::mouseEvent, this, Mouse::ENTER ) );
+    skillButton->GetSignal( sfg::Widget::OnMouseLeave ).Connect(
+                std::bind( &BattleGUI::mouseEvent, this, Mouse::LEAVE ) );
     skillButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
                 std::bind( &BattleGUI::clickedButton, this, ButtonPressed::SKILL ) );
     attackButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
@@ -285,6 +305,7 @@ void BattleGUI::setActiveHero(Hero *hero)
     infoImage->SetImage(hero->getResources().getImage2());
     completeStats(stats, hero);
     frame->SetLabel(stats[0]->GetText());
+    skillInfo->SetText(hero->getSkill()->getName()+": " + hero->getSkill()->getDescription());
 
     //button
     if(hero->getSkill() != nullptr)
@@ -294,6 +315,7 @@ void BattleGUI::setActiveHero(Hero *hero)
 
     //highlighting
     spritesField->setActiveHero(hero);
+
 }
 
 void BattleGUI::setQueue(HeroQueue *queue)
@@ -426,4 +448,18 @@ sf::FloatRect BattleGUI::setPopWindowPosition(sf::Vector2i mousePos)
     else
         return sf::FloatRect(Xmouse+1, Ymouse+1, XWINDOW, YWINDOW);
 
+}
+
+void BattleGUI::mouseEvent(Mouse mouse)
+{
+    skillWindow->SetAllocation(sf::FloatRect((sf::Mouse::getPosition(app_window).x-skillInfo->GetAlignment().x)/2,sf::Mouse::getPosition(app_window).y-YSKILL,0,YSKILL));
+    switch(mouse)
+    {
+        case ENTER:
+            skillWindow->Show(true);
+            break;
+        case LEAVE:
+            skillWindow->Show(false);
+            break;
+    }
 }

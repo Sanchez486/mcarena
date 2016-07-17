@@ -404,7 +404,8 @@ void SelectionGUI::setActiveHero(HeroTemplate *hero)
                                std::to_string( hero->getStats().damage.max ) + " DMG");
         infoLabels[4]->SetText(std::to_string( hero->getStats().initiative.val ) + " INIT");
         infoLabels[5]->SetText(std::to_string( hero->getStats().hp.max ) + " HP");
-        infoLabels[6]->SetText("Special skill:");
+        Action* action = hero->getStats().actions.getSkill();
+        infoLabels[6]->SetText(action->getName()+": "+hero->getStats().actions.getSkill()->getDescription());
 
         infoPic->SetImage(hero->getResources().getImage2());
     }

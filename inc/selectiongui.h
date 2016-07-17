@@ -2,6 +2,7 @@
 #include <QObject>
 #include <QTimer>
 
+#include "inc/action.h"
 #include "hero.h"
 #include "herogroup.h"
 #include "herovector.h"
