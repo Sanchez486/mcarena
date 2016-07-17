@@ -78,11 +78,7 @@ void AttackSingle::doAction()
 {
     int realDamage = getRandom(damage);
 
-    if(sender->getStats().element > target->getStats().element)
-        realDamage *= 1.25;
-
-    if(sender->getStats().element < target->getStats().element)
-        realDamage *= 0.8;
+    realDamage = countDamageWithElement(realDamage, sender, target);
 
     target->getStats().hp.curr -= realDamage;
 }

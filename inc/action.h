@@ -44,6 +44,8 @@ protected:
 
     bool isBlocked(Hero *hero, Player *player) const;
 
+    int countDamageWithElement(int realDamage, Hero *_sender, Hero *_target) const;
+
     int getRandom(int from, int to) const;  // random int from range [from, to]
     int getRandom(const Damage &damage) const;  // random int from range [min, max]
     bool rollChance(double chance);  // returns true with a probability of [chance]

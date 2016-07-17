@@ -145,6 +145,17 @@ bool Action::isBlocked(Hero *hero, Player *player) const
             player->at(HeroPosition::back3) == hero && player->at(HeroPosition::front3)->isAlive();
 }
 
+int Action::countDamageWithElement(int realDamage, Hero *_sender, Hero *_target) const
+{
+    if(_sender->getStats().element > _target->getStats().element)
+        realDamage = round(realDamage * 1.25);
+
+    if(_sender->getStats().element < _target->getStats().element)
+        realDamage = round(realDamage * 0.8);
+
+    return realDamage;
+}
+
 int Action::getRandom(int from, int to) const
 {
     return rand()%(to-from + 1) + from;
