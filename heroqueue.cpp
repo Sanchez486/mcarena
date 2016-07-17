@@ -34,6 +34,8 @@ void HeroQueue::setHeroes(const HeroGroup &group1, const HeroGroup &group2)
         return left->getStats().initiative.val > right->getStats().initiative.val;
     });
 
+    heroList.clear();
+
     for(int i=0; i < 12; ++i)
     {
         heroList.push_back(arr[i]);
