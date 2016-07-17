@@ -126,29 +126,38 @@ sf::Vector2f SpritesField::iToVector(int i)
 }
 
 void SpritesField::draw(sf::RenderWindow& app_window)
-{       
+{
     if((clock.getElapsedTime().asMilliseconds() > 70))
     {
 
         if(play)
         {
             sf::Sprite& activeSprite = findSprite(activeHero);
-            if(col < 8)
+            if (playingSound.getStatus()!=sf::Sound::Status::Playing)
             {
-                if(actionType == ATTACK)
-                    row = 0;
-                else if(actionType == SKILL)
-                    row = 1;
-
-                activeSprite.setTextureRect(sf::IntRect(col*XSPRITE, row*YSPRITE, XSPRITE, YSPRITE));
-                col++;
+                if (actionType == ATTACK) playingSound.setBuffer(activeHero->getResources().getAttackSound());
+                else playingSound.setBuffer(activeHero->getResources().getSkillSound());
+                playingSound.play();
             }
             else
             {
-                play = false;
-                dmg = true;
-                col = 0;
-                activeSprite.setTextureRect(sf::IntRect(0, 0, XSPRITE, YSPRITE));
+                if (col < 8)
+                {
+                    if(actionType == ATTACK)
+                        row = 0;
+                    else if(actionType == SKILL)
+                        row = 1;
+
+                    activeSprite.setTextureRect(sf::IntRect(col*XSPRITE, row*YSPRITE, XSPRITE, YSPRITE));
+                    col++;
+                }
+                else
+                {
+                    play = false;
+                    dmg = true;
+                    col = 0;
+                    activeSprite.setTextureRect(sf::IntRect(0, 0, XSPRITE, YSPRITE));
+                }
             }
         }
 
@@ -330,7 +339,7 @@ void SpritesField::showDead(Hero *hero)
     dead = true;
     sf::Sprite& deadSprite = findSprite(hero);
     deadSprite.setTextureRect(sf::IntRect(XSPRITE*(NCOL - 1), YSPRITE*(NROW - 1),
-                                 XSPRITE, YSPRITE));                               
+                                 XSPRITE, YSPRITE));
 }
 
 void SpritesField::setSkill()

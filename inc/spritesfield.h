@@ -28,6 +28,7 @@ private:
     sfg::Window::Ptr firstPlayerWindow[6];
     sfg::Window::Ptr secondPlayerWindow[6];
     sfg::Window::Ptr activeWindow;
+    sf::Sound playingSound;
 
     Hero *activeHero;
     Hero *deadHero;
