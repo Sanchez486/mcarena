@@ -156,7 +156,7 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
         }
     }
     popStats[6] = sfg::Label::Create(sf::String(""));
-    popSkillBox->Pack(stats[6]);
+    popSkillBox->Pack(popStats[6]);
 
     popWindow->Show(false);
     desktop.Add(popWindow);
@@ -409,9 +409,7 @@ void BattleGUI::completeStats(sfg::Label::Ptr* array, sfg::Image::Ptr* imageArra
             sfg::Context::Get().GetEngine().SetProperty("Label#" + array[5]->GetId(), "Color", sf::Color::Green);
             break;
     }
-    array[6]->SetText("Special skill: ");
-    if(hero->getStats().actions.getSkill() != nullptr)
-        array[6]->SetText(array[6]->GetText() + "\n" + hero->getStats().actions.getSkill()->getName());
+    array[6]->SetText("Special skill:\n" + hero->getSkill()->getName());
 }
 
 sf::FloatRect BattleGUI::setPopWindowPosition(sf::Vector2i mousePos)
