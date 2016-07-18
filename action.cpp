@@ -1,4 +1,5 @@
 #include "inc/action.h"
+#include <vector>
 
 Action::Action()
     : player1(nullptr), player2(nullptr), sender(nullptr), target(nullptr)
@@ -121,13 +122,34 @@ Targets Action::getAliveAttackTargets(Player *owner, Player *enemy) const
     return targets;
 }
 
-// TODO: return [num] random alive targets
 Targets Action::getRandomAliveTargets(Player *player, int num) const
 {
-    Targets targets;
-    targets.set(HeroPosition::front1);
-    targets.set(HeroPosition::front2);
-    targets.set(HeroPosition::front3);
+    std::vector<HeroPosition> vector;
+
+    Targets targets = getAliveTargets(player);
+
+    if(targets.front1)
+        vector.push_back(HeroPosition::front1);
+    if(targets.front2)
+        vector.push_back(HeroPosition::front2);
+    if(targets.front3)
+        vector.push_back(HeroPosition::front3);
+    if(targets.back1)
+        vector.push_back(HeroPosition::back1);
+    if(targets.back2)
+        vector.push_back(HeroPosition::back2);
+    if(targets.back3)
+        vector.push_back(HeroPosition::back3);
+
+    std::random_shuffle(vector.begin(), vector.end());
+
+    targets.setAll(false);
+
+    int numTargets = std::min(num, (int)vector.size());
+    for(int i = 0; i < numTargets; ++i)
+    {
+        targets.set(vector[i], true);
+    }
 
     return targets;
 }
