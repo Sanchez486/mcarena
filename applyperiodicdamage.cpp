@@ -57,8 +57,14 @@ std::string ApplyPeriodicDamage::getName() const
 
 std::string ApplyPeriodicDamage::getDescription() const
 {
-    return "target will take " + std::to_string(damage.min) + "-" + std::to_string(damage.max) +
-            " damage in next " + std::to_string(duration) + " turns";
+    std::string dmgString;
+    if(damage.min == damage.max)
+        dmgString = std::to_string(damage.min);
+    else
+        dmgString = std::to_string(damage.min) + "-" + std::to_string(damage.max);
+
+    return "set target on fire to take " + dmgString +
+            " damage in next " + std::to_string(duration) + " turn(s)";
 }
 
 void ApplyPeriodicDamage::doAction()

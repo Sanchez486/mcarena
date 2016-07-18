@@ -48,13 +48,13 @@ Targets DamageIncreaseAll::getTargetsPlayer2() const
 
 std::string DamageIncreaseAll::getName() const
 {
-    return "Increase damage";
+    return "Inspire";
 }
 
 std::string DamageIncreaseAll::getDescription() const
 {
-    return "buff allies` damage by " + std::to_string(rate) + "% for " +
-            std::to_string(duration) + " turns";
+    return "increase allies` damage by " + std::to_string( (int)(rate * 100) ) + "% for " +
+            std::to_string(duration) + " turn(s)";
 }
 
 void DamageIncreaseAll::doAction()

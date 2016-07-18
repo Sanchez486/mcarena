@@ -2,7 +2,7 @@
 #include "inc/hero.h"
 
 DecreaseDamage::DecreaseDamage(int _duration, double _rate)
-    : Effect(_duration), rate(_rate)
+    : Effect(_duration, false), rate(_rate)
 {
 
 }

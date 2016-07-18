@@ -53,8 +53,13 @@ std::string Heal::getName() const
 
 std::string Heal::getDescription() const
 {
-    return "heal ally hero for " +
-            std::to_string(healRange.min) + "-" + std::to_string(healRange.max) + " hp";
+    std::string dmgString;
+    if(healRange.min == healRange.max)
+        dmgString = std::to_string(healRange.min);
+    else
+        dmgString = std::to_string(healRange.min) + "-" + std::to_string(healRange.max);
+
+    return "heal ally hero for " + dmgString + " hp";
 }
 
 void Heal::doAction()

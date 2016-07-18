@@ -51,13 +51,25 @@ Targets AttackTargetAndSelf::getTargetsPlayer2() const
 
 std::string AttackTargetAndSelf::getName() const
 {
-    return "Self damaged attack";
+    return "Furious attack";
 }
 
 std::string AttackTargetAndSelf::getDescription() const
 {
-    return "attack for " + std::to_string(damageTarget.min) + "-" + std::to_string(damageTarget.max) + " damage with self damage of " 
-        + std::to_string(damageSelf.min) + "-" +std::to_string(damageSelf.max);
+    std::string dmgTargetString;
+    if(damageTarget.min == damageTarget.max)
+        dmgTargetString = std::to_string(damageTarget.min);
+    else
+        dmgTargetString = std::to_string(damageTarget.min) + "-" + std::to_string(damageTarget.max);
+
+    std::string dmgSelfString;
+    if(damageSelf.min == damageSelf.max)
+        dmgSelfString = std::to_string(damageSelf.min);
+    else
+        dmgSelfString = std::to_string(damageSelf.min) + "-" + std::to_string(damageSelf.max);
+
+    return "deal " + dmgTargetString + " damage to target and " +
+            dmgSelfString + " damage to yourself";
 }
 
 void AttackTargetAndSelf::doAction()

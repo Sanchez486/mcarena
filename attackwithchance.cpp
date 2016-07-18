@@ -56,8 +56,14 @@ std::string AttackWithChance::getName() const
 
 std::string AttackWithChance::getDescription() const
 {
-    return "has a " + std::to_string(chance * 100) + "% chance of dealing " +
-            std::to_string(damage.min) + "-" + std::to_string(damage.max) + " damage";
+    std::string dmgString;
+    if(damage.min == damage.max)
+        dmgString = std::to_string(damage.min);
+    else
+        dmgString = std::to_string(damage.min) + "-" + std::to_string(damage.max);
+
+    return "has a " + std::to_string( (int)(chance * 100) ) + "% chance of dealing " +
+            dmgString + " damage";
 }
 
 void AttackWithChance::doAction()

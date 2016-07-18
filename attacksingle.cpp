@@ -55,7 +55,13 @@ std::string AttackSingle::getName() const
 
 std::string AttackSingle::getDescription() const
 {
-    return "attack for " + std::to_string(damage.min) + "-" + std::to_string(damage.max) + " damage";
+    std::string dmgString;
+    if(damage.min == damage.max)
+        dmgString = std::to_string(damage.min);
+    else
+        dmgString = std::to_string(damage.min) + "-" + std::to_string(damage.max);
+
+    return "deal " + dmgString + " damage";
 }
 
 void AttackSingle::doAction()

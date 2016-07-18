@@ -255,7 +255,7 @@ void Game::strToActions(const string &str, Actions *actions) const
 
     if(!str.compare("damagedecrease"))
     {
-        actions->setSkill(new AttackWithDamageDecrease(Damage(0, 0), 0.5, 2));
+        actions->setSkill(new AttackWithDamageDecrease(Damage(0, 0), 0.5, 1));
         return;
     }
 
@@ -273,7 +273,7 @@ void Game::strToActions(const string &str, Actions *actions) const
 
     if(!str.compare("attackwithdamagedecrease"))
     {
-        actions->setSkill(new AttackWithDamageDecrease(Damage(1, 2), 0.33, 2));
+        actions->setSkill(new AttackWithDamageDecrease(Damage(1, 2), 0.33, 1));
         return;
     }
 
@@ -315,7 +315,7 @@ void Game::strToActions(const string &str, Actions *actions) const
 
     if(!str.compare("damageincreaseall"))
     {
-        actions->setSkill(new DamageIncreaseAll(0.33, 3)); // 2 turns
+        actions->setSkill(new DamageIncreaseAll(0.33, 2));
         return;
     }
 

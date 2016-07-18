@@ -28,6 +28,7 @@ public:
 
     void add(Effect *effect);
     bool onTurnEffects();
+    void afterTurnEffects();
     void removeAllEffects();
 
     bool isAlive() const;

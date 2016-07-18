@@ -55,8 +55,13 @@ std::string Lifesteal::getName() const
 
 std::string Lifesteal::getDescription() const
 {
-    return "deal " + std::to_string(damage.min) + "-" + std::to_string(damage.max) +
-            " damage and heal back for the same amount";
+    std::string dmgString;
+    if(damage.min == damage.max)
+        dmgString = std::to_string(damage.min);
+    else
+        dmgString = std::to_string(damage.min) + "-" + std::to_string(damage.max);
+
+    return "deal " + dmgString + " damage and heal back for the same amount";
 }
 
 void Lifesteal::doAction()
