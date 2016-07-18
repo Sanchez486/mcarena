@@ -105,6 +105,7 @@ private:
 
     void clickedButton(ButtonPressed Button);
     void showSkill();
+    void hideSkill();
 
     //Pop window
     sfg::Window::Ptr popWindow;

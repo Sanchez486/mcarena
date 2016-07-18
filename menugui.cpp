@@ -19,13 +19,13 @@ MenuGUI::MenuGUI(MainWindow& _app_window, QObject *parent)
       playButton(sfg::Button::Create("Play")),
       rulesButton(sfg::Button::Create( "How to play" )),
       exitButton(sfg::Button::Create( "Exit" )),
-      soundBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL)),
+      soundBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL,30)),
       soundToggle(sfg::Image::Create()),
       musicToggle(sfg::Image::Create()),
 
       //How to play window
       rulesWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
-      rulesBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 300)),
+      rulesBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
       okButton(sfg::Button::Create( "Ok" )),
       rules(sfg::Label::Create(""))
 
@@ -44,23 +44,23 @@ MenuGUI::MenuGUI(MainWindow& _app_window, QObject *parent)
     //Main window
     window->Add(box);
     window->SetAllocation(sf::FloatRect( (app_window.getX()-XWINDOW)/2 ,
-                                         (app_window.getY()-YWINDOW)/2 + YOFFSET, XWINDOW, YWINDOW));
-
+                                     (app_window.getY()-YWINDOW)/2 + YOFFSET, XWINDOW, YWINDOW));
+    box->Pack(soundBox);
     box->Pack(playButton);
     box->Pack(rulesButton);
     box->Pack(exitButton);
 
     //How to play window
     rulesWindow->Add(rulesBox);
-    rulesBox->Pack(rules);
-    rulesBox->Pack(okButton, false, false);
+    rulesBox->Pack(rules, false, true);
+    rulesBox->Pack(okButton);
 
     setLabel();
-    rulesWindow->SetAllocation(sf::FloatRect(XRULES, YRULES, app_window.getX() - 2*XRULES,
-                               app_window.getY() - 2*YRULES));
+    rulesWindow->SetPosition(sf::Vector2f(XRULES, YRULES));
 
     desktop.Add(rulesWindow);
     rulesWindow->Show(false);
+    rules->SetRequisition(sf::Vector2f(app_window.getX()-2*XRULES,app_window.getY()-2*YRULES-rulesButton->GetAllocation().height));
 
     //Sound Box
     noSoundImage.loadFromFile("res/img/icons/no_sound.png");
@@ -71,7 +71,6 @@ MenuGUI::MenuGUI(MainWindow& _app_window, QObject *parent)
     soundBox->Pack(musicToggle);
     soundToggle->SetImage(soundImage);
     musicToggle->SetImage(musicImage);
-    box->Pack(soundBox);
 
     //Signals
     playButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &MenuGUI::clickedButton, this, ButtonPressed::PLAY ) );
@@ -82,6 +81,13 @@ MenuGUI::MenuGUI(MainWindow& _app_window, QObject *parent)
     musicToggle->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &MenuGUI::clickedButton, this, ButtonPressed::MUSIC ) );
     okButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
                 std::bind( &MenuGUI::clickedButton, this, ButtonPressed::OK ) );
+
+    //coloring
+    playButton->SetClass("buttons");
+    rulesButton->SetClass("buttons");
+    exitButton->SetClass("buttons");
+    okButton->SetClass("smallButtons");
+    rulesWindow->SetClass("windows");
 }
 
 //Connecting Buttons and Qt signals
@@ -186,14 +192,15 @@ void MenuGUI::setMusic(bool)
 
 void MenuGUI::setLabel()
 {
-    str = "BBC is an abbreviation of \"British Broadcasting Corporation\"\n"
-            ", which is the oldest British public service broadcaster.\n"
-            "Nowadays it works all over the world, having a number of international programs.\n"
-            "Of these, there are BBC World Service, providing a multimedia broadcasting online\n"
-            "and via wireless handheld devices in different languages; BBC World News, broadcasting\n"
-            "in English 24 hours a day in many countries across the world; BBC Worldwide, promoting\n"
-            "the BBC content and BBC brand at all by, particularly, opening offices around the world\n"
-            "with local staff; and BBC Monitoring, providing news, information and comment gathered\n "
+    str = "BBC is an abbreviation of \"British Broadcasting Corporation"
+            ", which is the oldest British public service broadcaster."
+            "Nowadays it works all over the world, having a number of international programs."
+            "Of these, there are BBC World Service, providing a multimedia broadcasting online"
+            "and via wireless handheld devices in different languages; BBC World News, broadcasting"
+            "in English 24 hours a day in many countries across the world; BBC Worldwide, promoting"
+            "the BBC content and BBC brand at all by, particularly, opening offices around the world"
+            "with local staff; and BBC Monitoring, providing news, information and comment gathered "
             "from mass media around the world. ";
+    rules->SetLineWrap(true);
     rules->SetText(str);
 }

@@ -6,7 +6,7 @@
 #define YPOINTS 80
 #define XSCROLL 166
 #define YBUTTONS 80
-#define XPLAYERS 190
+#define XPLAYERS 175
 #define YPLAYERS 200
 #define FRAME 10
 #define XSCROLLBAR 30 //default scroll width of sfg::ScrollWindow
@@ -159,8 +159,8 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     //Buttons
     desktop.Add(buttonsWindow);
     buttonsWindow->Add(buttonsBox);
-    buttonsWindow->SetAllocation(sf::FloatRect( XSCROLL + FRAME + XSCROLLBAR, app_window.getY()-YBUTTONS,
-                                                app_window.getX()-XSCROLL - FRAME - XSCROLLBAR, YBUTTONS));
+    buttonsWindow->SetAllocation(sf::FloatRect( XSCROLL + FRAME*2 + XSCROLLBAR, app_window.getY()-YBUTTONS,
+                                                app_window.getX()-XSCROLL - FRAME*2 - XSCROLLBAR, YBUTTONS));
 
     buttonsBox->Pack(menuButton);
     buttonsBox->Pack(discardButton);
@@ -175,8 +175,7 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
 
     player1Button->SetId("p1");
     player2Button->SetId("p2");
-    sfg::Context::Get().GetEngine().SetProperty("Button#p1", "BackgroundColor", sf::Color(96,26,67));
-    player1Button->SetState(sfg::Widget::State::INSENSITIVE);
+
 
     //Signals
     startButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::clickedButton, this, ButtonPressed::START ) );
@@ -185,6 +184,26 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     menuButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::clickedButton, this, ButtonPressed::MENU ) );
     player1Button->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::clickedButton, this, ButtonPressed::PLAYER1 ) );
     player2Button->GetSignal( sfg::Widget::OnLeftClick ).Connect(  std::bind( &SelectionGUI::clickedButton, this, ButtonPressed::PLAYER2 ) );
+
+    //coloring
+
+    //buttons
+    discardButton->SetClass("buttons");
+    startButton->SetClass("buttons");
+    menuButton->SetClass("buttons");
+    infoWindow->SetClass("buttons");
+    player1Button->SetClass("buttons");
+    player2Button->SetClass("buttons");
+
+    //windows
+    scrollwin->SetClass("windows");
+    infoLabelWindow->SetClass("windows");
+    infoWindow->SetClass("windows");
+    scroll->SetClass("windows");
+    pointsWindow->SetClass("windows");
+
+    sfg::Context::Get().GetEngine().SetProperty("Button#p1", "BackgroundColor", sf::Color(96,26,67));
+    player1Button->SetState(sfg::Widget::State::INSENSITIVE);
 }
 
 void SelectionGUI::clickedButton(ButtonPressed Button)
@@ -198,7 +217,7 @@ void SelectionGUI::clickedButton(ButtonPressed Button)
         case PLAYER1:
         {
             sfg::Context::Get().GetEngine().SetProperty("Button#p1", "BackgroundColor", sf::Color(96,26,67));
-            sfg::Context::Get().GetEngine().SetProperty("Button#p2", "BackgroundColor", sf::Color(85,87,82));
+            sfg::Context::Get().GetEngine().SetProperty("Button#p2", "BackgroundColor", "#2E0B56ee");
             player1Button->SetState(sfg::Widget::State::INSENSITIVE);
             player2Button->SetState(sfg::Button::State::NORMAL);
             clickedPlayer1();
@@ -207,7 +226,7 @@ void SelectionGUI::clickedButton(ButtonPressed Button)
         case PLAYER2:
         {
             sfg::Context::Get().GetEngine().SetProperty("Button#p2", "BackgroundColor", sf::Color(96,26,67));
-            sfg::Context::Get().GetEngine().SetProperty("Button#p1", "BackgroundColor", sf::Color(85,87,82));
+            sfg::Context::Get().GetEngine().SetProperty("Button#p1", "BackgroundColor", "#2E0B56ee");
             player2Button->SetState(sfg::Widget::State::INSENSITIVE);
             player1Button->SetState(sfg::Button::State::NORMAL);
             clickedPlayer2();
@@ -394,8 +413,7 @@ void SelectionGUI::setActiveHero(HeroTemplate *hero)
         infoLabels[3]->SetText(std::to_string( hero->getStats().hp.max ) + " HP");
         infoLabels[4]->SetText(std::to_string( hero->getStats().damage.min ) + " - " +
                                std::to_string( hero->getStats().damage.max ) + " DMG");
-        infoLabels[4]->SetText(std::to_string( hero->getStats().initiative.val ) + " INIT");
-        infoLabels[5]->SetText(std::to_string( hero->getStats().hp.max ) + " HP");
+        infoLabels[5]->SetText(std::to_string( hero->getStats().initiative.val ) + " INIT");
         Action* action = hero->getStats().actions.getSkill();
         infoLabels[6]->SetText(action->getName()+": "+action->getDescription());
 

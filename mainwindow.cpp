@@ -11,6 +11,30 @@ MainWindow::MainWindow() : RenderWindow()
     setSound(true);
     if (buttonBuffer.loadFromFile("res/sfx/button.wav")) buttonSound.setBuffer(buttonBuffer);
     setImages();
+
+    sfg::Context::Get().GetEngine().SetProperties(".buttons"
+                                            "{"
+                                                "BackgroundColor: #2E0B56ee;"
+                                                "BorderColor: #250077ee;"
+                                                "BorderWidth: 2f;"
+                                                "FontName: res/fonts/Cornerstone.ttf;"
+                                                "FontSize: 20;"
+                                                "BorderColorShift: 50;"
+                                            "}");
+    sfg::Context::Get().GetEngine().SetProperties(".windows"
+                                            "{"
+                                                "BackgroundColor: #22223Dee;"
+                                                "BorderColor: #250077ee;"
+                                            "}");
+    sfg::Context::Get().GetEngine().SetProperties(".smallButtons"
+                                            "{"
+                                                "BackgroundColor: #2E0B56ee;"
+                                                "BorderColor: #250077ee;"
+                                                "BorderWidth: 2f;"
+                                                "FontName: res/fonts/Cornerstone.ttf;"
+                                                "FontSize: 14;"
+                                                "BorderColorShift: 50;"
+                                            "}");
 }
 
 MainWindow::~MainWindow()

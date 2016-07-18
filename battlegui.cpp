@@ -16,6 +16,8 @@
 #define XFINISH 200
 #define YFINISH 200
 #define YSKILL 30
+#define XSKILLLOC 165
+#define YSKILLLOC 345
 
 BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     :
@@ -181,12 +183,15 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     skillWindow->SetId("Skill");
     sfg::Context::Get().GetEngine().SetProperty("Window#" + skillWindow->GetId(),
                                                 "BackgroundColor", sf::Color(0, 0, 0, 200));
+    skillWindow->SetAllocation(sf::FloatRect(XSKILLLOC,YSKILLLOC,0,YSKILL));
 
 
     //Signals
 
-    skillButton->GetSignal( sfg::Widget::OnMouseRightPress ).Connect(
+    stats[6]->GetSignal( sfg::Widget::OnMouseEnter ).Connect(
                 std::bind( &BattleGUI::showSkill, this) );
+    stats[6]->GetSignal( sfg::Widget::OnMouseLeave ).Connect(
+                std::bind( &BattleGUI::hideSkill, this) );
     skillButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
                 std::bind( &BattleGUI::clickedButton, this, ButtonPressed::SKILL ) );
     attackButton->GetSignal( sfg::Widget::OnLeftClick ).Connect(
@@ -197,6 +202,17 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
                 std::bind( &BattleGUI::clickedButton, this, ButtonPressed::MENU ) );
     menuButton2->GetSignal( sfg::Widget::OnLeftClick ).Connect(
                 std::bind( &BattleGUI::clickedButton, this, ButtonPressed::MENU2 ) );
+
+    //coloring
+    infoWindow->SetClass("windows");
+    queueWindow->SetClass("windows");
+    buttonWindow->SetClass("windows");
+    finishWindow->SetClass("windows");
+    attackButton->SetClass("smallButtons");
+    skillButton->SetClass("smallButtons");
+    skipButton->SetClass("smallButtons");
+    menuButton->SetClass("smallButtons");
+    menuButton2->SetClass("buttons");
 }
 
 BattleGUI::~BattleGUI()
@@ -278,7 +294,6 @@ void BattleGUI::update()
                 {
                     popWindow->Show(false);
                     popWindow->SetState(sfg::Widget::State::INSENSITIVE);
-                    skillWindow->Show(false);
                 }
             }
         }
@@ -461,8 +476,11 @@ sf::FloatRect BattleGUI::setPopWindowPosition(sf::Vector2i mousePos)
 
 void BattleGUI::showSkill()
 {
-    skillWindow->SetAllocation(sf::FloatRect((sf::Mouse::getPosition(app_window).x-skillInfo->GetAlignment().x)/2,
-                                             sf::Mouse::getPosition(app_window).y-YSKILL-1,0,YSKILL));
     skillWindow->Show(true);
     desktop.BringToFront(skillWindow);
+}
+
+void BattleGUI::hideSkill()
+{
+    skillWindow->Show(false);
 }
