@@ -4,8 +4,8 @@
 #define YOFFSET 80
 #define YMCARENA 100
 #define XYSETTINGS 200
-#define XRULES 110
-#define YRULES 50
+#define XRULES 80
+#define YRULES 0
 #define TIMEUPDATE 25 //Window updates every 25 milliseconds (40 fps)
 
 MenuGUI::MenuGUI(MainWindow& _app_window, QObject *parent)
@@ -25,7 +25,7 @@ MenuGUI::MenuGUI(MainWindow& _app_window, QObject *parent)
 
       //How to play window
       rulesWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
-      rulesBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 300)),
+      rulesBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL, 4)),
       okButton(sfg::Button::Create( "Ok" )),
       rules(sfg::Label::Create(""))
 
@@ -150,7 +150,7 @@ void MenuGUI::update()
                 closed();
             }
         }
-        desktop.Update( 10 );
+        desktop.Update( TIMEUPDATE );
         app_window.clear();
         app_window.draw(background);
         app_window.draw(mcArena);
@@ -186,14 +186,48 @@ void MenuGUI::setMusic(bool)
 
 void MenuGUI::setLabel()
 {
-    str = "BBC is an abbreviation of \"British Broadcasting Corporation\"\n"
-            ", which is the oldest British public service broadcaster.\n"
-            "Nowadays it works all over the world, having a number of international programs.\n"
-            "Of these, there are BBC World Service, providing a multimedia broadcasting online\n"
-            "and via wireless handheld devices in different languages; BBC World News, broadcasting\n"
-            "in English 24 hours a day in many countries across the world; BBC Worldwide, promoting\n"
-            "the BBC content and BBC brand at all by, particularly, opening offices around the world\n"
-            "with local staff; and BBC Monitoring, providing news, information and comment gathered\n "
-            "from mass media around the world. ";
+    str =   ""
+            "Main rules.\n"
+            "\n"
+            "McArena  is the game, where two players play to each other. The goal of this game is to kill all\n"
+            "opponents\' heroes. Both players are allowed to pick any 6 heroes from the list of 16, furthemore\n"
+            "any hero may be picked more than once. Every hero has health, damage and initiative points, its\n"
+            "special skill, and it also belongs to some element (Water, Earth, Fire, Neutral) and is Melee or\n"
+            "Range. During the battle, all hero characteristics will be shown, if you do a right click on the sprite\n"
+            "or the image of the hero, you are interested in. In order to learn more about what special skill really\n"
+            "does, you are to pass the mouse on skill name in left hero info window, and there will be shown a\n"
+            "skill description.\n"
+            "\n"
+            "Element system\n"
+            "\n"
+            "Heroes can get and deal 25% more damage, depending on the element they belong to: Earth is\n"
+            "stronger than Water, but is weaker than Fire; Fire is stronger than Earth, but is weaker than Water;\n"
+            "Water is stronger than Fire, but is weaker than Earth. Heroes of Neutral element have no bonuses in\n"
+            "damage. A hero of a stronger element deals an increased damage, a hero of a weaker one -\n"
+            "decreased damage. If attacking hero element is stronger than attacked hero element, than the\n"
+            "damage coefficient equals 1.25; if it is wekaer, than the damage coefficient equals 0.75; in orther\n"
+            "cases - 1.\n"
+            "\n"
+            "Queue system\n"
+            "\n"
+            "Battles take place on the \"battle field\". Heroes take turns one after another. Turns queue is set\n"
+            "regarding the heroes initiative points, may be changed during the battle and is diaplyed at the\n"
+            "bottom of the screen. Every time, when some hero takes its turn, the initiative of every hero is\n"
+            "increased by its initiative value, until a threshold will be reached. The overreaching of the threshold\n"
+            "intiates a hero turn. Among all heroes, whose accumulated initiative overreached a threshold, the\n"
+            "hero with the lowest initiativee takes turn. If this value is equal for several heroes, the turn is\n"
+            "defined by random.\n"
+            "\n"
+            "Heroes Selection.\n"
+            "\n"
+            "In the single turn, the single hero can use Attack or Skill. Range is able to attack all opponent\n"
+            "heroes, whereas Melee is able to attack just opponent front line heroes and only when it has no\n"
+            "friendlies in front of them. During the hero choosing and placing, it is a good idea to place Melees\n"
+            "at the front line, as they has higher HP value and are not able to attack at the back line until a hero\n"
+            "in front of them will be killed. Ranges should be apparently placed at the back line, however it is\n"
+            "possible to place them at the front line too, in order to have more heroes, who can attack all 6\n"
+            "opponent heroes."
+            ;
+
     rules->SetText(str);
 }
