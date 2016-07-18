@@ -59,8 +59,13 @@ std::string TransferHealth::getName() const
 
 std::string TransferHealth::getDescription() const
 {
-    return "deal " + std::to_string(damage.min) + "-" + std::to_string(damage.max) +
-            " damage to yourself and heal ally for the same amount";
+    std::string dmgString;
+    if(damage.min == damage.max)
+        dmgString = std::to_string(damage.min);
+    else
+        dmgString = std::to_string(damage.min) + "-" + std::to_string(damage.max);
+
+    return "deal " + dmgString + " damage to yourself and heal ally for the same amount";
 }
 
 void TransferHealth::doAction()

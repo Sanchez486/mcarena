@@ -53,14 +53,28 @@ Targets AttackWithDamageDecrease::getTargetsPlayer2() const
 
 std::string AttackWithDamageDecrease::getName() const
 {
-    return "Curse";
+    if(damage.max == 0)
+        return "Curse";
+
+    return "Cursed attack";
 }
 
 std::string AttackWithDamageDecrease::getDescription() const
 {
-    return "deal " + std::to_string(damage.min) + "-" + std::to_string(damage.max) +
-            " damage and decrease target`s attack by " + std::to_string(rate * 100) +
-            "% for " + std::to_string(duration) + " turns";
+    std::string dmgString;
+    if(damage.min == damage.max)
+        dmgString = std::to_string(damage.min);
+    else
+        dmgString = std::to_string(damage.min) + "-" + std::to_string(damage.max);
+
+    std::string dmgMessage;
+    if(damage.max == 0)
+        dmgMessage = "";
+    else
+        dmgMessage = "deal " + dmgString + " damage and ";
+
+    return dmgMessage + "decrease target`s attack by " + std::to_string( (int)(rate * 100) ) +
+            "% for " + std::to_string(duration) + " turn(s)";
 }
 
 void AttackWithDamageDecrease::doAction()

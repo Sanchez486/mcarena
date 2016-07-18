@@ -55,8 +55,13 @@ std::string AttackAll::getName() const
 
 std::string AttackAll::getDescription() const
 {
-    return "Attack all enemies for " + std::to_string(damage.min) + "-" +
-            std::to_string(damage.max) + " damage";
+    std::string dmgString;
+    if(damage.min == damage.max)
+        dmgString = std::to_string(damage.min);
+    else
+        dmgString = std::to_string(damage.min) + "-" + std::to_string(damage.max);
+
+    return "deal " + dmgString + " damage to all enemies";
 }
 
 void AttackAll::doAction()

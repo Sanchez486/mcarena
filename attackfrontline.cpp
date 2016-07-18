@@ -55,8 +55,13 @@ std::string AttackFrontLine::getName() const
 
 std::string AttackFrontLine::getDescription() const
 {
-    return "Attack all enemies in front line for " + std::to_string(damage.min) + "-" +
-            std::to_string(damage.max) + " damage";
+    std::string dmgString;
+    if(damage.min == damage.max)
+        dmgString = std::to_string(damage.min);
+    else
+        dmgString = std::to_string(damage.min) + "-" + std::to_string(damage.max);
+
+    return "deal " + dmgString + " damage to all enemies in front line";
 }
 
 void AttackFrontLine::doAction()

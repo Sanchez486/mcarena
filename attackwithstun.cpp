@@ -53,14 +53,33 @@ Targets AttackWithStun::getTargetsPlayer2() const
 
 std::string AttackWithStun::getName() const
 {
-    return "Stun";
+    if(damage.max == 0)
+        return "Stun";
+
+    return "Stunning attack";
 }
 
 std::string AttackWithStun::getDescription() const
 {
-    return "deal " + std::to_string(damage.min) + "-" + std::to_string(damage.max) +
-            " damage and stun target for " + std::to_string(duration) + " turns with "
-            + std::to_string(chance * 100) + "% chance";
+    std::string dmgString;
+    if(damage.min == damage.max)
+        dmgString = std::to_string(damage.min);
+    else
+        dmgString = std::to_string(damage.min) + "-" + std::to_string(damage.max);
+
+    std::string dmgMessage;
+    if(damage.max == 0)
+        dmgMessage = "";
+    else
+        dmgMessage = "deal " + dmgString + " damage and ";
+
+    std::string chanceMessage;
+    if(chance == 1)
+        chanceMessage = "";
+    else
+        chanceMessage = " with " + std::to_string( (int)(chance * 100) ) + "% chance";
+
+    return dmgMessage + "stun target for " + std::to_string(duration) + " turn(s)" + chanceMessage;
 }
 
 void AttackWithStun::doAction()
