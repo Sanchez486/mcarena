@@ -9,7 +9,9 @@
 #include <SFGUI/Box.hpp>
 #include <SFGUI/Button.hpp>
 #include <SFGUI/Window.hpp>
+#include <SFGUI/Label.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/System/String.hpp>
 
 class MenuGUI : public QObject
 {
@@ -23,6 +25,9 @@ private:
     MainWindow& app_window;
     sf::Texture backgroundT;
     sf::Sprite background;
+    sf::Texture mcArenaT;
+    sf::Sprite mcArena;
+
 
     sfg::SFGUI sfgui;
     sfg::Desktop desktop;
@@ -31,19 +36,27 @@ private:
     sfg::Window::Ptr window;
     sfg::Box::Ptr box;
     sfg::Button::Ptr playButton;
-    sfg::Button::Ptr playWithCpuButton;
+    sfg::Button::Ptr rulesButton;
     sfg::Button::Ptr exitButton;
     sfg::Box::Ptr soundBox;
     sf::Image noSoundImage, soundImage,noMusicImage, musicImage;
     sfg::Image::Ptr soundToggle;
     sfg::Image::Ptr musicToggle;
 
+    //How to play window
+    sfg::Window::Ptr rulesWindow;
+    sfg::Box::Ptr rulesBox;
+    sfg::Label::Ptr rules;
+    sfg::Button::Ptr okButton;
+
+    sf::String str;
 
     //for signals
     enum ButtonPressed
     {
         PLAY,
-        PLAY_WITH_CPU,
+        HOW_TO_PLAY,
+        OK,
         EXIT,
         SOUND,
         MUSIC
@@ -51,6 +64,9 @@ private:
 
     //sfgui button signals
     void clickedButton(ButtonPressed Button);
+
+    //Additional function
+    void setLabel();
 
 private slots:
     void update();
