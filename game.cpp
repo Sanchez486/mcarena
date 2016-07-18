@@ -131,11 +131,8 @@ void Game::closedSelection()
     app.quit();
 }
 
-// TODO
 void Game::finished()
 {
-    cerr << "Game::finished()" << endl;
-
     battleModel->hideGUI();
     menuModel->showGUI();
 }
