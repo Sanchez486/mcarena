@@ -8,6 +8,7 @@
 #include "herovector.h"
 #include "player.h"
 #include "mainwindow.h"
+#include "action.h"
 
 #include <SFGUI/SFGUI.hpp>
 #include <SFGUI/Widgets.hpp>

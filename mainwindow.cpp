@@ -10,6 +10,7 @@ MainWindow::MainWindow() : RenderWindow()
     ToggleMusic();
     setSound(true);
     if (buttonBuffer.loadFromFile("res/sfx/button.wav")) buttonSound.setBuffer(buttonBuffer);
+    setImages();
 }
 
 MainWindow::~MainWindow()
@@ -54,4 +55,38 @@ void MainWindow::setSound(bool state)
 void MainWindow::playButtonSound()
 {
     if (isSound()) buttonSound.play();
+}
+
+void MainWindow::setImages()
+{
+    iconImage[0].loadFromFile("res/img/icons/near.png");
+    iconImage[1].loadFromFile("res/img/icons/further.png");
+    iconImage[2].loadFromFile("res/img/icons/element.png");
+    iconImage[3].loadFromFile("res/img/icons/hp.png");
+    iconImage[4].loadFromFile("res/img/icons/attack.png");
+    iconImage[5].loadFromFile("res/img/icons/init.png");
+}
+
+sf::Image& MainWindow::getImage(int i)
+{
+        return iconImage[i];
+}
+
+sf::Image& MainWindow::getImageForBattle(int i)
+{
+    switch(i)
+    {
+        case 0:
+            return iconImage[3];
+        case 1:
+            return iconImage[4];
+        case 2:
+            return iconImage[0];
+        case 3:
+            return iconImage[5];
+        case 4:
+            return iconImage[2];
+        default:
+            return iconImage[0];
+    }
 }
