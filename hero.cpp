@@ -67,6 +67,13 @@ bool Hero::onTurnEffects()
     for(auto it = effectList.begin(); it != effectList.end();)
     {
         res |= (*it)->onTurn(this);
+
+        if( !(*it)->isRemoveOnTurn() )  // if remove after turn
+        {
+            ++it;
+            continue;
+        }
+
         if( (*it)->updateDuration() == 0)
         {
             auto itOld = it;
@@ -80,6 +87,29 @@ bool Hero::onTurnEffects()
     }
 
     return res;
+}
+
+void Hero::afterTurnEffects()
+{
+    for(auto it = effectList.begin(); it != effectList.end();)
+    {
+        if( (*it)->isRemoveOnTurn() )  // if remove on turn
+        {
+            ++it;
+            continue;
+        }
+
+        if( (*it)->updateDuration() == 0)
+        {
+            auto itOld = it;
+            ++it;
+            remove(*itOld);
+        }
+        else
+        {
+            ++it;
+        }
+    }
 }
 
 void Hero::removeAllEffects()

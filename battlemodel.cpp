@@ -43,6 +43,8 @@ void BattleModel::beginTurn()
         return;
     }
 
+    heroQueue.first()->afterTurnEffects();
+
     heroQueue.rotate();
 
     if( heroQueue.first()->onTurnEffects() ) // if skip turn
