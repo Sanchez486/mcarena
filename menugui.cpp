@@ -174,7 +174,7 @@ void MenuGUI::update()
 void MenuGUI::hide()
 {
     window->Show(false);
-    rulesWindow->Show(false);
+    //rulesWindow->Show(false);
     disconnect(app_window.getTimer(), SIGNAL(timeout()), this, SLOT(update()));
     app_window.clear(sf::Color::Black);
     app_window.display();

@@ -13,8 +13,8 @@
 #define YWINDOW 250
 #define X 800
 #define Y 600
-#define XFINISH 200
-#define YFINISH 200
+#define XFINISH 0
+#define YFINISH 0
 #define YSKILL 30
 #define XSKILLLOC 165
 #define YSKILLLOC 345
@@ -63,8 +63,11 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
 
       finishWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
       finishBox(sfg::Box::Create(sfg::Box::Orientation::VERTICAL,FRAME)),
-      menuButton2(sfg::Button::Create("Main menu")),
       winnerLabel(sfg::Label::Create("")),
+      buttonWindow2(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
+      buttonBox2(sfg::Box::Create(sfg::Box::Orientation::VERTICAL)),
+      menuButton2(sfg::Button::Create("Main menu")),
+
 
       //Pop window
       popWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
@@ -83,7 +86,7 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     queueWindow->Add(queueSBox);
     queueSBox->Pack(qScroll, false, true);
     qScroll->AddWithViewport(queueBox);
-    qScroll->SetScrollbarPolicy( sfg::ScrolledWindow::VERTICAL_NEVER| sfg::ScrolledWindow::HORIZONTAL_ALWAYS);
+    qScroll->SetScrollbarPolicy( sfg::ScrolledWindow::VERTICAL_NEVER | sfg::ScrolledWindow::HORIZONTAL_ALWAYS);
     qScroll->SetRequisition( sf::Vector2f(app_window.getX() - FRAME*2, YICON ) );
 
     desktop.Add(queueWindow);
@@ -99,6 +102,8 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
 
     desktop.Add(buttonWindow);
     buttonWindow->SetAllocation(sf::FloatRect( XINFO , app_window.getY() - YQTOTAL - YBUTTON, app_window.getX() - XINFO, YBUTTON));
+
+    buttonWindow->Show(true);
 
     //Ifowindow
 
@@ -138,9 +143,15 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     desktop.Add(finishWindow);
     finishWindow->Add(finishBox);
     finishWindow->Show(false);
-    finishWindow->SetAllocation(sf::FloatRect((app_window.getX()-XFINISH)/2,(app_window.getY()-YFINISH)/2-FRAME,XFINISH,YFINISH));
+    finishWindow->SetAllocation(sf::FloatRect(XINFO + XFINISH,YFINISH,
+                                              X - XINFO - 2*XFINISH,Y - YQTOTAL - YBUTTON - 2*YFINISH));
     finishBox->Pack(winnerLabel);
-    finishBox->Pack(menuButton2);
+
+    desktop.Add(buttonWindow2);
+    buttonWindow2->Add(buttonBox2);
+    buttonBox2->Pack(menuButton2, false, false);
+    buttonWindow2->SetAllocation(buttonWindow->GetAllocation());
+    buttonWindow2->Show(false);
 
     //Pop window
     popWindow->Add(popBox);
@@ -213,6 +224,8 @@ BattleGUI::BattleGUI(MainWindow& _app_window, QObject *parent)
     skipButton->SetClass("smallButtons");
     menuButton->SetClass("smallButtons");
     menuButton2->SetClass("buttons");
+    finishWindow->SetClass("windows");
+    buttonWindow2->SetClass("windows");
 }
 
 BattleGUI::~BattleGUI()
@@ -267,7 +280,6 @@ void BattleGUI::show()
    infoWindow->Show(true);
    queueWindow->SetState(sfg::Window::State::NORMAL);
    infoWindow->SetState(sfg::Window::State::NORMAL);
-   buttonWindow->SetState(sfg::Window::State::NORMAL);
    connect(app_window.getTimer(), SIGNAL(timeout()), this, SLOT(update()));
    app_window.getTimer()->start(TIMEUPDATE);
 }
@@ -278,6 +290,7 @@ void BattleGUI::hide()
     buttonWindow->Show(false);
     infoWindow->Show(false);
     popWindow->Show(false);
+    buttonWindow2->Show(false);
     disconnect(app_window.getTimer(), SIGNAL(timeout()), this, SLOT(update()));
     app_window.clear(sf::Color::Black);
     app_window.display();
@@ -407,22 +420,24 @@ void BattleGUI::showDead(Hero *hero)
 void BattleGUI::winPlayer1()
 {
     finishWindow->Show(true);
+    buttonWindow->Show(false);
+    buttonWindow2->Show(true);
     desktop.BringToFront(finishWindow);
     winnerLabel->SetText("PLAYER 1 WON!!!");
     queueWindow->SetState(sfg::Window::State::INSENSITIVE);
     infoWindow->SetState(sfg::Window::State::INSENSITIVE);
-    buttonWindow->SetState(sfg::Window::State::INSENSITIVE);
     spritesField->setInsensitive();
 }
 
 void BattleGUI::winPlayer2()
 {
     finishWindow->Show(true);
+    buttonWindow->Show(false);
+    buttonWindow2->Show(true);
     desktop.BringToFront(finishWindow);
     winnerLabel->SetText("PLAYER 2 WON!!!");
     queueWindow->SetState(sfg::Window::State::INSENSITIVE);
     infoWindow->SetState(sfg::Window::State::INSENSITIVE);
-    buttonWindow->SetState(sfg::Window::State::INSENSITIVE);
     spritesField->setInsensitive();
 }
 

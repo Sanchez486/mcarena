@@ -90,8 +90,11 @@ private:
     //Finish window
     sfg::Window::Ptr finishWindow;
     sfg::Box::Ptr finishBox;
-    sfg::Button::Ptr menuButton2;
     sfg::Label::Ptr winnerLabel;
+
+    sfg::Window::Ptr buttonWindow2;
+    sfg::Box::Ptr buttonBox2;
+    sfg::Button::Ptr menuButton2;
 
     //for signals
     enum ButtonPressed
