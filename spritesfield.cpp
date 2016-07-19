@@ -14,8 +14,8 @@
 #define YBOUND 20
 #define XINDENT 10
 #define YINDENT 10
-#define ACTIVECOLOR sf::Color(100, 180, 230, 50)
-#define TARGETCOLOR sf::Color(230, 50, 50, 50)
+#define ACTIVECOLOR sf::Color(100, 180, 230, 100)
+#define TARGETCOLOR sf::Color(230, 50, 50, 80)
 
 SpritesField::SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _secondPlayer)
     :
