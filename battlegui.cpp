@@ -227,16 +227,25 @@ void BattleGUI::clickedButton(ButtonPressed Button)
     switch (Button)
     {
         case ATTACK:
-            selectedAction(activeHero->getAttack());
-            spritesField->setAttack();
+            if(!spritesField->isLocked())
+            {
+                selectedAction(activeHero->getAttack());
+                spritesField->setAttack();
+            }
             break;
         case SKILL:
-            selectedAction(activeHero->getSkill());
-            spritesField->setSkill();
+            if(!spritesField->isLocked())
+            {
+                selectedAction(activeHero->getSkill());
+                spritesField->setSkill();
+            }
             break;
         case SKIP:
-            spritesField->clear();
-            beginTurn();
+            if(!spritesField->isLocked())
+            {
+                spritesField->clear();
+                beginTurn();
+            }
             break;
         case MENU:
             spritesField->clear();

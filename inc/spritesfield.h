@@ -63,6 +63,7 @@ private:
     bool play;
     bool dead;
     bool dmg;
+    bool lockedFlag;
 
     //Additional functions
     HeroPosition iToPos(int i);
@@ -108,4 +109,5 @@ public:
     void setInsensitive();
     void setSensitive();
     void clear();
+    bool isLocked();
 };

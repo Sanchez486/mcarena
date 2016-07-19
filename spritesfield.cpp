@@ -29,6 +29,7 @@ SpritesField::SpritesField(BattleGUI* _parent, Player* _firstPlayer, Player* _se
       play(false),
       dead(false),
       dmg(false),
+      lockedFlag(false),
       action(nullptr),
       activeHero(nullptr)
 {
@@ -156,6 +157,7 @@ void SpritesField::draw(MainWindow& app_window)
 
         if(play)
         {
+            lockedFlag = true;
             sf::Sprite& activeSprite = findSprite(activeHero);
             if ((playingSound.getStatus()!=sf::Sound::Status::Playing) && (app_window.isSound()))
             {
@@ -206,6 +208,7 @@ void SpritesField::draw(MainWindow& app_window)
                        secondPlayerSprite[i].setTextureRect(sf::IntRect(0, 0, XSPRITE, YSPRITE));
                 }
                 dmg = false;
+                lockedFlag = false;
                 col = 0;
                 parent->beginTurn();
             }
@@ -213,6 +216,7 @@ void SpritesField::draw(MainWindow& app_window)
 
         else if(dead)
         {
+            lockedFlag = true;
             sf::Sprite& deadSprite = findSprite(deadHero);
             if(col < 8)
             {
@@ -225,6 +229,7 @@ void SpritesField::draw(MainWindow& app_window)
                 deadSprite.setTextureRect(sf::IntRect(XSPRITE*(NCOL - 1), YSPRITE*(NROW-1),
                                              XSPRITE, YSPRITE));
                 dead = false;
+                lockedFlag = false;
                 col = 0;
             }
         }
@@ -420,4 +425,9 @@ void SpritesField::clear()
 {
     clearTargets();
     clearActive(activeWindow);
+}
+
+bool SpritesField::isLocked()
+{
+    return lockedFlag;
 }
