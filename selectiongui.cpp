@@ -2,8 +2,6 @@
 #define YINFO 140
 #define XFIELD 166
 #define YFIELD 300
-#define XPOINTS 140
-#define YPOINTS 80
 #define XSCROLL 166
 #define YBUTTONS 80
 #define XPLAYERS 175
@@ -21,10 +19,6 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
       infoWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
       infoBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL,FRAME)),
       infoTable(sfg::Table::Create()),
-
-      pointsWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
-      pointsBox(sfg::Box::Create(sfg::Box::Orientation::HORIZONTAL, FRAME)),
-      pointsLabel(sfg::Label::Create("")),
 
       infoLabelWindow(sfg::Window::Create(sfg::Window::Style::BACKGROUND)),
       label(sfg::Label::Create("Choose a hero!!!")),
@@ -83,11 +77,6 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     infoLabelWindow->SetAllocation(infoWindow->GetAllocation());
     label->SetId("l1");
     sfg::Context::Get().GetEngine().SetProperty("Label#l1", "FontSize", 20);
-
-    desktop.Add(pointsWindow);
-    pointsWindow->Add(pointsBox);
-    pointsBox->Pack(pointsLabel);
-    pointsWindow->SetAllocation(sf::FloatRect(app_window.getX()-XPOINTS, YINFO, XPOINTS, YPOINTS));
 
     for(int i = 0; i < 7 ; i++)
         infoLabels[i]= sfg::Label::Create("");
@@ -200,7 +189,6 @@ SelectionGUI::SelectionGUI(MainWindow& _app_window, QObject *parent)
     infoLabelWindow->SetClass("windows");
     infoWindow->SetClass("windows");
     scroll->SetClass("windows");
-    pointsWindow->SetClass("windows");
 
     sfg::Context::Get().GetEngine().SetProperty("Button#p1", "BackgroundColor", sf::Color(96,26,67));
     player1Button->SetState(sfg::Widget::State::INSENSITIVE);
@@ -273,7 +261,6 @@ void SelectionGUI::crossActivated(Mouse mouse)
 void SelectionGUI::show()
 {
    infoWindow->Show(true);
-   pointsWindow->Show(true);
    fieldWindow->Show(true);
    buttonsWindow->Show(true);
    playerWindow->Show(true);
@@ -287,7 +274,6 @@ void SelectionGUI::show()
 void SelectionGUI::hide()
 {
     infoWindow->Show(false);
-    pointsWindow->Show(false);
     fieldWindow->Show(false);
     buttonsWindow->Show(false);
     playerWindow->Show(false);
@@ -512,13 +498,4 @@ void SelectionGUI::connectSignals(int pos)
 
 void SelectionGUI::setCost(Cost *cost)
 {
-    pointsLabel->SetText(std::to_string( cost->getUsed() ) + " \\ " +
-                     std::to_string( cost->getMax() ) + "\nCOINS");
-    pointsLabel->SetId("l2");
-    sfg::Context::Get().GetEngine().SetProperty("Label#l2", "FontSize", 18);
-
-    if(cost->getUsed() > cost->getMax())
-        sfg::Context::Get().GetEngine().SetProperty("Label#l2", "Color", sf::Color::Red);
-    else
-        sfg::Context::Get().GetEngine().SetProperty("Label#l2", "Color", sf::Color::White);
 }
