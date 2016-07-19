@@ -276,7 +276,7 @@ void Game::strToActions(const string &str, Actions *actions) const
 
     if(!str.compare("lifesteal"))
     {
-        actions->setSkill(new Lifesteal(Damage(1, 3)));
+        actions->setSkill(new Lifesteal(Damage(2, 3)));
         return;
     }
 
@@ -288,7 +288,7 @@ void Game::strToActions(const string &str, Actions *actions) const
 
     if(!str.compare("attackall"))
     {
-        actions->setSkill(new AttackAll(Damage(2, 2)));
+        actions->setSkill(new AttackAll(Damage(2, 3)));
         return;
     }
 
@@ -300,7 +300,7 @@ void Game::strToActions(const string &str, Actions *actions) const
 
     if(!str.compare("attacktargetandself"))
     {
-        actions->setSkill(new AttackTargetAndSelf(Damage(10, 10), Damage(5, 5)));
+        actions->setSkill(new AttackTargetAndSelf(Damage(8, 8), Damage(4, 4)));
         return;
     }
 
@@ -312,7 +312,7 @@ void Game::strToActions(const string &str, Actions *actions) const
 
     if(!str.compare("damageincreaseall"))
     {
-        actions->setSkill(new DamageIncreaseAll(0.33, 2));
+        actions->setSkill(new DamageIncreaseAll(0.5, 1));
         return;
     }
 
