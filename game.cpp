@@ -145,6 +145,8 @@ void Game::closedBattle()
 
 int Game::exec()
 {
+	srand(time(0));
+	
     loadHeroes();
     menuModel->showGUI();
 
