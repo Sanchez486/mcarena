@@ -83,20 +83,12 @@ void SelectionModel::updateHero(HeroPosition pos, HeroTemplate *templ)
     }
 }
 
-// TODO: remove else branch (its for debug only!)
 void SelectionModel::clickedStart()
 {
     if(player1->isValidGroup() && player2->isValidGroup())
     {
         emit clickedStartSignal(player1, player2);
     }
-//    else
-//    {
-//        cerr << "SelectionModel::clickedStart()" << endl
-//             << "  Groups are not valid!!!" << endl;
-
-//        emit clickedStartSignal(player1, player2);
-//    }
 }
 
 void SelectionModel::clickedMenu()
@@ -127,8 +119,8 @@ void SelectionModel::beginPlay(HeroVector *_heroes)
 {
     heroes = _heroes;
 
-    createPlayer1(99);  // TODO: this number should not be defined here
-    createPlayer2(99);  // TODO: this number should not be defined here
+    createPlayer1(35);  // TODO: this number should not be defined here
+    createPlayer2(35);  // TODO: this number should not be defined here
 
     activePlayer = player1;
     activeHero = nullptr;
@@ -151,8 +143,8 @@ void SelectionModel::beginPlayCPU(HeroVector *_heroes)
 {
     heroes = _heroes;
 
-    createPlayer1(99);  // TODO: this number should not be defined here
-    createPlayerCPU(99);  // TODO: this number should not be defined here
+    createPlayer1(35);  // TODO: this number should not be defined here
+    createPlayerCPU(35);  // TODO: this number should not be defined here
 
     activePlayer = player1;
     activeHero = nullptr;
