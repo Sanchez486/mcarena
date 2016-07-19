@@ -382,7 +382,6 @@ void BattleGUI::showTargets(Action *action)
 void BattleGUI::playAction(Action *action)
 {
     spritesField->playAction(action);
-    updateHPBars();
 }
 
 void BattleGUI::updateHPBars()
