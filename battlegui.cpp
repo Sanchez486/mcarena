@@ -280,6 +280,7 @@ void BattleGUI::show()
    infoWindow->Show(true);
    queueWindow->SetState(sfg::Window::State::NORMAL);
    infoWindow->SetState(sfg::Window::State::NORMAL);
+   buttonWindow->SetState(sfg::Window::State::NORMAL);
    connect(app_window.getTimer(), SIGNAL(timeout()), this, SLOT(update()));
    app_window.getTimer()->start(TIMEUPDATE);
 }
